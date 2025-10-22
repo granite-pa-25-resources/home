@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granite School District Area 5 Study - Independent Analysis</title>
+
+    <!-- Plotly Library -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #252b3b;
+            --text-primary: #e8eaed;
+            --text-secondary: #9ca3af;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-yellow: #fbbf24;
+            --accent-red: #ef4444;
+            --accent-orange: #f97316;
+            --border-color: #374151;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Hamburger Menu */
+        .nav-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--accent-blue);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 15px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: var(--accent-cyan);
+            transform: scale(1.05);
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 999;
+            padding: 80px 20px 20px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-sidebar.active {
+            left: 0;
+        }
+
+        .nav-sidebar h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-sidebar ul {
+            list-style: none;
+        }
+
+        .nav-sidebar li {
+            margin: 8px 0;
+        }
+
+        .nav-sidebar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-sidebar a:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            padding-left: 20px;
+        }
+
+        /* Overlay for mobile */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin: 10px 0;
+        }
+
+        .update-banner {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(251, 191, 36, 0.15);
+            border: 2px solid var(--accent-yellow);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .update-banner p {
+            margin: 5px 0;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            border-bottom: 3px solid var(--accent-blue);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: var(--accent-blue);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        h4 {
+            color: var(--text-primary);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--accent-yellow);
+            color: var(--text-primary);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-red);
+            color: var(--text-primary);
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--accent-green);
+            color: var(--text-primary);
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .data-card {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-blue);
+            transition: transform 0.2s ease;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .data-card h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin: 8px;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--accent-blue);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .highlight-red {
+            background: rgba(239, 68, 68, 0.2);
+            font-weight: bold;
+        }
+
+        .highlight-yellow {
+            background: rgba(251, 191, 36, 0.2);
+        }
+
+        .highlight-green {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin: 12px 0;
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+
+        .chart-container {
+            background: var(--bg-tertiary);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            color: var(--accent-cyan);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .methodology {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 1px solid var(--accent-blue);
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+        }
+
+        .chart-note {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle Button -->
+    <button class="nav-toggle" id="navToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#executive-summary">Executive Summary</a></li>
+            <li><a href="#enrollment-trends">Enrollment Trends</a></li>
+            <li><a href="#schools-review">Schools Under Review</a></li>
+            <li><a href="#video-docs">Video Documentation</a></li>
+            <li><a href="#methodology">Study Methodology</a></li>
+            <li><a href="#data-sources">Data Sources</a></li>
+            <li><a href="#critical-flaws">Critical Flaws</a></li>
+            <li><a href="#school-trends">School-by-School Trends</a></li>
+            <li><a href="#financial">Financial Impact</a></li>
+            <li><a href="#recommendations">PAC Recommendations</a></li>
+            <li><a href="#alternatives">Alternative Scenarios</a></li>
+            <li><a href="#unanswered">Unanswered Questions</a></li>
+            <li><a href="#community">Community Input</a></li>
+            <li><a href="#assessment">Final Assessment</a></li>
+            <li><a href="#improvements">Recommendations</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay for mobile -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <header>
+        <h1>Granite School District Area 5 Study</h1>
+        <p>Independent Analysis of the 2025 Boundary and Closure Study</p>
+        <p style="font-size: 0.9em; margin-top: 10px;">Analysis Date: January 2025</p>
+        <div class="update-banner">
+            <p style="font-weight: bold;">🔔 IMPORTANT UPDATE (Sept 19, 2025):</p>
+            <p style="margin-top: 5px;">The district REVERSED its ALC consolidation plan. Morningside ALC will relocate to a new location (TBD) but remain separate from Woodstock ALC.</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Executive Summary -->
+        <div class="section" id="executive-summary">
+            <h2>Executive Summary</h2>
+            <p>The Granite School District is conducting a Population Analysis Study for Area 5, which includes 10 elementary schools on the east side of the district. The study is driven by declining enrollment trends affecting the entire district over the past 15+ years.</p>
+
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4>District Enrollment Decline</h4>
+                    <p><strong>2010:</strong> 68,614 students</p>
+                    <p><strong>2024:</strong> 55,546 students</p>
+                    <p><strong>Decline:</strong> <span style="color: var(--accent-red); font-weight: bold;">-19.0%</span></p>
+                    <p><strong>2029 Projection:</strong> 49,296 students (-28% from 2010)</p>
+                </div>
+
+                <div class="data-card">
+                    <h4>Area 5 Current Status (2024-25)</h4>
+                    <p><strong>Total Students:</strong> ~3,980</p>
+                    <p><strong>Schools:</strong> 10 elementary schools</p>
+                    <p><strong>Average per School:</strong> 398 students</p>
+                    <p><strong>Target Average:</strong> 500-550 students</p>
+                </div>
+
+                <div class="data-card">
+                    <h4>PAC Recommendations</h4>
+                    <p><strong>Eastwood:</strong> Close & merge with Oakridge</p>
+                    <p><strong>Morningside:</strong> Convert to French DLI standalone (boundary closure)</p>
+                    <p><strong>Timeline:</strong> Final decision Dec 2025, implementation Fall 2026</p>
+                </div>
+            </div>
+
+            <h3>Goal Alignment Analysis: Target Average vs PAC Recommendations</h3>
+
+            <div class="alert alert-warning">
+                <h4>Critical Finding: PAC Recommendations Do NOT Meet Stated Goals</h4>
+                <p>The district's stated goal is to achieve 500-550 students per school. However, the PAC recommendations fail to achieve this target and contain significant mathematical inconsistencies.</p>
+            </div>
+
+            <h4>Current Math (2024-25 Actual Total Enrollment):</h4>
+            <ul>
+                <li><strong>10 schools, ~3,980 students = 398 avg/school</strong> (below target)</li>
+            </ul>
+
+            <h4>After PAC Recommendations (Projected Impact):</h4>
+            <ul>
+                <li><strong>Eastwood closes:</strong> 267 students redistributed</li>
+                <li><strong>Morningside boundary closes:</strong> ~309 in-boundary students redistributed (French DLI program remains with ~250-300 choice students)</li>
+                <li><strong>Result:</strong> 8 boundary schools + 1 standalone DLI program</li>
+                <li><strong>Available students for 8 boundary schools:</strong> 3,980 - 250 (Morningside DLI) = ~3,730</li>
+                <li><strong>New average: 3,730 ÷ 8 = 466 students/school</strong></li>
+            </ul>
+
+            <div class="alert alert-danger">
+                <h4>GOAL NOT MET: 466 < 500-550 Target Range</h4>
+                <p>Even after closing two schools and redistributing approximately 576 students, the resulting average of <strong>466 students per school is still 34-84 students below the target range</strong>. The PAC recommendations fail to achieve the district's stated capacity optimization goal.</p>
+            </div>
+
+            <h4>Why the Plan Falls Short:</h4>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4>Methodological Flaw #1</h4>
+                    <p><strong>In-Boundary vs Total Enrollment Mismatch</strong></p>
+                    <p>The study uses in-boundary resident forecasts (showing decline) but schools actually operate on total enrollment (includes choice students). Many schools have 50-80% MORE students than their boundary populations.</p>
+                </div>
+
+                <div class="data-card">
+                    <h4>Methodological Flaw #2</h4>
+                    <p><strong>Insufficient Consolidation</strong></p>
+                    <p>To reach 500-550 avg with ~3,980 total students would require reducing to 7-8 schools. The PAC recommends only 2 closures (to 8 schools), which mathematically cannot achieve the target.</p>
+                </div>
+
+                <div class="data-card">
+                    <h4>Methodological Flaw #3</h4>
+                    <p><strong>Choice Program Paradox</strong></p>
+                    <p>Morningside's closure as a boundary school while retaining it as a DLI program creates administrative complexity without addressing capacity issues. The DLI program will still occupy the building with 250-300 students.</p>
+                </div>
+            </div>
+
+            <h4>Alternative Scenario to Actually Meet Goals:</h4>
+            <p>To reach 500 students/school average with 3,980 total students: <strong>3,980 ÷ 500 = ~8 schools needed</strong> (matching PAC plan)</p>
+            <p>To reach 550 students/school average: <strong>3,980 ÷ 550 = ~7 schools needed</strong> (would require 3 closures)</p>
+
+            <div class="alert alert-info">
+                <h4>Conclusion on Goal Alignment</h4>
+                <p><strong>The PAC recommendations partially address capacity concerns but do NOT meet the district's stated target average of 500-550 students per school.</strong> The plan achieves only 466 students/school, falling short by 7-15%. To truly meet stated goals, the district would need to:</p>
+                <ul>
+                    <li>Close one additional school (3 total closures instead of 2), OR</li>
+                    <li>Revise the target average to 450-500 students/school to match realistic outcomes, OR</li>
+                    <li>Address the choice-based enrollment discrepancy by limiting out-of-boundary transfers</li>
+                </ul>
+                <p>The current plan represents a <strong>compromise between community concerns and capacity optimization</strong> rather than a data-driven solution aligned with stated goals.</p>
+            </div>
+        </div>
+
+        <!-- District-Wide Enrollment Trend Chart -->
+        <div class="section" id="enrollment-trends">
+            <h2>📊 District-Wide Enrollment Trends</h2>
+
+            <div class="chart-container">
+                <div class="chart-title">Granite School District 20-Year Enrollment + 5-Year Forecast</div>
+                <div id="districtEnrollmentChart"></div>
+                <p class="chart-note">Blue bars represent historical data (2004-2024). Orange bars show MGT forecasts (2025-2029).</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Area 5 Schools: In-Boundary vs Total Enrollment (2024)</div>
+                <div id="boundaryVsTotalChart"></div>
+                <p class="chart-note">This chart reveals the critical discrepancy: many schools have significantly higher total enrollment than in-boundary population due to choice-based attendance.</p>
+            </div>
+        </div>
+
+        <!-- Schools Under Review Table -->
+        <div class="section" id="schools-review">
+            <h2>Area 5 Schools - Current Enrollment & Projections</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>School</th>
+                        <th>FCI</th>
+                        <th>Oct 2024 Enrollment</th>
+                        <th>Fall 2025 Projection</th>
+                        <th>Building Capacity</th>
+                        <th>Utilization</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-red">
+                        <td><strong>Eastwood</strong></td>
+                        <td>4</td>
+                        <td>270</td>
+                        <td>259</td>
+                        <td>450-500</td>
+                        <td>~52%</td>
+                    </tr>
+                    <tr class="highlight-red">
+                        <td><strong>Oakridge</strong></td>
+                        <td>5</td>
+                        <td>270</td>
+                        <td>243</td>
+                        <td>550-600</td>
+                        <td>~41%</td>
+                    </tr>
+                    <tr class="highlight-yellow">
+                        <td><strong>Morningside</strong></td>
+                        <td>20</td>
+                        <td>565</td>
+                        <td>547</td>
+                        <td>600-650</td>
+                        <td>~84%</td>
+                    </tr>
+                    <tr class="highlight-red">
+                        <td><strong>Cottonwood</strong></td>
+                        <td>37</td>
+                        <td>340</td>
+                        <td>315</td>
+                        <td>500-550</td>
+                        <td>~57%</td>
+                    </tr>
+                    <tr class="highlight-yellow">
+                        <td><strong>Rosecrest</strong></td>
+                        <td>32</td>
+                        <td>300</td>
+                        <td>296</td>
+                        <td>450-500</td>
+                        <td>~59%</td>
+                    </tr>
+                    <tr class="highlight-yellow">
+                        <td><strong>Upland Terrace</strong></td>
+                        <td>22</td>
+                        <td>395</td>
+                        <td>383</td>
+                        <td>650-700</td>
+                        <td>~55%</td>
+                    </tr>
+                    <tr class="highlight-green">
+                        <td><strong>Crestview</strong></td>
+                        <td>39</td>
+                        <td>460</td>
+                        <td>430</td>
+                        <td>550-600</td>
+                        <td>~72%</td>
+                    </tr>
+                    <tr class="highlight-green">
+                        <td><strong>Driggs</strong></td>
+                        <td>27</td>
+                        <td>440</td>
+                        <td>422</td>
+                        <td>650-700</td>
+                        <td>~61%</td>
+                    </tr>
+                    <tr class="highlight-green">
+                        <td><strong>Oakwood</strong></td>
+                        <td>60</td>
+                        <td>510</td>
+                        <td>521</td>
+                        <td>700-750</td>
+                        <td>~70%</td>
+                    </tr>
+                    <tr class="highlight-green">
+                        <td><strong>Penn</strong></td>
+                        <td>58</td>
+                        <td>615</td>
+                        <td>564</td>
+                        <td>600-650</td>
+                        <td>~87%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="chart-note"><strong>Note:</strong> FCI (Facility Condition Index) - Higher numbers indicate better building condition. Red = critically underutilized, Yellow = underutilized, Green = adequately utilized.</p>
+
+            <div class="chart-container">
+                <div class="chart-title">Facility Condition Index vs Enrollment (2024)</div>
+                <div id="fciVsEnrollmentChart"></div>
+                <p class="chart-note">This scatter plot shows the relationship between facility condition and enrollment. Schools with lower FCI (Eastwood FCI=4, Oakridge FCI=5) have lower enrollment, while schools with higher FCI (Penn FCI=58, Oakwood FCI=60) tend to have higher enrollment. However, FCI alone doesn't determine enrollment - choice-based attendance and programs play major roles.</p>
+            </div>
+        </div>
+
+        <!-- Continue with remaining sections... Due to length, I'll add the key sections with charts -->
+
+        <div class="section" id="school-trends">
+            <h2>Individual School Enrollment Trends</h2>
+
+            <div class="chart-container">
+                <div class="chart-title">Top 3 Declining Schools: In-Boundary Population (2016-2029)</div>
+                <div id="decliningSchoolsChart"></div>
+                <p class="chart-note">Cottonwood, Crestview, and Morningside show steepest in-boundary population declines through 2029.</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Enrollment Change by School (2016-2029 Forecast)</div>
+                <div id="enrollmentChangeChart"></div>
+                <p class="chart-note">Percentage change from 2016 baseline to 2029 forecast. Negative values show enrollment decline.</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Facility Condition Index (FCI) by School</div>
+                <div id="fciComparisonChart"></div>
+                <p class="chart-note"><strong>FCI Scale: Higher = Better Condition.</strong> Red bar shows Eastwood (recommended for closure, FCI=4). Green bars show schools with higher FCI ratings. The closure decision considers lower FCI alongside enrollment decline.</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Normalized Total Enrollment Trends (2021 = 100%)</div>
+                <div id="normalizedTotalEnrollmentChart"></div>
+                <p class="chart-note">This shows how actual total enrollment at each school has changed relative to 2021 baseline. Penn grew 20% while Oakridge declined 27%. Notice significant divergence in school performance despite being in the same area.</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Normalized In-Boundary Population Trends (2021 = 100%)</div>
+                <div id="normalizedBoundaryPopChart"></div>
+                <p class="chart-note">This shows in-boundary resident population changes. Eastwood's boundary population declined only 10% (to 90%) but the district is closing it. Cottonwood declined to 82% - steepest decline in Area 5.</p>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Total Enrollment vs In-Boundary Population - Key Schools</div>
+                <div id="enrollmentVsBoundaryChart"></div>
+                <p class="chart-note"><strong>Critical Insight:</strong> Penn's total enrollment grew to 110% while boundary population fell to 81%. Morningside's total stayed at 99% while boundary fell to 90%. This gap is the choice-based enrollment the study doesn't account for.</p>
+            </div>
+        </div>
+
+        <!-- Video Documentation -->
+        <div class="section" id="video-docs">
+            <h2>📹 Complete Video Documentation</h2>
+
+            <p>One of the most impressive aspects of this study is the comprehensive video documentation. All public meetings have been recorded and published on YouTube, allowing community members to review discussions at any time.</p>
+
+            <h3>Available Meeting Recordings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Meeting Type</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Feb 2025</td>
+                        <td>Board Meeting - PAC Initial Presentation</td>
+                        <td><a href="https://youtu.be/qPS3OLAVk1s?t=2744" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>March 19, 2025</td>
+                        <td>Skyline Area Open House</td>
+                        <td><a href="https://youtu.be/J0iI3_djrVw" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>March 26, 2025</td>
+                        <td>Olympus Area Open House</td>
+                        <td><a href="https://youtu.be/8l7Q-eF5Hl8" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>May 21, 2025</td>
+                        <td>Superintendent Town Hall</td>
+                        <td><a href="https://youtu.be/aulg0nN9tfk" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr class="highlight-yellow">
+                        <td>Sept 11, 2025</td>
+                        <td>ALC Parent Meeting (Led to Sept 19 Reversal)</td>
+                        <td><a href="https://youtu.be/rTSHtIb9R-s" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sept 22, 2025</td>
+                        <td>Olympus High Public Meeting</td>
+                        <td><a href="https://youtu.be/7JGT9qPt_M4" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sept 23, 2025</td>
+                        <td>Skyline High Public Meeting</td>
+                        <td><a href="https://youtu.be/SsV3Ur1LoTs" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sept 29, 2025</td>
+                        <td>Driggs Parent Meeting</td>
+                        <td><a href="https://drive.google.com/file/d/1LMnENQQvPbKM_6jBbER7gFBZjiQsPLb4/view" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sept 30, 2025</td>
+                        <td>Eastwood Meeting</td>
+                        <td><a href="https://youtu.be/H8GRhWFN4wY" target="_blank">Watch Video</a></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 7, 2025</td>
+                        <td>Board Meeting Update</td>
+                        <td><a href="https://www.youtube.com/live/cAkQb6IT7jY?t=5467" target="_blank">Watch Video</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.95em;"><strong>Note:</strong> These recordings provide unfiltered access to presentations, Q&A sessions, and community concerns. This level of documentation is rare in public education and demonstrates a genuine commitment to transparency.</p>
+        </div>
+
+        <!-- Study Methodology -->
+        <div class="section" id="methodology">
+            <h2>How the Study is Being Conducted</h2>
+
+            <h3>Study Process Overview</h3>
+            <ol>
+                <li><strong>December - February:</strong> Population Analysis Committee (PAC) reviews demographic data from multiple sources including MGT forecasts and historical enrollment</li>
+                <li><strong>February - June:</strong> PAC meets monthly; community input collected through councils and public forums</li>
+                <li><strong>June - July:</strong> PAC presents initial report to Board of Education with preliminary recommendations</li>
+                <li><strong>July - August:</strong> Board refinement based on input from Board of Education and community feedback</li>
+                <li><strong>September:</strong> PAC holds public open houses; community input collected</li>
+                <li><strong>October - December:</strong> Board guidance and community feedback shape final recommendations presented for approval in public hearings (Nov 18, Dec 2, 2025)</li>
+                <li><strong>Implementation:</strong> Approved boundary changes typically implemented in Fall of following year (Fall 2026)</li>
+            </ol>
+
+            <h3>Population Analysis Committee (PAC) Composition</h3>
+            <p>The PAC is comprised of representatives from multiple district departments:</p>
+            <ul>
+                <li>Planning & Boundaries (Chair: Steve Hogan)</li>
+                <li>Chief of Staff</li>
+                <li>Community Engagement</li>
+                <li>Assistant Superintendents</li>
+                <li>Student Services & Prevention</li>
+                <li>PTA Region 5</li>
+                <li>Granite Education Association (GEA)</li>
+                <li>Transportation</li>
+                <li>Information Systems</li>
+                <li>Special Education</li>
+                <li>School Leadership & Improvement (Elementary & Secondary)</li>
+                <li>Risk, Property, Records Management</li>
+                <li>Preschool Services</li>
+                <li>Organizational Effectiveness</li>
+                <li>Architecture & Engineering</li>
+                <li>Assessment & Research</li>
+                <li>Career & Technical Education</li>
+                <li>Curriculum & Instruction</li>
+                <li>Student Data Facilitator</li>
+            </ul>
+
+            <h3>Factors Considered in Decision-Making</h3>
+            <ul>
+                <li>Current and future enrollment projections (through 2029)</li>
+                <li>School programs and their impacts (e.g., Dual Language Immersion, Advanced Learner Centers)</li>
+                <li>Facility Condition Index (FCI) - building age and maintenance needs</li>
+                <li>Contiguous boundaries - keeping neighborhoods together</li>
+                <li>Transportation logistics and safe walking routes</li>
+                <li>Protection of at-risk populations</li>
+                <li>Efficiency of district resources and fiscal considerations</li>
+                <li>Other factors unique to the study area</li>
+            </ul>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="section" id="data-sources">
+            <h2>Data Sources & Methodology Assessment</h2>
+
+            <h3>Primary Data Sources</h3>
+            <div class="alert alert-info">
+                <strong>Multiple Vendors/Sources Used:</strong>
+                <ul style="margin-top: 10px;">
+                    <li><strong>2016/17-2019/20:</strong> Davis Demographics (2019/20 data)</li>
+                    <li><strong>2020/21:</strong> No in-boundary population data available (data gap)</li>
+                    <li><strong>2021-2024:</strong> MGT 03/11/2025 Population Forecast - Section 4: Attendance Area Forecasts: RESIDENT Student Forecasts</li>
+                    <li><strong>2025:</strong> District's own student mobility and population tables</li>
+                    <li><strong>Forecasts (2025-2029):</strong> MGT projections</li>
+                    <li><strong>Statewide Context:</strong> Kem C. Gardner Policy Institute State and County Projections 2020-2060</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Full MGT Forecast Available:</strong> <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank">MGT Student Population Forecast 2024-2030 (PDF)</a></p>
+            </div>
+
+            <h3>Individual School Mobility Data</h3>
+            <div class="alert alert-info">
+                <p>The district provides detailed student mobility tables for each school, breaking down enrollment by:</p>
+                <ul>
+                    <li>In-boundary vs. out-of-boundary students</li>
+                    <li>Program-specific enrollment (DLI, ALC, general education)</li>
+                    <li>Geographic sub-areas within boundaries</li>
+                </ul>
+                <p><strong>Access individual school tables at:</strong> <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank">Student Mobility and Population Tables</a></p>
+                <p><strong>Note:</strong> These tables would provide crucial data to answer the "in-boundary vs. total enrollment" questions raised in this analysis, but require individual PDF downloads for each school.</p>
+            </div>
+
+            <h3>Strengths of the Study</h3>
+            <div class="alert alert-success">
+                <ul>
+                    <li><strong>Comprehensive Committee:</strong> PAC includes 19+ departments ensuring multi-faceted perspective</li>
+                    <li><strong>Extended Timeline:</strong> 12-month process allows for thorough community input</li>
+                    <li><strong>Multiple Data Points:</strong> Uses both historical data and professional demographic forecasting (MGT)</li>
+                    <li><strong>Exceptional Transparency:</strong>
+                        <ul>
+                            <li>11+ public meetings with video recordings on YouTube</li>
+                            <li>5+ detailed presentation PDFs on Google Drive</li>
+                            <li>Individual student mobility tables for each school</li>
+                            <li>Community feedback compiled in public spreadsheets with AI summaries</li>
+                            <li>Multiple feedback mechanisms (forms, email, phone, public hearings)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Community Subcommittee:</strong> 40+ members including parent SCC reps, teachers, and city council representatives provide grassroots input</li>
+                    <li><strong>Holistic Criteria:</strong> Considers not just enrollment but also facility condition, transportation, programs, and community impact</li>
+                    <li><strong>Contextual Awareness:</strong> References statewide demographic trends showing this is not unique to Granite District</li>
+                    <li><strong>Long-term Planning:</strong> 5-year forecasts (through 2029) help avoid short-term reactive decisions</li>
+                    <li><strong>Responsiveness to Feedback:</strong> September 19 ALC reversal demonstrates Board/PAC listen to community concerns</li>
+                    <li><strong>Board Policy Foundation:</strong> Study follows established procedures (Board Policy VII.G.1 on Annual Student Population Analysis)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Critical Flaws -->
+        <div class="section" id="critical-flaws">
+            <h2>Critical Flaws & Inconsistencies</h2>
+
+            <div class="alert alert-danger">
+                <h3 style="margin-top: 0;">🚨 Major Data Inconsistency: In-Boundary vs Total Enrollment</h3>
+                <p><strong>The most significant flaw in this study is the disconnect between in-boundary population data and actual total enrollment.</strong></p>
+
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>School</th>
+                            <th>2021 In-Boundary Pop</th>
+                            <th>2024 In-Boundary Pop</th>
+                            <th>Change</th>
+                            <th>2024-25 Total Enrollment</th>
+                            <th>Discrepancy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Morningside</strong></td>
+                            <td>342</td>
+                            <td>309</td>
+                            <td class="highlight-red">-10%</td>
+                            <td class="highlight-green">561</td>
+                            <td><strong>+82% more than boundary pop</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Penn</strong></td>
+                            <td>426</td>
+                            <td>344</td>
+                            <td class="highlight-red">-19%</td>
+                            <td class="highlight-green">606</td>
+                            <td><strong>+76% more than boundary pop</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Eastwood</strong></td>
+                            <td>193</td>
+                            <td>173</td>
+                            <td class="highlight-red">-10%</td>
+                            <td class="highlight-green">267</td>
+                            <td><strong>+54% more than boundary pop</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Oakwood</strong></td>
+                            <td>493</td>
+                            <td>400</td>
+                            <td class="highlight-red">-19%</td>
+                            <td class="highlight-green">533</td>
+                            <td><strong>+33% more than boundary pop</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 15px;"><strong>What This Means:</strong> Many schools are heavily reliant on out-of-boundary students (open enrollment, program draws like Morningside's ALC). The study focuses on "resident student forecasts" but actual enrollment is driven by choice-based attendance. <em>Closing a school based solely on declining in-boundary population ignores the reality that these schools are successfully attracting students from outside their boundaries.</em></p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">⚠️ Facility Condition Index (FCI) - Mixed Picture</h3>
+                <p><strong>Understanding the FCI data for Area 5 schools:</strong></p>
+
+                <p style="margin-top: 15px;"><strong>Schools Being Closed:</strong></p>
+                <ul>
+                    <li><strong>Eastwood: FCI = 4</strong> (Poor/older condition - CLOSING)</li>
+                    <li><strong>Oakridge: FCI = 5</strong> (Poor/older condition - Receiving Eastwood students)</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Schools Staying Open with Better Condition:</strong></p>
+                <ul>
+                    <li><strong>Oakwood: FCI = 60</strong> (Best condition in Area 5)</li>
+                    <li><strong>Penn: FCI = 58</strong> (Excellent condition)</li>
+                    <li><strong>Crestview: FCI = 39</strong> (Good condition)</li>
+                    <li><strong>Cottonwood: FCI = 37</strong> (Good condition - declining enrollment)</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>What This Means:</strong></p>
+                <ul>
+                    <li><strong>FCI Scale: Higher = Better.</strong> FCI 58-60 = excellent/well-maintained. FCI 4-5 = poor/aging.</li>
+                    <li>From a facilities perspective, closing lower-FCI schools (Eastwood, Oakridge) makes sense</li>
+                    <li>However, this should be balanced against enrollment patterns and community needs</li>
+                </ul>
+
+                <p style="margin-top: 15px; color: var(--text-secondary);">Note: The facilities condition data suggests reasonable building-focused decision-making, though the overall recommendation still has other significant flaws (in-boundary vs. total enrollment mismatch).</p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">⚠️ Data Source Inconsistency</h3>
+                <ul>
+                    <li><strong>Multiple Vendors:</strong> Using Davis Demographics (2016-2019), then switching to MGT (2021-2029) creates potential methodological inconsistencies</li>
+                    <li><strong>2020/21 Data Gap:</strong> Complete absence of in-boundary population data for 2020/21 makes it difficult to assess COVID-19 impact vs. long-term trends</li>
+                    <li><strong>Baseline Uncertainty:</strong> Different forecasting methodologies may use different assumptions about birth rates, migration, housing development</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">⚠️ Capacity Definition Ambiguity</h3>
+                <p>The study uses three different capacity measures but provides only broad ranges:</p>
+                <ul>
+                    <li><strong>Architectural Capacity:</strong> Classrooms × 27.25 (but how many classrooms?)</li>
+                    <li><strong>Average Capacity:</strong> "Typical number based on programs, labs, preschools, relos, etc." (subjective and varies)</li>
+                    <li><strong>Emergency Capacity:</strong> Maximum number a building "could accommodate" (undefined)</li>
+                </ul>
+                <p><strong>Problem:</strong> Capacity ranges span 100+ students (e.g., "500-550"), making utilization calculations imprecise.</p>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">⚠️ Missing Analysis: Economic & Demographic Drivers</h3>
+                <p>The study acknowledges factors influencing enrollment decline but doesn't deeply analyze them:</p>
+                <ul>
+                    <li><strong>Birth Rate Decline:</strong> Mentioned but not quantified for Area 5 specifically</li>
+                    <li><strong>Housing Affordability:</strong> Area 5 is in the highest-income east side neighborhoods. Have housing prices priced out young families?</li>
+                    <li><strong>Charter/Private School Competition:</strong> Stated as a factor but no data on how many Area 5 residents attend charters/private schools</li>
+                    <li><strong>Open Enrollment Patterns:</strong> No analysis of why students choose certain schools</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">⚠️ Forecast Accuracy Unknown</h3>
+                <p>The study relies heavily on MGT's 2025-2029 forecasts, but:</p>
+                <ul>
+                    <li>No information provided on MGT's past forecast accuracy for Granite District</li>
+                    <li>No sensitivity analysis (what if forecasts are off by ±10%?)</li>
+                    <li>COVID-19 disrupted enrollment patterns—are post-2021 trends stabilized or still volatile?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Impact -->
+        <div class="section" id="financial">
+            <h2>Financial & Resource Considerations</h2>
+
+            <h3>Consolidation Economics</h3>
+            <p>The study argues that consolidation creates "economy of scale" benefits:</p>
+
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4>10 Schools (Current)</h4>
+                    <p>3,980 students ÷ 10 = <strong>398 avg</strong></p>
+                    <p>Many schools under 400 = split-grade classes, limited program funding</p>
+                </div>
+
+                <div class="data-card">
+                    <h4>8 Schools (PAC Recommendation)</h4>
+                    <p>3,980 students ÷ 8 = <strong>498 avg</strong></p>
+                    <p>Most schools reach 500+ = 3 teachers/grade, better resource allocation</p>
+                </div>
+            </div>
+
+            <h3>Per-Pupil Funding Impact</h3>
+            <div class="alert alert-info">
+                <p><strong>Smaller Schools = Less Funding for Extras</strong></p>
+                <p>Elementary schools receive per-pupil funding from:</p>
+                <ul>
+                    <li><strong>Trust Lands:</strong> State-allocated funds based on enrollment</li>
+                    <li><strong>TSSA (Teacher & Student Success Act):</strong> Per-pupil allocation</li>
+                </ul>
+                <p>A school with 250 students receives half the funding of a school with 500 students, but <em>most staffing costs are fixed</em> (principal, counselor, librarian, specialist teachers, etc.).</p>
+            </div>
+
+            <h3>Fiscal Comparison to Other Districts</h3>
+            <div class="alert alert-warning">
+                <p><strong>Lesson from Salt Lake City School District (2023)</strong></p>
+                <p>The presentation cites a 2023 legislative audit criticizing Salt Lake City SD for NOT closing underutilized schools sooner. Key findings:</p>
+                <ul>
+                    <li>SLC enrollment dropped 17% over a decade, but district rebuilt 3 underutilized schools instead of closing them</li>
+                    <li>Cost taxpayers millions in inefficient spending</li>
+                    <li>Running underutilized schools cost an extra <strong>$3.5 million annually</strong></li>
+                </ul>
+                <p><strong>Granite's Position:</strong> The district is attempting to be proactive rather than reactive, addressing declining enrollment before it becomes a fiscal crisis.</p>
+            </div>
+        </div>
+
+        <!-- PAC Recommendations Assessment -->
+        <div class="section" id="recommendations">
+            <h2>Assessing the PAC Recommendations</h2>
+
+            <h3>Recommendation 1: Close Eastwood, Merge with Oakridge</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Supporting Evidence</th>
+                        <th>Contradicting Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>Eastwood has lowest in-boundary population (173 current, 131 by 2029)</li>
+                                <li>Oakridge has second-lowest (230 current, 194 by 2029)</li>
+                                <li>Both schools combined = ~408 students (2029 forecast) = adequate size</li>
+                                <li>Contiguous boundaries make merge logical</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Eastwood has poor building condition (FCI=4 - older/aging infrastructure)</li>
+                                <li>From a facilities perspective, closing a lower-FCI school makes some sense</li>
+                                <li><strong>HOWEVER:</strong> Eastwood <em>total enrollment</em> is 267 (54% higher than boundary pop of 173) - suggests strong program drawing students from across the district</li>
+                                <li>The discrepancy between boundary (173) and total (267) enrollment is unexplained - are those 94 out-of-boundary families likely to transfer to Oakridge?</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-warning">
+                <p><strong>Verdict:</strong> This recommendation has <strong>mixed merit</strong>. Considerations:</p>
+                <ul>
+                    <li><strong>Facilities perspective:</strong> Eastwood has lower FCI (4), so from a building-condition standpoint, closing it is reasonable</li>
+                    <li><strong>Enrollment perspective:</strong> Eastwood's total enrollment (267) is 54% higher than boundary population (173), suggesting strong programmatic appeal that draws students district-wide</li>
+                    <li><strong>Key question:</strong> Will those 94 out-of-boundary students follow the merge to Oakridge, or will they leave the district?</li>
+                    <li><strong>Alternative:</strong> Consider closing Cottonwood instead - it has both the steepest enrollment decline (-42%) AND lower FCI (37)</li>
+                </ul>
+                <p><em>The recommendation makes sense from a facilities standpoint but needs deeper analysis of the enrollment dynamics.</em></p>
+            </div>
+
+            <h3>Recommendation 2: Convert Morningside to French DLI Standalone</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Supporting Evidence</th>
+                        <th>Contradicting Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>Morningside boundary enrollment declining (309 current, 253 by 2029 = -18%)</li>
+                                <li>French DLI programs need critical mass of students to be viable</li>
+                                <li>District wants to maintain two ALC sites on east side (Woodstock + Morningside)</li>
+                                <li>Boundary students would move to Rosecrest + Driggs (both have capacity)</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Morningside <em>total enrollment</em> is 561—<strong>one of the highest in Area 5</strong>—because of ALC program draw</li>
+                                <li>Current boundary residents would lose neighborhood school option</li>
+                                <li>Rosecrest and Driggs receive displaced boundary students, but those schools' forecasts don't account for this influx</li>
+                                <li>No analysis of how many current Morningside students are in ALC vs. general education vs. French DLI</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-danger">
+                <p><strong>Verdict:</strong> This is the most problematic recommendation. <strong>Morningside is NOT underenrolled—it has 561 students.</strong> The "problem" is only apparent when looking solely at in-boundary resident data (309 students).</p>
+                <p><strong>Alternative:</strong> Keep Morningside as a dual-track school (neighborhood + ALC + DLI). The building has capacity (~600-650), and total enrollment (561) suggests the community wants the school open.</p>
+            </div>
+        </div>
+
+        <!-- Alternative Scenarios -->
+        <div class="section" id="alternatives">
+            <h2>Alternative Scenarios Not Considered</h2>
+
+            <h3>Scenario 1: Close Cottonwood Instead of Eastwood</h3>
+            <div class="alert alert-info">
+                <p><strong>Rationale:</strong></p>
+                <ul>
+                    <li><strong>Cottonwood has the steepest enrollment decline:</strong> -42% by 2029 (worst in Area 5)</li>
+                    <li>Cottonwood also has lower FCI (37) similar to Eastwood (4)</li>
+                    <li>Cottonwood boundary could merge with Oakwood (contiguous, Oakwood has larger capacity and higher FCI=60)</li>
+                    <li>This consolidates to a school with better building condition (Oakwood FCI=60)</li>
+                </ul>
+                <p><strong>Challenges:</strong></p>
+                <ul>
+                    <li>Oakwood is on opposite side of I-215—transportation barriers</li>
+                    <li>Cottonwood serves Cottonwood Heights community—politically sensitive</li>
+                    <li>Eastwood's out-of-boundary draw (94 students) suggests programmatic strength that might be worth preserving</li>
+                </ul>
+            </div>
+
+            <h3>Scenario 2: Close Oakridge AND Eastwood, Create One Consolidated School</h3>
+            <div class="alert alert-info">
+                <p><strong>Rationale:</strong></p>
+                <ul>
+                    <li>Oakridge + Eastwood combined in-boundary pop = ~404 by 2029</li>
+                    <li>If total enrollment follows similar out-of-boundary patterns, could be 500-550 students</li>
+                    <li>Use Oakridge building (larger capacity ~550-600, FCI=5)</li>
+                    <li>Both Oakridge (FCI=5) and Eastwood (FCI=4) have similar lower FCI ratings</li>
+                </ul>
+                <p><strong>Challenges:</strong></p>
+                <ul>
+                    <li>Closing two schools instead of one is politically harder</li>
+                    <li>Larger disruption to two communities</li>
+                    <li>Loses potential out-of-boundary enrollment from both schools</li>
+                </ul>
+            </div>
+
+            <h3>Scenario 3: Keep All Schools Open, Accept Lower Per-School Enrollment</h3>
+            <div class="alert alert-info">
+                <p><strong>Rationale:</strong></p>
+                <ul>
+                    <li>Community preference for neighborhood schools (as evidenced by feedback that led to Morningside ALC reversal)</li>
+                    <li>Area 5 is relatively affluent—PTAs/foundations could supplement funding gaps</li>
+                    <li>Keeps buildings in inventory for potential future enrollment growth</li>
+                </ul>
+                <p><strong>Challenges:</strong></p>
+                <ul>
+                    <li>Continues inefficient use of district resources (as highlighted in SLC School District audit)</li>
+                    <li>Split-grade classrooms persist at smaller schools</li>
+                    <li>Per-pupil funding disparities—smaller schools have fewer resources for extras</li>
+                    <li>Doesn't solve long-term fiscal sustainability if enrollment continues to decline</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Unanswered Questions -->
+        <div class="section" id="unanswered">
+            <h2>Critical Unanswered Questions</h2>
+
+            <div class="alert alert-danger">
+                <h3 style="margin-top: 0;">🔍 Questions the Study Should Address:</h3>
+                <ol>
+                    <li>
+                        <strong>Why is there such a large gap between in-boundary population and total enrollment at several schools?</strong>
+                        <ul>
+                            <li>Morningside: 309 boundary, 561 total (+82%)</li>
+                            <li>Penn: 344 boundary, 606 total (+76%)</li>
+                            <li>Eastwood: 173 boundary, 267 total (+54%)</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Where are Area 5 boundary residents sending their children if not to boundary schools?</strong>
+                        <ul>
+                            <li>Charter schools? Private schools? Open enrollment to other GSD schools? Homeschooling?</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>What is MGT's historical forecast accuracy for Granite School District?</strong>
+                        <ul>
+                            <li>What is the margin of error on 2025-2029 projections?</li>
+                            <li>What happens if forecasts are off by 10-15%?</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>What are the actual per-school operating cost differences?</strong>
+                        <ul>
+                            <li>How much does Granite save annually by closing one elementary school?</li>
+                            <li>What are the one-time costs of closure?</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>What is the district's long-term facilities plan?</strong>
+                        <ul>
+                            <li>Several schools have poor building condition (FCI 37-60). When do these need major renovations?</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Community Input -->
+        <div class="section" id="community">
+            <h2>Community Input & Response</h2>
+
+            <h3>Public Feedback Mechanisms</h3>
+            <ul>
+                <li><strong>Online Feedback Forms:</strong>
+                    <ul>
+                        <li><a href="https://forms.gle/7X1KgLqTVowhvKFf7" target="_blank">General Feedback Form</a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1gMY4Ttoq41tH_z71El6ucxsCYkLleILZzIrzJibxXk0/edit" target="_blank">Post-Sept 2 Feedback Responses</a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1lbN_kWEokykChQYN7xJXkMTeFxEPadCt-i-ljpY57Pk/edit" target="_blank">ALC-Specific Feedback</a></li>
+                    </ul>
+                </li>
+                <li><strong>Email:</strong> boundaries@graniteschools.org</li>
+                <li><strong>Phone:</strong> Steve Hogan, Director - (385) 646-4123</li>
+                <li><strong>Public Hearings:</strong> November 18 and December 2, 2025 (7:00 PM)</li>
+            </ul>
+
+            <h3>Community Subcommittee</h3>
+            <p>The district created a Community Subcommittee with over 40 members including:</p>
+            <ul>
+                <li>2 parent SCC representatives per school (20 parents total)</li>
+                <li>1 teacher representative per school (10 teachers)</li>
+                <li>City council representatives from Millcreek and Holladay</li>
+            </ul>
+
+            <h3>Evidence of Community Impact on Decisions</h3>
+            <div class="alert alert-success">
+                <p><strong>September 19 MAJOR Reversal on ALC Consolidation</strong></p>
+                <p>The PAC's initial recommendation (presented September 2) proposed consolidating all east-side Advanced Learner Centers at Woodstock Elementary. After intense community feedback, district officials <strong>completely reversed this decision on September 19</strong>.</p>
+                <p><strong>What This Shows:</strong> Community input <em>absolutely can</em> influence PAC recommendations. The reversal demonstrates that the Board and PAC are responsive to parent concerns when feedback is strong and organized.</p>
+            </div>
+        </div>
+
+        <!-- Final Assessment -->
+        <div class="section" id="assessment">
+            <h2>Final Assessment: Is the Study Rigorous and Consistent?</h2>
+
+            <h3>Overall Grade: B- (Good Process, Flawed Methodology)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Grade</th>
+                        <th>Assessment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Collection</strong></td>
+                        <td class="highlight-yellow">B-</td>
+                        <td>Multiple sources provide breadth, but inconsistent vendors and 2020/21 gap create concerns about comparability.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transparency</strong></td>
+                        <td class="highlight-green">A+</td>
+                        <td><strong>EXCEPTIONAL:</strong> 11+ video recordings, 5+ presentations, individual school mobility PDFs, AI-summarized feedback, community subcommittee with 40+ members.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Methodology</strong></td>
+                        <td class="highlight-red">D+</td>
+                        <td><strong>Major flaw:</strong> Study focuses on in-boundary resident forecasts but ignores large discrepancies with actual total enrollment.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contextual Analysis</strong></td>
+                        <td class="highlight-yellow">B</td>
+                        <td>Statewide demographic trends provide good context. Missing analysis of <em>why</em> Area 5 families choose other schools.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fiscal Justification</strong></td>
+                        <td class="highlight-yellow">B-</td>
+                        <td>Economy of scale argument is sound. However, no specific cost-benefit analysis for Granite's closures.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recommendations Logic</strong></td>
+                        <td class="highlight-red">C-</td>
+                        <td>Eastwood closure has some facilities-based merit (lower FCI). However, Morningside conversion is highly problematic (school is NOT underenrolled at 561 students). Doesn't adequately address in-boundary vs. total enrollment discrepancy.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Community Responsiveness</strong></td>
+                        <td class="highlight-green">A</td>
+                        <td>September 19 ALC reversal shows PAC/Board listens to feedback. Extended timeline allows for meaningful input.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Process Integrity</strong></td>
+                        <td class="highlight-green">A</td>
+                        <td>Follows Board Policy VII.G.1. Adheres to annual population analysis procedures.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key Strengths</h3>
+            <div class="alert alert-success">
+                <ul>
+                    <li><strong>Best-in-Class Transparency:</strong> This may be the most transparent school closure study in Utah history</li>
+                    <li>Proactive rather than reactive approach (avoiding SLC School District's mistakes)</li>
+                    <li>Comprehensive PAC with multi-departmental expertise</li>
+                    <li>Extended public input process with multiple touchpoints throughout the year</li>
+                    <li>Demonstrated responsiveness to community feedback (ALC reversal)</li>
+                </ul>
+            </div>
+
+            <h3>Critical Weaknesses</h3>
+            <div class="alert alert-danger">
+                <ul>
+                    <li><strong>🚨 IN-BOUNDARY VS. TOTAL ENROLLMENT DISCREPANCY:</strong> The study's entire foundation rests on declining <em>resident</em> student forecasts, but many schools have significantly higher <em>total</em> enrollment due to choice-based attendance. Morningside (309 boundary vs 561 total), Penn (344 vs 606), Eastwood (173 vs 267) - this 50-80% discrepancy is never adequately explained or accounted for in closure decisions.</li>
+                    <li><strong>Morningside conversion lacks justification:</strong> The school has 561 students—it's not underenrolled. Converting to DLI-only removes neighborhood access for boundary families.</li>
+                    <li><strong>Missing cost-benefit analysis:</strong> No specific figures on how much Granite saves by closing schools, what one-time closure costs are, or lifecycle cost comparisons between different buildings.</li>
+                    <li><strong>No analysis of school choice patterns:</strong> Where are boundary residents going? Why do out-of-boundary students choose certain schools? This data is critical for predicting whether consolidations will retain or lose students.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recommendations for Improvement -->
+        <div class="section" id="improvements">
+            <h2>Recommendations for Improving the Study</h2>
+
+            <ol>
+                <li>
+                    <strong>Reconcile In-Boundary vs. Total Enrollment Discrepancies</strong>
+                    <ul>
+                        <li>Provide detailed breakdown of where students come from</li>
+                        <li>Analyze historical trends: Are out-of-boundary percentages increasing or stable?</li>
+                        <li>Survey out-of-boundary families: Why do they choose these schools?</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Conduct Forecast Accuracy Analysis</strong>
+                    <ul>
+                        <li>Compare MGT's previous forecasts to actual enrollment</li>
+                        <li>Provide margin of error and sensitivity analysis</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Perform Comprehensive Cost-Benefit Analysis</strong>
+                    <ul>
+                        <li>Quantify annual savings from closing one elementary school</li>
+                        <li>Include renovation costs for aging buildings</li>
+                        <li>Calculate one-time closure costs</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Analyze Out-of-Boundary Enrollment Dynamics</strong>
+                    <ul>
+                        <li>Survey out-of-boundary families at Eastwood, Penn, and Morningside: Why do they choose these schools over their boundary schools?</li>
+                        <li>Predict retention: Will Eastwood's 94 out-of-boundary students transfer to Oakridge or leave the district?</li>
+                        <li>Consider whether strong programmatic draws (that create out-of-boundary enrollment) should be preserved rather than consolidated</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Clarify Capacity Definitions</strong>
+                    <ul>
+                        <li>Provide specific capacity numbers (not ranges)</li>
+                        <li>Show current utilization rates using consistent capacity definition</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="section" id="conclusion">
+            <h2>Conclusion</h2>
+
+            <p>The Granite School District Area 5 Population Analysis Study represents a <strong>highly transparent, well-structured process with significant methodological flaws in its core assumptions</strong>. The district deserves credit for setting a new standard in public education transparency, but the fundamental analysis has critical gaps.</p>
+
+            <p>The district is correct that:</p>
+
+            <ul>
+                <li>District-wide enrollment has declined significantly (-19% since 2010)</li>
+                <li>Projections suggest continued decline through 2029</li>
+                <li>Underutilized schools create fiscal inefficiencies and limit resources for students</li>
+                <li>Proactive planning is better than reactive crisis management</li>
+            </ul>
+
+            <p><strong>However, the study's critical flaw is its reliance on in-boundary resident forecasts while ignoring the reality of choice-based enrollment.</strong> Schools like Morningside (561 students vs. 309 boundary residents) and Eastwood (267 vs. 173) are NOT underenrolled in practice—they're successfully attracting students from beyond their boundaries.</p>
+
+            <div class="alert alert-success">
+                <h3 style="margin-top: 0;">What This Study Does Exceptionally Well:</h3>
+                <ul>
+                    <li><strong>Transparency:</strong> 11+ video recordings, individual school data PDFs, AI-summarized feedback—this is model transparency for school districts nationwide</li>
+                    <li><strong>Community Engagement:</strong> 40-member community subcommittee, multiple feedback mechanisms, extended 12-month timeline</li>
+                    <li><strong>Responsiveness:</strong> The September 19 ALC reversal proves the district listens when community voices are strong and organized</li>
+                    <li><strong>Process Integrity:</strong> Follows board policy, includes 19+ departments, considers holistic factors beyond just numbers</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">What This Study Still Needs to Address:</h3>
+                <ul>
+                    <li><strong>🚨 MOST CRITICAL:</strong> Reconcile in-boundary forecasts with actual total enrollment patterns - the 50-80% discrepancy at several schools undermines closure projections</li>
+                    <li>Analyze out-of-boundary enrollment dynamics: Why do families choose schools outside their boundaries? Will they follow consolidations or leave the district?</li>
+                    <li>Provide specific cost-benefit analysis with dollar amounts</li>
+                    <li>Clarify Morningside status and enrollment breakdowns (ALC vs DLI vs general education)</li>
+                    <li>Analyze where boundary residents are actually going (charters, private schools, other GSD schools)</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-info">
+                <h3 style="margin-top: 0;">For Community Members:</h3>
+                <p><strong>Questions to Ask at Public Hearings (Nov 18, Dec 2 at 7:00 PM):</strong></p>
+                <ol>
+                    <li><strong>"Why is there such a large gap between in-boundary population and total enrollment at schools like Morningside (309 vs 561), Penn (344 vs 606), and Eastwood (173 vs 267)? Where are these out-of-boundary students coming from and why do they choose these schools?"</strong></li>
+                    <li>"What analysis has been done to predict whether Eastwood's 94 out-of-boundary students will transfer to Oakridge or leave the district entirely after consolidation?"</li>
+                    <li>"Morningside has 561 students—why is it being treated as underenrolled? How many of those students are in ALC vs DLI vs general education?"</li>
+                    <li>"Why not close Cottonwood instead of Eastwood? Cottonwood has the steepest enrollment decline (-42%) in Area 5."</li>
+                    <li>"How much does Granite save annually by closing one elementary school? What are the one-time closure costs?"</li>
+                    <li>"What happens to students at schools with high out-of-boundary draw when those schools are consolidated? Historical data from other consolidations?"</li>
+                </ol>
+            </div>
+
+            <p style="margin-top: 30px;"><strong>Final Recommendation:</strong> The Board of Education should request <strong>additional analysis</strong> before finalizing closure decisions in December 2025. The critical missing piece is understanding out-of-boundary enrollment dynamics. The Board should request:</p>
+            <ol style="margin-top: 15px;">
+                <li><strong>Out-of-boundary enrollment analysis:</strong> Survey families choosing schools outside their boundaries - Why do they make these choices? Will they follow consolidations or leave the district?</li>
+                <li><strong>Enrollment retention projections:</strong> For each proposed consolidation, what percentage of current students are expected to stay vs. leave?</li>
+                <li><strong>Morningside breakdown:</strong> How many students are in ALC vs. DLI vs. general education? What happens to each group under the conversion plan?</li>
+                <li><strong>Cost-benefit analysis with dollar amounts:</strong> Annual savings from closures, one-time costs, and comparison to status quo operating costs</li>
+            </ol>
+
+            <div class="alert alert-success" style="margin-top: 20px;">
+                <h3 style="margin-top: 0;">🏆 Recognition Where Due</h3>
+                <p>Regardless of whether you agree with the recommendations, the Granite School District deserves recognition for:</p>
+                <ul>
+                    <li>Publishing 11+ hours of video recordings so families can review every presentation and Q&A</li>
+                    <li>Creating AI summaries of community feedback so all voices are heard</li>
+                    <li>Establishing a 40-member community subcommittee with direct parent/teacher representation</li>
+                    <li>Reversing course on ALC consolidation when feedback was strong</li>
+                    <li>Providing individual school mobility data tables</li>
+                </ul>
+                <p><strong>This is what transparent, community-engaged governance looks like.</strong> Other school districts should study Granite's process as a model—even if the analytical methodology needs refinement.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>This independent analysis was prepared based on publicly available data from Granite School District as of January 2025.</p>
+        <p><strong>Official District Resources:</strong></p>
+        <p>📊 Full Study Data: <a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/">graniteschools.org/planning/2025-population-analysis-studies-amp-data/</a></p>
+        <p>📝 Feedback Form: <a href="https://forms.gle/7X1KgLqTVowhvKFf7">forms.gle/7X1KgLqTVowhvKFf7</a></p>
+        <p>📧 Email: boundaries@graniteschools.org | ☎️ Phone: (385) 646-4123</p>
+        <p>📅 Public Hearings: November 18 & December 2, 2025 at 7:00 PM</p>
+        <p style="margin-top: 15px; font-size: 0.9em; font-style: italic;">Analyst Note: This website is not affiliated with Granite School District. It represents an independent analysis of publicly available data.</p>
+    </footer>
+
+    <script>
+        // Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navOverlay = document.getElementById('navOverlay');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navSidebar.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navToggle.classList.remove('active');
+            navSidebar.classList.remove('active');
+            navOverlay.classList.remove('active');
+        });
+
+        // Close nav when clicking a link
+        document.querySelectorAll('.nav-sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navSidebar.classList.remove('active');
+                navOverlay.classList.remove('active');
+            });
+        });
+
+        // Chart Data
+        const districtEnrollmentData = [
+            { year: '2004', enrollment: 68314, type: 'actual' },
+            { year: '2005', enrollment: 68462, type: 'actual' },
+            { year: '2006', enrollment: 68517, type: 'actual' },
+            { year: '2007', enrollment: 68075, type: 'actual' },
+            { year: '2008', enrollment: 68392, type: 'actual' },
+            { year: '2009', enrollment: 68267, type: 'actual' },
+            { year: '2010', enrollment: 68614, type: 'actual' },
+            { year: '2011', enrollment: 67736, type: 'actual' },
+            { year: '2012', enrollment: 67600, type: 'actual' },
+            { year: '2013', enrollment: 68107, type: 'actual' },
+            { year: '2014', enrollment: 67822, type: 'actual' },
+            { year: '2015', enrollment: 67177, type: 'actual' },
+            { year: '2016', enrollment: 67177, type: 'actual' },
+            { year: '2017', enrollment: 66024, type: 'actual' },
+            { year: '2018', enrollment: 64281, type: 'actual' },
+            { year: '2019', enrollment: 63989, type: 'actual' },
+            { year: '2020', enrollment: 61036, type: 'actual' },
+            { year: '2021', enrollment: 59924, type: 'actual' },
+            { year: '2022', enrollment: 58595, type: 'actual' },
+            { year: '2023', enrollment: 57858, type: 'actual' },
+            { year: '2024', enrollment: 55546, type: 'actual' },
+            { year: '2025', enrollment: 54296, type: 'forecast' },
+            { year: '2026', enrollment: 53046, type: 'forecast' },
+            { year: '2027', enrollment: 51796, type: 'forecast' },
+            { year: '2028', enrollment: 50546, type: 'forecast' },
+            { year: '2029', enrollment: 49296, type: 'forecast' }
+        ];
+
+        const boundaryVsTotalData = [
+            { school: 'Eastwood', boundary: 173, total: 267 },
+            { school: 'Oakridge', boundary: 230, total: 270 },
+            { school: 'Morningside', boundary: 309, total: 561 },
+            { school: 'Cottonwood', boundary: 271, total: 340 },
+            { school: 'Rosecrest', boundary: 331, total: 300 },
+            { school: 'Upland T.', boundary: 402, total: 395 },
+            { school: 'Crestview', boundary: 517, total: 460 },
+            { school: 'Driggs', boundary: 427, total: 440 },
+            { school: 'Oakwood', boundary: 400, total: 510 },
+            { school: 'Penn', boundary: 344, total: 615 }
+        ];
+
+        const fciVsEnrollmentData = [
+            { school: 'Eastwood', fci: 4, enrollment: 270 },
+            { school: 'Oakridge', fci: 5, enrollment: 270 },
+            { school: 'Morningside', fci: 20, enrollment: 565 },
+            { school: 'Upland T.', fci: 22, enrollment: 395 },
+            { school: 'Driggs', fci: 27, enrollment: 440 },
+            { school: 'Rosecrest', fci: 32, enrollment: 300 },
+            { school: 'Cottonwood', fci: 37, enrollment: 340 },
+            { school: 'Crestview', fci: 39, enrollment: 460 },
+            { school: 'Penn', fci: 58, enrollment: 615 },
+            { school: 'Oakwood', fci: 60, enrollment: 510 }
+        ];
+
+        const decliningSchoolsData = [
+            { year: '2016', Cottonwood: 350, Crestview: 625, Morningside: 369 },
+            { year: '2017', Cottonwood: 343, Crestview: 653, Morningside: 351 },
+            { year: '2018', Cottonwood: 339, Crestview: 633, Morningside: 360 },
+            { year: '2019', Cottonwood: 327, Crestview: 591, Morningside: 336 },
+            { year: '2021', Cottonwood: 330, Crestview: 606, Morningside: 342 },
+            { year: '2022', Cottonwood: 316, Crestview: 554, Morningside: 338 },
+            { year: '2023', Cottonwood: 281, Crestview: 532, Morningside: 316 },
+            { year: '2024', Cottonwood: 271, Crestview: 517, Morningside: 309 },
+            { year: '2025', Cottonwood: 251, Crestview: 484, Morningside: 285 },
+            { year: '2026', Cottonwood: 223, Crestview: 462, Morningside: 278 },
+            { year: '2027', Cottonwood: 208, Crestview: 433, Morningside: 266 },
+            { year: '2028', Cottonwood: 205, Crestview: 436, Morningside: 254 },
+            { year: '2029', Cottonwood: 199, Crestview: 426, Morningside: 253 }
+        ];
+
+        const enrollmentChangeData = [
+            { school: 'Cottonwood', change: -42 },
+            { school: 'Crestview', change: -35 },
+            { school: 'Morningside', change: -28 },
+            { school: 'Penn', change: -25 },
+            { school: 'Eastwood', change: -23 },
+            { school: 'Oakridge', change: -22 },
+            { school: 'Upland T.', change: -17 },
+            { school: 'Rosecrest', change: -15 },
+            { school: 'Driggs', change: -12 }
+        ];
+
+        // Normalized Total Enrollment Data (from CSV - 2021 = 100%)
+        const normalizedTotalEnrollment = {
+            years: ['2021', '2022', '2023', '2024', '2025'],
+            Cottonwood: [100, 95, 85, 85, 79],
+            Crestview: [100, 94, 97, 94, 92],
+            Driggs: [100, 96, 97, 95, 101],
+            Eastwood: [100, 110, 103, 97, 85],
+            Morningside: [100, 101, 104, 99, 100],
+            Oakridge: [100, 95, 90, 84, 73],
+            Penn: [100, 94, 120, 110, 106],
+            Rosecrest: [100, 104, 104, 102, 101],
+            'Upland Terrace': [100, 100, 99, 92, 86]
+        };
+
+        // Normalized In-Boundary Population Data (from CSV - 2021 = 100%)
+        const normalizedBoundaryPop = {
+            years: ['2021', '2022', '2023', '2024', '2025'],
+            Cottonwood: [100, 96, 85, 82, 80],
+            Crestview: [100, 91, 88, 85, 87],
+            Driggs: [100, 99, 97, 96, 97],
+            Eastwood: [100, 113, 103, 90, 84],
+            Morningside: [100, 99, 92, 90, 86],
+            Oakridge: [100, 98, 95, 90, 84],
+            Penn: [100, 87, 92, 81, 84],
+            Rosecrest: [100, 103, 101, 103, 99],
+            'Upland Terrace': [100, 98, 97, 89, 85]
+        };
+
+        // Render Charts using Plotly
+
+        // District Enrollment Chart
+        const actualYears = districtEnrollmentData.filter(d => d.type === 'actual').map(d => d.year);
+        const actualEnrollment = districtEnrollmentData.filter(d => d.type === 'actual').map(d => d.enrollment);
+        const forecastYears = districtEnrollmentData.filter(d => d.type === 'forecast').map(d => d.year);
+        const forecastEnrollment = districtEnrollmentData.filter(d => d.type === 'forecast').map(d => d.enrollment);
+
+        Plotly.newPlot('districtEnrollmentChart', [
+            {
+                x: actualYears,
+                y: actualEnrollment,
+                type: 'bar',
+                name: 'Actual',
+                marker: { color: '#3b82f6' }
+            },
+            {
+                x: forecastYears,
+                y: forecastEnrollment,
+                type: 'bar',
+                name: 'Forecast',
+                marker: { color: '#f97316' }
+            }
+        ], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'Year', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: 'Enrollment', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 60, r: 30, t: 30, b: 80 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' } }
+        }, { responsive: true });
+
+        // Boundary vs Total Chart
+        Plotly.newPlot('boundaryVsTotalChart', [
+            {
+                x: boundaryVsTotalData.map(d => d.school),
+                y: boundaryVsTotalData.map(d => d.boundary),
+                type: 'bar',
+                name: 'In-Boundary Population',
+                marker: { color: '#ef4444' }
+            },
+            {
+                x: boundaryVsTotalData.map(d => d.school),
+                y: boundaryVsTotalData.map(d => d.total),
+                type: 'bar',
+                name: 'Total Enrollment',
+                marker: { color: '#10b981' }
+            }
+        ], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'School', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: 'Students', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 60, r: 30, t: 30, b: 100 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' } },
+            barmode: 'group'
+        }, { responsive: true });
+
+        // FCI vs Enrollment Scatter Chart
+        Plotly.newPlot('fciVsEnrollmentChart', [{
+            x: fciVsEnrollmentData.map(d => d.fci),
+            y: fciVsEnrollmentData.map(d => d.enrollment),
+            text: fciVsEnrollmentData.map(d => d.school),
+            mode: 'markers+text',
+            type: 'scatter',
+            textposition: 'top center',
+            marker: {
+                size: 12,
+                color: '#06b6d4',
+                line: { color: '#0891b2', width: 2 }
+            },
+            textfont: { color: '#e8eaed', size: 10 }
+        }], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'Facility Condition Index (Higher = Better)', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: 'Total Enrollment', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 60, r: 30, t: 30, b: 80 },
+            showlegend: false
+        }, { responsive: true });
+
+        // Declining Schools Line Chart
+        Plotly.newPlot('decliningSchoolsChart', [
+            {
+                x: decliningSchoolsData.map(d => d.year),
+                y: decliningSchoolsData.map(d => d.Cottonwood),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Cottonwood',
+                line: { color: '#ef4444', width: 3 },
+                marker: { size: 8 }
+            },
+            {
+                x: decliningSchoolsData.map(d => d.year),
+                y: decliningSchoolsData.map(d => d.Crestview),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Crestview',
+                line: { color: '#f97316', width: 3 },
+                marker: { size: 8 }
+            },
+            {
+                x: decliningSchoolsData.map(d => d.year),
+                y: decliningSchoolsData.map(d => d.Morningside),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Morningside',
+                line: { color: '#fbbf24', width: 3 },
+                marker: { size: 8 }
+            }
+        ], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'Year', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: 'In-Boundary Population', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 60, r: 30, t: 30, b: 60 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' } }
+        }, { responsive: true });
+
+        // Enrollment Change Bar Chart
+        const barColors = enrollmentChangeData.map(d =>
+            d.change < -30 ? '#ef4444' : d.change < -20 ? '#f97316' : '#fbbf24'
+        );
+
+        Plotly.newPlot('enrollmentChangeChart', [{
+            x: enrollmentChangeData.map(d => d.change),
+            y: enrollmentChangeData.map(d => d.school),
+            type: 'bar',
+            orientation: 'h',
+            marker: { color: barColors },
+            text: enrollmentChangeData.map(d => `${d.change}%`),
+            textposition: 'outside'
+        }], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'Percent Change (%)', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: '', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 100, r: 60, t: 30, b: 60 },
+            showlegend: false
+        }, { responsive: true });
+
+        // FCI Comparison Chart
+        const fciComparisonData = [
+            { school: 'Eastwood*', fci: 4, status: 'closing' },
+            { school: 'Oakridge', fci: 5, status: 'receiving' },
+            { school: 'Morningside', fci: 20, status: 'converting' },
+            { school: 'Upland T.', fci: 22, status: 'staying' },
+            { school: 'Driggs', fci: 27, status: 'staying' },
+            { school: 'Rosecrest', fci: 32, status: 'staying' },
+            { school: 'Cottonwood', fci: 37, status: 'staying' },
+            { school: 'Crestview', fci: 39, status: 'staying' },
+            { school: 'Penn', fci: 58, status: 'staying' },
+            { school: 'Oakwood', fci: 60, status: 'staying' }
+        ];
+
+        const fciBarColors = fciComparisonData.map(d =>
+            d.status === 'closing' ? '#ef4444' :
+            d.status === 'converting' ? '#f97316' :
+            d.fci > 50 ? '#fbbf24' :
+            d.fci > 30 ? '#06b6d4' : '#10b981'
+        );
+
+        Plotly.newPlot('fciComparisonChart', [{
+            x: fciComparisonData.map(d => d.school),
+            y: fciComparisonData.map(d => d.fci),
+            type: 'bar',
+            marker: { color: fciBarColors },
+            text: fciComparisonData.map(d => `FCI: ${d.fci}`),
+            textposition: 'outside'
+        }], {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'School', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: { title: 'FCI (Higher = Better)', color: '#9ca3af', gridcolor: '#374151' },
+            margin: { l: 60, r: 30, t: 40, b: 100 },
+            showlegend: false
+        }, { responsive: true });
+
+        // Normalized Total Enrollment Chart - All Schools
+        const schoolColors = {
+            'Cottonwood': '#ef4444',
+            'Crestview': '#f97316',
+            'Driggs': '#fbbf24',
+            'Eastwood': '#10b981',
+            'Morningside': '#06b6d4',
+            'Oakridge': '#8b5cf6',
+            'Penn': '#ec4899',
+            'Rosecrest': '#14b8a6',
+            'Upland Terrace': '#84cc16'
+        };
+
+        const totalEnrollmentTraces = Object.keys(normalizedTotalEnrollment).filter(k => k !== 'years').map(school => ({
+            x: normalizedTotalEnrollment.years,
+            y: normalizedTotalEnrollment[school],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: school,
+            line: { color: schoolColors[school], width: 3 },
+            marker: { size: 8 }
+        }));
+
+        Plotly.newPlot('normalizedTotalEnrollmentChart', totalEnrollmentTraces, {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'School Year', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: {
+                title: 'Normalized Enrollment (2021 = 100%)',
+                color: '#9ca3af',
+                gridcolor: '#374151',
+                range: [70, 125]
+            },
+            margin: { l: 60, r: 30, t: 30, b: 60 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' }, x: 1.05, y: 1 },
+            shapes: [{
+                type: 'line',
+                x0: '2021',
+                x1: '2025',
+                y0: 100,
+                y1: 100,
+                line: { color: '#9ca3af', width: 2, dash: 'dash' }
+            }]
+        }, { responsive: true });
+
+        // Normalized In-Boundary Population Chart - All Schools
+        const boundaryPopTraces = Object.keys(normalizedBoundaryPop).filter(k => k !== 'years').map(school => ({
+            x: normalizedBoundaryPop.years,
+            y: normalizedBoundaryPop[school],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: school,
+            line: { color: schoolColors[school], width: 3 },
+            marker: { size: 8 }
+        }));
+
+        Plotly.newPlot('normalizedBoundaryPopChart', boundaryPopTraces, {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'School Year', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: {
+                title: 'Normalized In-Boundary Population (2021 = 100%)',
+                color: '#9ca3af',
+                gridcolor: '#374151',
+                range: [70, 125]
+            },
+            margin: { l: 60, r: 30, t: 30, b: 60 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af' }, x: 1.05, y: 1 },
+            shapes: [{
+                type: 'line',
+                x0: '2021',
+                x1: '2025',
+                y0: 100,
+                y1: 100,
+                line: { color: '#9ca3af', width: 2, dash: 'dash' }
+            }]
+        }, { responsive: true });
+
+        // Comparison Chart - Total Enrollment vs Boundary Population for Key Schools
+        const keySchools = ['Penn', 'Morningside', 'Eastwood', 'Oakridge', 'Cottonwood'];
+        const comparisonTraces = [];
+
+        keySchools.forEach(school => {
+            comparisonTraces.push({
+                x: normalizedTotalEnrollment.years,
+                y: normalizedTotalEnrollment[school],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: `${school} Total`,
+                line: { color: schoolColors[school], width: 3 },
+                marker: { size: 8 }
+            });
+            comparisonTraces.push({
+                x: normalizedBoundaryPop.years,
+                y: normalizedBoundaryPop[school],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: `${school} Boundary`,
+                line: { color: schoolColors[school], width: 2, dash: 'dot' },
+                marker: { size: 6, symbol: 'square' }
+            });
+        });
+
+        Plotly.newPlot('enrollmentVsBoundaryChart', comparisonTraces, {
+            paper_bgcolor: '#0f1419',
+            plot_bgcolor: '#1a1f2e',
+            font: { color: '#e8eaed' },
+            xaxis: { title: 'School Year', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: {
+                title: 'Normalized Value (2021 = 100%)',
+                color: '#9ca3af',
+                gridcolor: '#374151',
+                range: [70, 125]
+            },
+            margin: { l: 60, r: 150, t: 30, b: 60 },
+            showlegend: true,
+            legend: { font: { color: '#9ca3af', size: 10 }, x: 1.02, y: 1 },
+            shapes: [{
+                type: 'line',
+                x0: '2021',
+                x1: '2025',
+                y0: 100,
+                y1: 100,
+                line: { color: '#9ca3af', width: 2, dash: 'dash' }
+            }],
+            annotations: [{
+                text: 'Solid = Total Enrollment<br>Dotted = Boundary Population',
+                x: 1.02,
+                y: -0.15,
+                xref: 'paper',
+                yref: 'paper',
+                showarrow: false,
+                font: { color: '#9ca3af', size: 10 },
+                xanchor: 'left'
+            }]
+        }, { responsive: true });
+    </script>
+
+</body>
+</html>
