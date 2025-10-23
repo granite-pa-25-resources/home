@@ -2,21 +2,46 @@
 
 An independent, data-driven analysis of the Granite School District's Area 5 Population Analysis Study and proposed school closures for the 2025-2026 school year.
 
+## 🚨 MAJOR UPDATE: October 21, 2025
+
+**The district's proposal has changed significantly from the original PAC recommendations.** The Board Study Session on October 21, 2025 introduced new proposals:
+
+### What's Changed:
+- ✅ **Eastwood & Oakridge merger** still proposed (486 students combined)
+- 🔄 **Morningside traditional program closes** (NEW - different from PAC)
+- 🔄 **French DLI becomes standalone K-5** at Morningside building
+- 🔄 **ALC program STAYS at Morningside** (reverses original consolidation plan)
+- 🆕 **Driggs boundary changes** - loses ~100 students to Cottonwood
+- 🆕 **Rosecrest expansion** - gains ~55-60 students from Morningside/Wilson areas
+
 ## 📊 Live Analysis
 
-Open `granite_district_area5_analysis_dark.html` in any modern web browser to view the complete interactive analysis.
+Open `index.html` in any modern web browser to view the complete interactive analysis with October 2025 updates.
 
 ## 🎯 Key Findings
 
 ### Critical Methodological Flaw
 The study uses **in-boundary resident population forecasts** to justify closures, but schools actually operate on **total enrollment** (which includes choice-based, out-of-boundary students). This creates a 50-80% discrepancy at several schools:
 
-- **Morningside:** 309 boundary residents vs 561 total students (+82%)
-- **Penn:** 344 boundary residents vs 606 total students (+76%)
-- **Eastwood:** 173 boundary residents vs 267 total students (+54%)
+- **Morningside:** 293-309 boundary residents vs 567 total students (+82-94%)
+- **Penn:** 344 boundary residents vs 586 total students (+70%)
+- **Eastwood:** 173 boundary residents vs 233 total students (+35%)
+
+### Morningside Actual Impact (NEW DATA - October 2025)
+Of the 293 students living in Morningside's boundary:
+- **193 attend Morningside** (66%)
+- **Of those 193:** 21 in ALC, 97 in DLI-French, **75 in Traditional**
+- **Only ~75 traditional students need reassignment**, not 293-309 as district messaging suggests
+
+### Academic Excellence of Merged School
+The combined Eastwood-Oakridge school would rank among Utah's highest-performing:
+- **77% proficiency** across all tested subjects
+- **68% growth** (Superior rating on Utah's accountability model)
+- **486 students** with 19 FTE teachers
+- **$162,956** in TSSA + LAND Trust funding
 
 ### Goal Misalignment
-The district's stated goal is to achieve **500-550 students per school**. The PAC recommendations result in only **466 students per school** - falling short by 34-84 students.
+The district's stated goal is to achieve **500-550 students per school**. The October 2025 proposal results in approximately **466-486 students per school** - closer to the target but still falling short by 14-84 students.
 
 ### Transparency Excellence
 The district earns an **A+** for transparency:
@@ -25,18 +50,23 @@ The district earns an **A+** for transparency:
 - 40-member community subcommittee
 - AI-summarized community feedback
 - Multiple feedback mechanisms
+- Board Study Session presentations with detailed enrollment projections
 
-### Overall Assessment: **B-** (Good Process, Flawed Methodology)
+### Overall Assessment: **B-** (Good Process, Improved Proposal, Some Remaining Flaws)
 
 ## 📁 Project Structure
 
 ```
 PAC_Study/
-├── granite_district_area5_analysis_dark.html  # Main analysis (dark theme with charts)
-├── granite_district_area5_analysis.html       # Original analysis (light theme)
-├── README.md                                   # This file
-├── LICENSE                                     # MIT License
-└── .gitignore                                  # Git ignore rules
+├── index.html                     # Main analysis (dark theme with interactive charts)
+├── student_mobility_data.html     # Student mobility data visualization page
+├── population_trends.html         # 21-year enrollment trends (2003-2024)
+├── README.md                      # This file
+├── LICENSE                        # MIT License
+├── .gitignore                     # Git ignore rules
+└── tables/
+    ├── student_mobility/          # PDF files with mobility data for each school
+    └── population/                # PDF files with historical enrollment data
 ```
 
 ## 🔧 Features
@@ -72,6 +102,7 @@ PAC_Study/
 - **Accessible:** High contrast, clear typography, semantic HTML
 - **Interactive Charts:** Hover tooltips, zoom, pan capabilities
 - **Navigation:** Hamburger menu with smooth scroll to sections
+- **Search:** Robust full-text search with keyboard shortcuts (Ctrl+K / Cmd+K)
 
 ## 📈 Data Sources
 
@@ -90,13 +121,17 @@ All data sourced from official Granite School District publications:
    ```
 
 2. **Open the analysis:**
-   - Simply open `granite_district_area5_analysis_dark.html` in your web browser
+   - **Main Analysis:** Open `index.html` in your web browser for the complete independent analysis
+   - **Student Mobility Data:** Open `student_mobility_data.html` for interactive school-by-school enrollment visualizations with Sankey diagrams
+   - **Population Trends:** Open `population_trends.html` for 21-year historical enrollment trends (2003-2024) with linear regression
    - No build process or dependencies required
    - Works completely offline
 
 3. **Navigate:**
-   - Use the hamburger menu (☰) in the top-left corner
+   - Use the hamburger menu (☰) in the top-left corner to browse sections
+   - Use the search button (🔍) in the top-right corner or press Ctrl+K (Cmd+K on Mac) to search
    - Click any section to jump directly to it
+   - Access the student mobility data page from the "Data Sources" section
    - Scroll through for linear reading
 
 ## 📊 Key Visualizations

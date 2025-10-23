@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Granite School District Area 5 Study - Independent Analysis</title>
 
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Plotly Library -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         * {
@@ -32,7 +38,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Roboto', sans-serif;
             line-height: 1.7;
             color: var(--text-primary);
             background: var(--bg-primary);
@@ -42,13 +48,13 @@
         /* Navigation Hamburger Menu */
         .nav-toggle {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 0.5rem;
+            left: 0.5rem;
             z-index: 1000;
-            background: var(--accent-blue);
+            background: var(--bg-tertiary);
             border: none;
             border-radius: 8px;
-            padding: 12px 15px;
+            padding: 0.25rem 0.5rem;
             cursor: pointer;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
@@ -79,6 +85,187 @@
 
         .nav-toggle.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Search Button */
+        .search-toggle {
+            position: fixed;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 1000;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .search-toggle:hover {
+            background: var(--accent-cyan);
+            transform: scale(1.05);
+        }
+
+        /* Search Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 5vh;
+        }
+
+        .search-modal.active {
+            display: flex;
+        }
+
+        .search-container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .search-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .search-close {
+            background: var(--accent-red);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .search-close:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .search-results {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-cyan);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: var(--bg-primary);
+            transform: translateX(5px);
+            border-left-color: var(--accent-green);
+        }
+
+        .search-result-title {
+            font-weight: bold;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .search-result-context {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .search-highlight {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 0 0.25rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .search-no-results {
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .search-stats {
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Citation Styles */
+        .citation {
+            display: inline-block;
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            padding: 0.15rem 0.5rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .citation:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .citation::before {
+            content: "📄 ";
+        }
+
+        .source-note {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border-color);
         }
 
         .nav-sidebar {
@@ -148,10 +335,16 @@
             display: block;
         }
 
-        .container {
+        .main-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+        }
+
+        /* Override Bootstrap container to use our dark theme */
+        .container, .container-fluid {
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         header {
@@ -295,6 +488,15 @@
             overflow: hidden;
         }
 
+        /* Make tables responsive on mobile */
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
         th, td {
             padding: 15px;
             text-align: left;
@@ -362,6 +564,79 @@
             text-align: center;
         }
 
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .section {
+                padding: 20px;
+                margin: 15px 0;
+            }
+
+            .chart-container {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .chart-title {
+                font-size: 1.1em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+
+            .stat-box {
+                display: block;
+                margin: 8px 0;
+                text-align: center;
+            }
+
+            .nav-menu {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 10px;
+            }
+
+            header {
+                padding: 40px 15px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .chart-container {
+                padding: 10px;
+            }
+        }
+
         .methodology {
             background: rgba(59, 130, 246, 0.1);
             padding: 25px;
@@ -392,7 +667,7 @@
 
         /* Scrollbar styling */
         ::-webkit-scrollbar {
-            width: 12px;
+            width: 1rem;
         }
 
         ::-webkit-scrollbar-track {
@@ -401,25 +676,27 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--accent-blue);
-            border-radius: 6px;
+            border-radius: 2px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-cyan);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
+        .data-grid {
+            display: grid;
+            gap: 20px;
+        }
 
-            .section {
-                padding: 25px;
-            }
-
+        @media (min-width: 768px) {
             .data-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .data-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -432,26 +709,60 @@
         <span></span>
     </button>
 
+    <!-- Search Toggle Button -->
+    <button class="search-toggle" id="searchToggle">🔍 Search</button>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-container">
+            <div class="search-header">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search analysis (e.g., 'Morningside', 'enrollment', 'ALC')..." autocomplete="off">
+                <button class="search-close" id="searchClose">Close</button>
+            </div>
+            <div class="search-stats" id="searchStats"></div>
+            <div class="search-results" id="searchResults">
+                <div class="search-no-results">
+                    Enter a search term to find content in the analysis
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Sidebar -->
     <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul style="border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+            <li><a href="index.html" style="color: var(--accent-cyan); font-weight: bold;">📊 Main Analysis</a></li>
+            <li><a href="student_mobility_data.html">🔄 Student Mobility Data</a></li>
+            <li><a href="population_trends.html">📈 Population Trends</a></li>
+        </ul>
         <h3>Contents</h3>
         <ul>
-            <li><a href="#executive-summary">Executive Summary</a></li>
-            <li><a href="#enrollment-trends">Enrollment Trends</a></li>
-            <li><a href="#schools-review">Schools Under Review</a></li>
-            <li><a href="#video-docs">Video Documentation</a></li>
-            <li><a href="#methodology">Study Methodology</a></li>
-            <li><a href="#data-sources">Data Sources</a></li>
-            <li><a href="#critical-flaws">Critical Flaws</a></li>
-            <li><a href="#school-trends">School-by-School Trends</a></li>
-            <li><a href="#financial">Financial Impact</a></li>
-            <li><a href="#recommendations">PAC Recommendations</a></li>
-            <li><a href="#alternatives">Alternative Scenarios</a></li>
-            <li><a href="#unanswered">Unanswered Questions</a></li>
-            <li><a href="#community">Community Input</a></li>
-            <li><a href="#assessment">Final Assessment</a></li>
-            <li><a href="#improvements">Recommendations</a></li>
-            <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#introduction"><strong>1. Introduction</strong></a></li>
+            <li style="margin-left: 15px;"><a href="#executive-summary">Executive Summary</a></li>
+            <li style="margin-left: 15px;"><a href="#video-docs">Video Documentation</a></li>
+
+            <li style="margin-top: 10px;"><a href="#methods"><strong>2. Methods</strong></a></li>
+            <li style="margin-left: 15px;"><a href="#methodology">Study Methodology</a></li>
+            <li style="margin-left: 15px;"><a href="#data-sources">Data Sources</a></li>
+            <li style="margin-left: 15px;"><a href="#community">Community Input Process</a></li>
+
+            <li style="margin-top: 10px;"><a href="#results"><strong>3. Results</strong></a></li>
+            <li style="margin-left: 15px;"><a href="#enrollment-trends">District-Wide Trends</a></li>
+            <li style="margin-left: 15px;"><a href="#schools-review">Schools Under Review</a></li>
+            <li style="margin-left: 15px;"><a href="#school-trends">Individual School Trends</a></li>
+            <li style="margin-left: 15px;"><a href="#morningside-analysis">Morningside Analysis</a></li>
+            <li style="margin-left: 15px;"><a href="#feeder-patterns">Feeder Patterns</a></li>
+
+            <li style="margin-top: 10px;"><a href="#discussion"><strong>4. Discussion</strong></a></li>
+            <li style="margin-left: 15px;"><a href="#critical-flaws">Critical Flaws</a></li>
+            <li style="margin-left: 15px;"><a href="#financial">Financial Impact</a></li>
+            <li style="margin-left: 15px;"><a href="#recommendations">PAC Recommendations</a></li>
+            <li style="margin-left: 15px;"><a href="#alternatives">Alternative Scenarios</a></li>
+            <li style="margin-left: 15px;"><a href="#unanswered">Unanswered Questions</a></li>
+            <li style="margin-left: 15px;"><a href="#assessment">Final Assessment</a></li>
+            <li style="margin-left: 15px;"><a href="#improvements">Recommendations</a></li>
+            <li style="margin-left: 15px;"><a href="#conclusion">Conclusion</a></li>
         </ul>
     </nav>
 
@@ -463,17 +774,28 @@
         <p>Independent Analysis of the 2025 Boundary and Closure Study</p>
         <p style="font-size: 0.9em; margin-top: 10px;">Analysis Date: January 2025</p>
         <div class="update-banner">
-            <p style="font-weight: bold;">🔔 IMPORTANT UPDATE (Sept 19, 2025):</p>
-            <p style="margin-top: 5px;">The district REVERSED its ALC consolidation plan. Morningside ALC will relocate to a new location (TBD) but remain separate from Woodstock ALC.</p>
+            <p style="font-weight: bold;">🔔 IMPORTANT UPDATES:</p>
+            <p style="margin-top: 5px;"><strong>September 19, 2025:</strong> The district REVERSED its ALC consolidation plan. Morningside ALC will remain separate from Woodstock ALC.</p>
+            <p style="margin-top: 5px;"><strong>October 21, 2025:</strong> The district announced that Morningside ALC will remain at Morningside Elementary. Morningside will become a <strong>DLI/ALC Magnet school</strong> (no traditional neighborhood boundary students).</p>
         </div>
     </header>
 
-    <div class="container">
+    <div class="container-fluid px-2 px-md-4">
+        <div class="row">
+            <div class="col-12">
+
+        <!-- ===== SECTION 1: INTRODUCTION ===== -->
+        <div class="section" id="introduction" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%); border: none; padding: 3rem 2rem; margin-bottom: 2rem;">
+            <h1 style="color: white; font-size: 2.5rem; text-align: center; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">1. INTRODUCTION</h1>
+        </div>
 
         <!-- Executive Summary -->
         <div class="section" id="executive-summary">
             <h2>Executive Summary</h2>
+           
             <p>The Granite School District is conducting a Population Analysis Study for Area 5, which includes 10 elementary schools on the east side of the district. The study is driven by declining enrollment trends affecting the entire district over the past 15+ years.</p>
+            <hr>
+            <p>This page provides an independent analysis of the Granite School District's 2025 Area 5 Population Analysis Study, which evaluates boundary changes and proposed closures of eastside elementary schools in response to persistent district-wide enrollment declines. It highlights both the strengths (notably transparency and community engagement) and the significant analytic flaws—especially the critical gap between in-boundary population forecasts and actual total enrollment that could undermine the study's closure recommendations. The summary below distills the core findings, projected impacts, and the major unresolved questions for decision makers and community stakeholders.</p>
 
             <div class="data-grid">
                 <div class="data-card">
@@ -482,6 +804,7 @@
                     <p><strong>2024:</strong> 55,546 students</p>
                     <p><strong>Decline:</strong> <span style="color: var(--accent-red); font-weight: bold;">-19.0%</span></p>
                     <p><strong>2029 Projection:</strong> 49,296 students (-28% from 2010)</p>
+                    <p class="source-note">Source: <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank" class="citation">MGT Forecast 2024-2030</a></p>
                 </div>
 
                 <div class="data-card">
@@ -490,13 +813,15 @@
                     <p><strong>Schools:</strong> 10 elementary schools</p>
                     <p><strong>Average per School:</strong> 398 students</p>
                     <p><strong>Target Average:</strong> 500-550 students</p>
+                    <p class="source-note">Source: <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank" class="citation">Student Mobility Tables</a></p>
                 </div>
 
                 <div class="data-card">
                     <h4>PAC Recommendations</h4>
                     <p><strong>Eastwood:</strong> Close & merge with Oakridge</p>
-                    <p><strong>Morningside:</strong> Convert to French DLI standalone (boundary closure)</p>
+                    <p><strong>Morningside:</strong> Convert to DLI/ALC Magnet school (boundary closure, no traditional neighborhood students)</p>
                     <p><strong>Timeline:</strong> Final decision Dec 2025, implementation Fall 2026</p>
+                    <p class="source-note">Source: <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" class="citation">PAC Meeting Sept 2025</a></p>
                 </div>
             </div>
 
@@ -515,15 +840,16 @@
             <h4>After PAC Recommendations (Projected Impact):</h4>
             <ul>
                 <li><strong>Eastwood closes:</strong> 267 students redistributed</li>
-                <li><strong>Morningside boundary closes:</strong> ~309 in-boundary students redistributed (French DLI program remains with ~250-300 choice students)</li>
-                <li><strong>Result:</strong> 8 boundary schools + 1 standalone DLI program</li>
-                <li><strong>Available students for 8 boundary schools:</strong> 3,980 - 250 (Morningside DLI) = ~3,730</li>
+                <li><strong>Morningside boundary closes:</strong> Unknown number of traditional boundary students redistributed (many of the 309 "boundary" students are in ALC/DLI and will stay; DLI/ALC Magnet programs remain with ~250-300 choice students)</li>
+                <li><strong>Result:</strong> 8 boundary schools + 1 DLI/ALC Magnet school</li>
+                <li><strong>Available students for 8 boundary schools:</strong> 3,980 - 250 (Morningside DLI/ALC Magnet) = ~3,730</li>
                 <li><strong>New average: 3,730 ÷ 8 = 466 students/school</strong></li>
             </ul>
 
             <div class="alert alert-danger">
                 <h4>GOAL NOT MET: 466 < 500-550 Target Range</h4>
-                <p>Even after closing two schools and redistributing approximately 576 students, the resulting average of <strong>466 students per school is still 34-84 students below the target range</strong>. The PAC recommendations fail to achieve the district's stated capacity optimization goal.</p>
+                <p>Even after closing two schools and redistributing students, the resulting average of <strong>466 students per school is still 34-84 students below the target range</strong>. The PAC recommendations fail to achieve the district's stated capacity optimization goal.</p>
+                <p><strong>Note:</strong> This calculation assumes all 309 Morningside "boundary" students need reassignment, but many are likely enrolled in ALC/DLI programs and will remain. The district has not provided a breakdown, making precise impact calculations impossible.</p>
             </div>
 
             <h4>Why the Plan Falls Short:</h4>
@@ -543,7 +869,7 @@
                 <div class="data-card">
                     <h4>Methodological Flaw #3</h4>
                     <p><strong>Choice Program Paradox</strong></p>
-                    <p>Morningside's closure as a boundary school while retaining it as a DLI program creates administrative complexity without addressing capacity issues. The DLI program will still occupy the building with 250-300 students.</p>
+                    <p>Morningside's closure as a boundary school while retaining it as a DLI/ALC Magnet school creates administrative complexity without addressing capacity issues. The DLI/ALC Magnet programs will still occupy the building with 250-300 students.</p>
                 </div>
             </div>
 
@@ -563,6 +889,11 @@
             </div>
         </div>
 
+        <!-- ===== SECTION 3: RESULTS ===== -->
+        <div class="section" id="results" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%); border: none; padding: 3rem 2rem; margin: 3rem 0 2rem 0;">
+            <h1 style="color: white; font-size: 2.5rem; text-align: center; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">3. RESULTS</h1>
+        </div>
+
         <!-- District-Wide Enrollment Trend Chart -->
         <div class="section" id="enrollment-trends">
             <h2>📊 District-Wide Enrollment Trends</h2>
@@ -577,6 +908,17 @@
                 <div class="chart-title">Area 5 Schools: In-Boundary vs Total Enrollment (2024)</div>
                 <div id="boundaryVsTotalChart"></div>
                 <p class="chart-note">This chart reveals the critical discrepancy: many schools have significantly higher total enrollment than in-boundary population due to choice-based attendance.</p>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); border-left: 4px solid var(--accent-cyan);">
+                <p style="margin-bottom: 1rem;"><strong>💡 For comprehensive 21-year historical trends and advanced statistical forecasts, visit:</strong></p>
+                <p style="text-align: center; margin: 1rem 0;">
+                    <a href="population_trends.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent-cyan); color: var(--bg-primary); text-decoration: none; border-radius: 6px; font-weight: bold; transition: all 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-2px)'"
+                       onmouseout="this.style.transform='translateY(0)'">
+                        📈 Population Trends Analysis →
+                    </a>
+                </p>
             </div>
         </div>
 
@@ -680,6 +1022,7 @@
             </table>
 
             <p class="chart-note"><strong>Note:</strong> FCI (Facility Condition Index) - Higher numbers indicate better building condition. Red = critically underutilized, Yellow = underutilized, Green = adequately utilized.</p>
+            <p class="source-note">Data sources: <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank" class="citation">Student Mobility Tables</a> <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank" class="citation">MGT Forecast 2024-2030</a></p>
 
             <div class="chart-container">
                 <div class="chart-title">Facility Condition Index vs Enrollment (2024)</div>
@@ -693,34 +1036,47 @@
         <div class="section" id="school-trends">
             <h2>Individual School Enrollment Trends</h2>
 
-            <div class="chart-container">
-                <div class="chart-title">Top 3 Declining Schools: In-Boundary Population (2016-2029)</div>
-                <div id="decliningSchoolsChart"></div>
-                <p class="chart-note">Cottonwood, Crestview, and Morningside show steepest in-boundary population declines through 2029.</p>
+            <div class="alert alert-info" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); border-left: 4px solid var(--accent-cyan);">
+                <h3 style="margin-top: 0; color: var(--accent-cyan);">📈 Comprehensive Historical Trends & Forecasts Available</h3>
+                <p><strong>For detailed enrollment analysis with 21 years of historical data (2003-2024) and statistical forecasts through 2029, see the dedicated page:</strong></p>
+                <p style="text-align: center; margin: 1.5rem 0;">
+                    <a href="population_trends.html" style="display: inline-block; padding: 1rem 2rem; background: var(--accent-cyan); color: var(--bg-primary); text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.4)'"
+                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.3)'">
+                        📊 View Population Trends Analysis →
+                    </a>
+                </p>
+                <p><strong>Features include:</strong></p>
+                <ul>
+                    <li><strong>Interactive charts</strong> with 21 years of actual enrollment data</li>
+                    <li><strong>7 statistical forecast methods</strong> - Linear Regression, Polynomial, Moving Averages, Exponential Smoothing, Damped Trend, and Autoregressive models</li>
+                    <li><strong>95% confidence intervals</strong> showing forecast uncertainty</li>
+                    <li><strong>Model fitted values</strong> demonstrating how well each method fits historical patterns</li>
+                    <li><strong>Toggle views</strong> between absolute enrollment and % of minimum capacity</li>
+                    <li><strong>School-by-school comparisons</strong> of long-term trends</li>
+                </ul>
             </div>
 
-            <div class="chart-container">
-                <div class="chart-title">Enrollment Change by School (2016-2029 Forecast)</div>
-                <div id="enrollmentChangeChart"></div>
-                <p class="chart-note">Percentage change from 2016 baseline to 2029 forecast. Negative values show enrollment decline.</p>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-title">Facility Condition Index (FCI) by School</div>
-                <div id="fciComparisonChart"></div>
-                <p class="chart-note"><strong>FCI Scale: Higher = Better Condition.</strong> Red bar shows Eastwood (recommended for closure, FCI=4). Green bars show schools with higher FCI ratings. The closure decision considers lower FCI alongside enrollment decline.</p>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-title">Normalized Total Enrollment Trends (2021 = 100%)</div>
-                <div id="normalizedTotalEnrollmentChart"></div>
-                <p class="chart-note">This shows how actual total enrollment at each school has changed relative to 2021 baseline. Penn grew 20% while Oakridge declined 27%. Notice significant divergence in school performance despite being in the same area.</p>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-title">Normalized In-Boundary Population Trends (2021 = 100%)</div>
-                <div id="normalizedBoundaryPopChart"></div>
-                <p class="chart-note">This shows in-boundary resident population changes. Eastwood's boundary population declined only 10% (to 90%) but the district is closing it. Cottonwood declined to 82% - steepest decline in Area 5.</p>
+            <h3>Key Findings Summary</h3>
+            <div class="data-grid">
+                <div class="data-card" style="border-left: 4px solid var(--accent-red);">
+                    <h4>Steepest Declines</h4>
+                    <p><strong>Cottonwood:</strong> -42% boundary population (2021-2025)</p>
+                    <p><strong>Oakridge:</strong> -27% total enrollment</p>
+                    <p><strong>Crestview:</strong> Consistent multi-year decline</p>
+                </div>
+                <div class="data-card" style="border-left: 4px solid var(--accent-green);">
+                    <h4>Growth Schools</h4>
+                    <p><strong>Penn:</strong> +6% total enrollment despite declining boundary</p>
+                    <p><strong>Morningside:</strong> Stable at 99-100% of 2021 levels</p>
+                    <p><strong>Upland Terrace:</strong> Relatively stable enrollment</p>
+                </div>
+                <div class="data-card" style="border-left: 4px solid var(--accent-yellow);">
+                    <h4>Facility Condition</h4>
+                    <p><strong>Best:</strong> Oakwood (FCI=60), Penn (FCI=58)</p>
+                    <p><strong>Worst:</strong> Eastwood (FCI=4), Oakridge (FCI=5)</p>
+                    <p><em>FCI = Facility Condition Index</em></p>
+                </div>
             </div>
 
             <div class="chart-container">
@@ -802,6 +1158,11 @@
             <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.95em;"><strong>Note:</strong> These recordings provide unfiltered access to presentations, Q&A sessions, and community concerns. This level of documentation is rare in public education and demonstrates a genuine commitment to transparency.</p>
         </div>
 
+        <!-- ===== SECTION 2: METHODS ===== -->
+        <div class="section" id="methods" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%); border: none; padding: 3rem 2rem; margin: 3rem 0 2rem 0;">
+            <h1 style="color: white; font-size: 2.5rem; text-align: center; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">2. METHODS</h1>
+        </div>
+
         <!-- Study Methodology -->
         <div class="section" id="methodology">
             <h2>How the Study is Being Conducted</h2>
@@ -864,12 +1225,12 @@
                 <ul style="margin-top: 10px;">
                     <li><strong>2016/17-2019/20:</strong> Davis Demographics (2019/20 data)</li>
                     <li><strong>2020/21:</strong> No in-boundary population data available (data gap)</li>
-                    <li><strong>2021-2024:</strong> MGT 03/11/2025 Population Forecast - Section 4: Attendance Area Forecasts: RESIDENT Student Forecasts</li>
-                    <li><strong>2025:</strong> District's own student mobility and population tables</li>
-                    <li><strong>Forecasts (2025-2029):</strong> MGT projections</li>
+                    <li><strong>2021-2024:</strong> MGT 03/11/2025 Population Forecast - Section 4: Attendance Area Forecasts: RESIDENT Student Forecasts <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank" class="citation">MGT Forecast PDF</a></li>
+                    <li><strong>2025:</strong> District's own student mobility and population tables <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank" class="citation">Mobility Tables</a></li>
+                    <li><strong>Forecasts (2025-2029):</strong> MGT projections <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank" class="citation">MGT Forecast PDF</a></li>
                     <li><strong>Statewide Context:</strong> Kem C. Gardner Policy Institute State and County Projections 2020-2060</li>
                 </ul>
-                <p style="margin-top: 15px;"><strong>Full MGT Forecast Available:</strong> <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank">MGT Student Population Forecast 2024-2030 (PDF)</a></p>
+                <p style="margin-top: 15px;"><strong>Main Study Page:</strong> <a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/" target="_blank" class="citation">2025 Population Analysis Studies & Data</a></p>
             </div>
 
             <h3>Individual School Mobility Data</h3>
@@ -880,8 +1241,11 @@
                     <li>Program-specific enrollment (DLI, ALC, general education)</li>
                     <li>Geographic sub-areas within boundaries</li>
                 </ul>
-                <p><strong>Access individual school tables at:</strong> <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank">Student Mobility and Population Tables</a></p>
-                <p><strong>Note:</strong> These tables would provide crucial data to answer the "in-boundary vs. total enrollment" questions raised in this analysis, but require individual PDF downloads for each school.</p>
+                <p><strong>📊 <a href="student_mobility_data.html" style="color: var(--accent-cyan); font-weight: bold;">VIEW INTERACTIVE STUDENT MOBILITY DATA →</a></strong></p>
+                <p style="margin-top: 0.5rem;">We've created a dedicated visualization page with enrollment comparisons, capacity analysis, and direct links to all 10 school mobility PDFs.</p>
+                <p style="margin-top: 1rem;"><strong>📈 <a href="population_trends.html" style="color: var(--accent-green); font-weight: bold;">VIEW 21-YEAR ENROLLMENT TRENDS (2003-2024) →</a></strong></p>
+                <p style="margin-top: 0.5rem;">Interactive historical enrollment trends with linear regression analysis showing long-term patterns for all 10 schools.</p>
+                <p style="margin-top: 1rem;"><strong>Official Source:</strong> <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank">Student Mobility and Population Tables</a></p>
             </div>
 
             <h3>Strengths of the Study</h3>
@@ -965,6 +1329,28 @@
                 </table>
 
                 <p style="margin-top: 15px;"><strong>What This Means:</strong> Many schools are heavily reliant on out-of-boundary students (open enrollment, program draws like Morningside's ALC). The study focuses on "resident student forecasts" but actual enrollment is driven by choice-based attendance. <em>Closing a school based solely on declining in-boundary population ignores the reality that these schools are successfully attracting students from outside their boundaries.</em></p>
+                <p class="source-note">Data sources: <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank" class="citation">Student Mobility Tables (Oct 2024)</a> <a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank" class="citation">MGT In-Boundary Population Forecasts</a></p>
+
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); border-radius: 8px; border: 2px solid var(--accent-purple);">
+                    <h4 style="margin-top: 0; color: var(--accent-purple);">🔄 Complete Student Mobility Analysis Available</h4>
+                    <p><strong>For comprehensive interactive visualizations showing where every student lives vs. where they attend school, see the dedicated page:</strong></p>
+                    <p style="text-align: center; margin: 1.5rem 0;">
+                        <a href="student_mobility_data.html" style="display: inline-block; padding: 1rem 2rem; background: var(--accent-purple); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.3s ease;"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.4)'"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.3)'">
+                            📊 View Student Mobility Data Analysis →
+                        </a>
+                    </p>
+                    <p><strong>Key insights from the mobility data:</strong></p>
+                    <ul>
+                        <li><strong>School Choice is Highly Active:</strong> Morningside draws 66% from outside its boundary (374 of 567 students), Penn draws 51% (296 of 586)</li>
+                        <li><strong>Eastwood (closure target):</strong> 47% of students (109 of 233) chose to attend from other boundaries - demonstrating significant demand</li>
+                        <li><strong>Out-of-District Students:</strong> 79 at Oakwood, 68 at Morningside, 53 at Penn - hundreds of external students sustaining enrollment</li>
+                        <li><strong>Retention Rates Vary Dramatically:</strong> Crestview retains 80% of boundary residents, while Morningside only retains 66%</li>
+                        <li><strong>Interactive Sankey Diagram:</strong> Visualizes all student flows from every boundary to every school</li>
+                    </ul>
+                    <p style="margin-bottom: 0;"><em>The mobility data reveals Area 5 as an interconnected system where simple boundary-based projections miss the complex reality of school choice patterns.</em></p>
+                </div>
             </div>
 
             <div class="alert alert-warning">
@@ -1086,6 +1472,81 @@
         <div class="section" id="recommendations">
             <h2>Assessing the PAC Recommendations</h2>
 
+            <div class="alert alert-danger" style="border-left: 5px solid var(--accent-red); background: rgba(239, 68, 68, 0.1);">
+                <h3 style="margin-top: 0;">🚨 MAJOR UPDATE: October 21, 2025 Board Study Session</h3>
+                <p><strong>The district's proposal has CHANGED significantly from the original PAC recommendations.</strong> Key changes:</p>
+
+                <h4 style="margin-top: 1rem; color: var(--accent-cyan);">WHAT'S THE SAME:</h4>
+                <ul>
+                    <li>✅ <strong>Eastwood & Oakridge Merger:</strong> Still proposed - close Eastwood, merge into Oakridge (combined 486 students)</li>
+                </ul>
+
+                <h4 style="margin-top: 1rem; color: var(--accent-red);">WHAT'S CHANGED:</h4>
+                <ul>
+                    <li>🔄 <strong>Morningside:</strong> NOW proposed for CLOSURE (traditional program)</li>
+                    <li>🔄 <strong>French DLI:</strong> Becomes standalone K-5 program at Morningside building</li>
+                    <li>🔄 <strong>ALC Program:</strong> STAYS at Morningside with French DLI (NOT moving to consolidated location)</li>
+                    <li>🔄 <strong>Morningside Traditional Students:</strong> Reboundaried to Driggs Elementary</li>
+                    <li>🆕 <strong>Rosecrest Expansion:</strong> Gains ~55-60 students from Morningside non-contiguous area and Wilson boundary</li>
+                    <li>🆕 <strong>Cottonwood Expansion:</strong> Gains ~100 students from western Driggs boundary areas</li>
+                </ul>
+
+                <h4 style="margin-top: 1rem; color: var(--accent-yellow);">KEY IMPACTS:</h4>
+                <table style="margin-top: 0.5rem;">
+                    <thead>
+                        <tr>
+                            <th>School</th>
+                            <th>Current Enrollment</th>
+                            <th>Projected 2026-27</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Oakridge (merged)</strong></td>
+                            <td>243 (Oakridge only)</td>
+                            <td>486</td>
+                            <td style="color: var(--accent-green);">+243 (+100%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Driggs</strong></td>
+                            <td>445</td>
+                            <td>~345 (loses ~100 to Cottonwood)</td>
+                            <td style="color: var(--accent-red);">-100 (-22%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cottonwood</strong></td>
+                            <td>343</td>
+                            <td>~443</td>
+                            <td style="color: var(--accent-green);">+100 (+29%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rosecrest</strong></td>
+                            <td>295</td>
+                            <td>~350-355</td>
+                            <td style="color: var(--accent-green);">+55-60 (+19%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Morningside (building)</strong></td>
+                            <td>567 total (193 traditional)</td>
+                            <td>~230-250 (DLI + ALC only)</td>
+                            <td style="color: var(--accent-red);">-317 to -337 (-56-59%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 1rem; color: var(--accent-cyan);">ACADEMIC EXCELLENCE OF MERGED SCHOOL:</h4>
+                <p>According to the Board presentation, the combined Eastwood-Oakridge school would rank among the highest-performing in Utah:</p>
+                <ul>
+                    <li><strong>Proficiency:</strong> Combined average 77% across all tested subjects</li>
+                    <li><strong>Growth:</strong> Combined average 68% (at or above "Superior" on Utah's accountability model)</li>
+                    <li><strong>Class Sizes:</strong> 19 FTE teachers for 486 students = avg 25.6 students/teacher</li>
+                    <li><strong>TSSA + LAND Trust Funding:</strong> $162,956 total (enough for 1 additional FTE + supplies/PD)</li>
+                </ul>
+
+                <p style="margin-top: 1rem;"><strong>Source:</strong> <a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/" target="_blank">GSD Board Study Session October 21, 2025</a></p>
+            </div>
+
             <h3>Recommendation 1: Close Eastwood, Merge with Oakridge</h3>
 
             <table>
@@ -1128,7 +1589,27 @@
                 <p><em>The recommendation makes sense from a facilities standpoint but needs deeper analysis of the enrollment dynamics.</em></p>
             </div>
 
-            <h3>Recommendation 2: Convert Morningside to French DLI Standalone</h3>
+            <h3>Recommendation 2: Convert Morningside to DLI/ALC Magnet School</h3>
+
+            <div class="alert alert-danger" style="border-left: 5px solid var(--accent-orange); background: rgba(249, 115, 22, 0.1);">
+                <h4 style="margin-top: 0; color: var(--accent-orange);">⚠️ UPDATE: October 21, 2025 - MAJOR CHANGE TO PROPOSAL</h4>
+                <p><strong>The district's October 2025 proposal differs from the original PAC recommendation:</strong></p>
+                <ul>
+                    <li><strong>SAME:</strong> Morningside building becomes program-only (no traditional neighborhood boundary)</li>
+                    <li><strong>CHANGED:</strong> ALC program STAYS at Morningside (not consolidated as originally proposed)</li>
+                    <li><strong>NEW:</strong> Traditional Morningside students reboundaried to <strong>Driggs</strong> (not Rosecrest)</li>
+                    <li><strong>REASONS GIVEN:</strong>
+                        <ul>
+                            <li>Lower in-boundary utilization %</li>
+                            <li>Non-contiguous boundary</li>
+                            <li>Lower Facility Condition Index (FCI)</li>
+                            <li>School cluster proximity (Morningside/Driggs/Crestview/Oakridge very close)</li>
+                            <li>Impact on traditional classes</li>
+                            <li>Helps balance enrollment in other schools</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
             <table>
                 <thead>
@@ -1141,18 +1622,22 @@
                     <tr>
                         <td>
                             <ul>
-                                <li>Morningside boundary enrollment declining (309 current, 253 by 2029 = -18%)</li>
-                                <li>French DLI programs need critical mass of students to be viable</li>
-                                <li>District wants to maintain two ALC sites on east side (Woodstock + Morningside)</li>
-                                <li>Boundary students would move to Rosecrest + Driggs (both have capacity)</li>
+                                <li>Morningside boundary enrollment declining (309 "boundary" residents current, 253 by 2029 = -18%)</li>
+                                <li>French DLI and ALC programs need critical mass of students to be viable</li>
+                                <li>District decided to keep ALC at Morningside (announced Oct 21, 2025)</li>
+                                <li>Traditional neighborhood students would move to Driggs (has capacity)</li>
+                                <li><strong>ALC & DLI share transportation resources</strong> - keeping both at same location is efficient</li>
+                                <li><strong>Proximity to Churchill Jr High</strong> - natural feeder for French DLI continuation</li>
+                                <li><strong>9:05 start time preserved</strong> for ALC without impacting other schools</li>
                             </ul>
                         </td>
                         <td>
                             <ul>
-                                <li>Morningside <em>total enrollment</em> is 561—<strong>one of the highest in Area 5</strong>—because of ALC program draw</li>
-                                <li>Current boundary residents would lose neighborhood school option</li>
-                                <li>Rosecrest and Driggs receive displaced boundary students, but those schools' forecasts don't account for this influx</li>
-                                <li>No analysis of how many current Morningside students are in ALC vs. general education vs. French DLI</li>
+                                <li>Morningside <em>total enrollment</em> is 567—<strong>one of the highest in Area 5</strong>—because of ALC and DLI program draw</li>
+                                <li>Many of the 293-309 "boundary" students may already be in ALC/DLI programs and would stay at Morningside</li>
+                                <li>Only traditional neighborhood students (~75 actual students) would need reassignment</li>
+                                <li><strong>School cluster concern:</strong> Morningside, Driggs, Crestview, Oakridge are all within ~1 mile - closing one creates capacity issues</li>
+                                <li><strong>QUESTION:</strong> If Morningside has lower FCI than Driggs, why not close Driggs instead?</li>
                             </ul>
                         </td>
                     </tr>
@@ -1160,9 +1645,473 @@
             </table>
 
             <div class="alert alert-danger">
-                <p><strong>Verdict:</strong> This is the most problematic recommendation. <strong>Morningside is NOT underenrolled—it has 561 students.</strong> The "problem" is only apparent when looking solely at in-boundary resident data (309 students).</p>
-                <p><strong>Alternative:</strong> Keep Morningside as a dual-track school (neighborhood + ALC + DLI). The building has capacity (~600-650), and total enrollment (561) suggests the community wants the school open.</p>
+                <p><strong>Verdict:</strong> This is the most problematic recommendation. <strong>Morningside is NOT underenrolled—it has 567 students.</strong> The "problem" is only apparent when looking solely at in-boundary resident data (293-309 students).</p>
+                <p><strong>District Decision (Oct 21, 2025):</strong> Morningside traditional program will close. The building will serve only choice-based DLI-French (K-5) and ALC programs. Traditional students will be reboundaried to Driggs Elementary.</p>
+                <p><strong>ACTUAL IMPACT:</strong> Analysis of October 2025 enrollment data reveals only ~75 traditional neighborhood students need reassignment—NOT the 293-309 students the district's messaging implies. See detailed analysis below.</p>
+                <p><strong>KEY BENEFITS OF KEEPING ALC AT MORNINGSIDE:</strong></p>
+                <ul>
+                    <li>✅ Preserves 9:05 AM start time for ALC students</li>
+                    <li>✅ Shares transportation with French DLI</li>
+                    <li>✅ Maintains proximity to Churchill Jr High (IB/French DLI feeder)</li>
+                    <li>✅ No impact on other schools while ALC program study continues</li>
+                    <li>✅ Siblings of ALC/DLI students get priority at Driggs</li>
+                </ul>
             </div>
+        </div>
+
+        <!-- Morningside Detailed Enrollment Analysis -->
+        <div class="section" id="morningside-analysis">
+            <h2>🔍 Morningside Enrollment: Detailed Data Analysis</h2>
+
+            <p>The district has NOT provided a public breakdown of how many of Morningside's 293-309 "boundary" students are enrolled in ALC/DLI programs versus traditional neighborhood education. However, detailed enrollment data from October 2025 reveals the answer to this critical question.</p>
+
+            <p class="source-note">Data sources: <a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank" class="citation">Student Mobility Tables (Oct 2025)</a> and district internal enrollment data (Feb 2025)</p>
+
+            <div class="alert alert-success">
+                <h3 style="margin-top: 0;">✅ KEY FINDING: Actual Impact Much Smaller Than District Claims</h3>
+                <p><strong>Of the 293 students living in Morningside's boundary (Oct 2025):</strong></p>
+                <ul>
+                    <li><strong>193 attend Morningside</strong> (66% of boundary residents)</li>
+                    <li><strong>100 already attend other schools</strong> (34% already choose elsewhere)</li>
+                </ul>
+                <p><strong>Of the 193 boundary residents at Morningside:</strong></p>
+                <ul>
+                    <li><strong>21 are in ALC</strong> (will stay when school becomes magnet)</li>
+                    <li><strong>97 are in DLI-French</strong> (will stay when school becomes magnet)</li>
+                    <li><strong>75 are in Traditional</strong> (need reassignment to neighboring schools)</li>
+                </ul>
+                <p style="margin-top: 15px; font-weight: bold; font-size: 1.1em;">ACTUAL STUDENTS NEEDING REASSIGNMENT: ~75, NOT 293-309</p>
+                <p>The district's framing of "309 boundary students" losing their school is misleading. The reality is closer to <strong>75 traditional neighborhood students</strong> need reassignment—76% fewer than the district's public messaging suggests.</p>
+            </div>
+
+            <h3>Morningside Total Enrollment by Program (October 2025)</h3>
+            <div class="chart-container">
+                <div class="chart-title">Where Morningside's 567 Students Come From (Oct 2025)</div>
+                <div id="morningsideProgramsChart"></div>
+                <p class="chart-note">Total enrollment: 567 students. ALC = Advanced Learning Center, DLI = Dual Language Immersion (French), Trad = Traditional neighborhood program</p>
+            </div>
+
+            <h3>Enrollment by Grade and Program</h3>
+            <div class="chart-container">
+                <div class="chart-title">Morningside Enrollment by Grade: ALC vs DLI vs Traditional (Oct 2025)</div>
+                <div id="morningsideGradeStackedChart"></div>
+                <p class="chart-note">Stacked bar chart showing the composition of each grade. Note: Kindergarten (Grade 0) has NO ALC or DLI students—all 69 kindergartners are in the Traditional program.</p>
+            </div>
+
+            <div class="alert alert-danger">
+                <h3 style="margin-top: 0;">🚨 CRITICAL ISSUE: Kindergarten Program Gap</h3>
+                <p><strong>Neither ALC nor DLI-French programs accept kindergarten students.</strong> Both programs begin at 1st grade.</p>
+                <ul>
+                    <li><strong>Current (2024-25):</strong> 69 kindergarten students attend Morningside Traditional program</li>
+                    <li><strong>After Magnet Conversion:</strong> Traditional program eliminated—where do these 69 kindergartners go?</li>
+                </ul>
+                <p><strong>Impact on Families:</strong></p>
+                <ul>
+                    <li>Families planning to enroll kindergartners at Morningside for ALC/DLI programs <strong>CANNOT</strong> do so—those programs don't take kindergartners</li>
+                    <li>Current kindergartners in Traditional program (69 students) will be forced to attend different schools for kindergarten, then potentially transfer to Morningside for 1st grade ALC/DLI</li>
+                    <li><strong>School disruption:</strong> Forces families to change schools between kindergarten and 1st grade</li>
+                    <li><strong>Lost enrollment:</strong> Families may choose other schools for kindergarten and never return to Morningside</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>District has provided NO PLAN</strong> for addressing this kindergarten enrollment gap. Options include:</p>
+                <ol>
+                    <li>Add kindergarten to DLI/ALC programs (requires program restructuring)</li>
+                    <li>Keep Traditional kindergarten at Morningside (undermines "magnet-only" conversion)</li>
+                    <li>Force kindergarten families elsewhere, lose them to other schools/districts</li>
+                </ol>
+                <p><strong>Question for District:</strong> How will the kindergarten transition work? This affects 69+ families annually.</p>
+            </div>
+
+            <h3>Boundary Residents: Where They Actually Go</h3>
+            <div class="chart-container">
+                <div class="chart-title">293 Students Living in Morningside Boundary - School Choice Patterns</div>
+                <div id="morningsideBoundaryDestChart"></div>
+                <p class="chart-note">Only 66% of boundary residents actually attend Morningside. The other 34% already choose to attend 10+ different schools across the district.</p>
+            </div>
+
+            <h3>Detailed Program Breakdown</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Students</th>
+                        <th>% of Total</th>
+                        <th>Impact of Magnet Conversion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-green">
+                        <td><strong>ALC (Advanced Learning Center)</strong></td>
+                        <td>148</td>
+                        <td>26.1%</td>
+                        <td>✅ Stays at Morningside Magnet</td>
+                    </tr>
+                    <tr class="highlight-green">
+                        <td><strong>DLI-French (Dual Language Immersion)</strong></td>
+                        <td>261</td>
+                        <td>46.0%</td>
+                        <td>✅ Stays at Morningside Magnet</td>
+                    </tr>
+                    <tr class="highlight-red">
+                        <td><strong>Traditional Neighborhood Program</strong></td>
+                        <td>158</td>
+                        <td>27.9%</td>
+                        <td>❌ Needs reassignment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL ENROLLMENT</strong></td>
+                        <td><strong>567</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-warning">
+                <h3 style="margin-top: 0;">Breaking Down the 158 Traditional Students</h3>
+                <p><strong>Where they live:</strong></p>
+                <ul>
+                    <li><strong>75 live in Morningside boundary</strong> (will be reassigned to Rosecrest/Driggs)</li>
+                    <li><strong>83 live in other boundaries</strong> (already choosing Morningside; may leave district if forced to other schools)</li>
+                </ul>
+                <p><strong>Critical Question:</strong> What happens to the 83 out-of-boundary traditional students? Will they:</p>
+                <ul>
+                    <li>Transfer to their assigned boundary school?</li>
+                    <li>Leave for charter/private schools?</li>
+                    <li>Move to other GSD schools via open enrollment?</li>
+                </ul>
+                <p>The study provides <strong>NO ANALYSIS</strong> of retention likelihood for these 83 students who currently choose Morningside over their assigned school.</p>
+            </div>
+
+            <h3>Out-of-Boundary Students: Where They Come From</h3>
+            <div class="chart-container">
+                <div class="chart-title">Top 10 Boundary Schools Sending Students to Morningside (All Programs)</div>
+                <div id="morningsideFeederSourcesChart"></div>
+                <p class="chart-note">Shows how Morningside draws students from across the district. "Out Of District" (68 students) includes families living outside Granite School District boundaries who specifically choose Morningside.</p>
+            </div>
+
+            <h3>Program Distribution by Source</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Boundary School</th>
+                        <th>ALC</th>
+                        <th>DLI</th>
+                        <th>Traditional</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-yellow">
+                        <td><strong>Morningside (In-Boundary)</strong></td>
+                        <td>21</td>
+                        <td>97</td>
+                        <td>75</td>
+                        <td><strong>193</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Out Of District</td>
+                        <td>12</td>
+                        <td>44</td>
+                        <td>12</td>
+                        <td>68</td>
+                    </tr>
+                    <tr>
+                        <td>Upland Terrace</td>
+                        <td>23</td>
+                        <td>14</td>
+                        <td>6</td>
+                        <td>43</td>
+                    </tr>
+                    <tr>
+                        <td>Driggs</td>
+                        <td>10</td>
+                        <td>23</td>
+                        <td>6</td>
+                        <td>39</td>
+                    </tr>
+                    <tr>
+                        <td>Oakridge</td>
+                        <td>15</td>
+                        <td>11</td>
+                        <td>4</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Crestview</td>
+                        <td>13</td>
+                        <td>10</td>
+                        <td>6</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>Rosecrest</td>
+                        <td>11</td>
+                        <td>13</td>
+                        <td>2</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Lincoln</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>Penn</td>
+                        <td>11</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        <td>Cottonwood</td>
+                        <td>17</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        <td>All Others (14 schools)</td>
+                        <td>13</td>
+                        <td>35</td>
+                        <td>31</td>
+                        <td>79</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL</strong></td>
+                        <td><strong>148</strong></td>
+                        <td><strong>261</strong></td>
+                        <td><strong>158</strong></td>
+                        <td><strong>567</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-danger">
+                <h3 style="margin-top: 0;">🚨 What the Data Reveals</h3>
+                <ol>
+                    <li><strong>Massive Out-of-Boundary Draw:</strong> 374 of 567 students (66%) live outside Morningside's boundary yet choose to attend. This is not a failing school—it's a highly sought-after school.</li>
+                    <li><strong>Misleading District Messaging:</strong> The district talks about "309 boundary students losing their school" but doesn't clarify that ~118 of those are in ALC/DLI and will stay.</li>
+                    <li><strong>Actual Reassignment Impact:</strong> Only ~75 traditional boundary students need reassignment, not 293-309.</li>
+                    <li><strong>Risk to District Enrollment:</strong> If the 83 out-of-boundary traditional students leave the district instead of transferring, GSD loses enrollment funding.</li>
+                    <li><strong>Program Success:</strong> ALC and DLI programs are clearly working—families from 24+ different boundary schools choose Morningside.</li>
+                </ol>
+            </div>
+
+            <h3>Summary: Why the Magnet Conversion is Problematic</h3>
+            <div class="methodology">
+                <p><strong>The District's Case:</strong></p>
+                <ul>
+                    <li>Declining in-boundary population (293-309 residents vs. 342 in 2021)</li>
+                    <li>Need to consolidate underutilized schools</li>
+                    <li>ALC and DLI programs need dedicated space</li>
+                </ul>
+
+                <p><strong>What the Data Actually Shows:</strong></p>
+                <ul>
+                    <li><strong>567 total students attend Morningside</strong>—this is NOT an underenrolled school</li>
+                    <li><strong>Only 75 boundary traditional students</strong> actually need reassignment</li>
+                    <li><strong>66% out-of-boundary enrollment</strong> proves Morningside is highly desirable</li>
+                    <li><strong>Risk:</strong> Converting to magnet-only could cause the 158 traditional students (especially the 83 out-of-boundary) to leave GSD entirely</li>
+                    <li><strong>🚨 Kindergarten Gap:</strong> Neither ALC nor DLI accept kindergartners—all 69 kindergarten students are currently in Traditional program. Magnet conversion eliminates this, forcing families to change schools between K and 1st grade.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Better Alternative:</strong> Keep Morningside as a <strong>dual-track school</strong> (neighborhood + ALC + DLI). The building capacity (600-650) can accommodate all 567 current students plus modest growth. This preserves:</p>
+                <ul>
+                    <li>Neighborhood access for 75 boundary traditional students</li>
+                    <li>Choice access for 83 out-of-boundary traditional students who prefer Morningside</li>
+                    <li>ALC and DLI program integrity</li>
+                    <li>District enrollment and funding</li>
+                    <li><strong>Kindergarten continuity</strong> for 69 families who want their children to continue at Morningside through elementary</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feeder Pattern Analysis -->
+        <div class="section" id="feeder-patterns">
+            <h2>Feeder Pattern Analysis & Geographic Implications</h2>
+
+            <div class="alert alert-warning">
+                <p><strong>🚨 MAJOR DISTRICT-WIDE CHANGE for 2025-26:</strong></p>
+                <p>The district is implementing a <strong>grade reconfiguration</strong> across ALL schools:</p>
+                <ul>
+                    <li><strong>Previous (2024-25):</strong> Mixed configurations (some K-6, some 6th-8th, some 7th-8th)</li>
+                    <li><strong>New (2025-26):</strong> <strong>Uniform K-5, 6-8, 9-12</strong> across entire district</li>
+                </ul>
+                <p><strong>What This Means for Area 5:</strong></p>
+                <ul>
+                    <li>All 6th graders will move to junior high schools starting 2025-26</li>
+                    <li>Elementary school enrollment drops by one grade level (loses ~16% of students)</li>
+                    <li><strong>Critical:</strong> The PAC study's enrollment projections may not fully account for this grade reconfiguration impact</li>
+                    <li>Schools that currently have 6th grade (like some K-6 schools elsewhere in district) will see immediate enrollment drops</li>
+                </ul>
+            </div>
+
+            <p>The Granite School District's Feeder Flow Charts reveal critical issues with the PAC's proposed boundary changes. Elementary schools feed into specific junior highs and high schools, creating cohesive educational pathways for students. The PAC recommendations disrupt these established patterns in ways that could negatively impact students.</p>
+
+            <h3>Feeder Patterns for Area 5 Schools (2025-26)</h3>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Olympus High Feeder Pattern</h4>
+                    <div class="methodology">
+                        <p><strong>Elementary → Junior High → High School</strong></p>
+                        <ul>
+                            <li><strong>Cottonwood Elementary</strong> → Olympus Jr. High → <strong>Olympus High</strong></li>
+                            <li><strong>Crestview Elementary</strong> → Olympus Jr. High → <strong>Olympus High</strong></li>
+                            <li><strong>Driggs Elementary</strong> → <strong>Olympus Jr. High OR Churchill Jr. High</strong> (split feeder) → <strong>Olympus High</strong></li>
+                            <li><strong>Penn Elementary</strong> → Evergreen Jr. High → <strong>Olympus High</strong></li>
+                            <li><strong>Rosecrest Elementary</strong> → Evergreen Jr. High → <strong>Olympus High</strong></li>
+                        </ul>
+                        <p class="chart-note"><em>Note: Driggs is currently a split feeder to both Olympus Jr. High (6th-8th) and Churchill Jr. High (6th-8th), but both feed to Olympus High (9th-12th)</em></p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Skyline High Feeder Pattern</h4>
+                    <div class="methodology">
+                        <p><strong>Elementary → Junior High → High School</strong></p>
+                        <ul>
+                            <li><strong>Driggs Elementary</strong> → Churchill Jr. High → <strong>Skyline High</strong></li>
+                            <li><strong>Eastwood Elementary</strong> → Churchill Jr. High → <strong>Skyline High</strong></li>
+                            <li><strong>Morningside Elementary</strong> → <strong>Churchill Jr. High OR Wasatch Jr. High</strong> (split feeder) → <strong>Skyline High</strong></li>
+                            <li><strong>Oakridge Elementary</strong> → Churchill Jr. High → <strong>Skyline High</strong></li>
+                            <li><strong>Upland Terrace Elementary</strong> → Wasatch Jr. High → <strong>Skyline High</strong></li>
+                        </ul>
+                        <p class="chart-note"><em>Note: Morningside is a split feeder to Churchill Jr. High (6th-8th) and Wasatch Jr. High (6th-8th), both feeding to Skyline High</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🚨 Critical Issue: Driggs Split Feeder Pattern</h3>
+            <div class="alert alert-danger">
+                <p><strong>Driggs Elementary feeds to BOTH Olympus High AND Skyline High networks</strong></p>
+                <p>According to the 2024-25 Feeder Flow Chart, Driggs Elementary is a <strong>split feeder</strong>:</p>
+                <ul>
+                    <li><strong>Path 1:</strong> Driggs → <strong>Olympus Jr. High</strong> (6th-8th) → <strong>Olympus High</strong> (9th-12th)</li>
+                    <li><strong>Path 2:</strong> Driggs → <strong>Churchill Jr. High</strong> (6th-8th) → <strong>Skyline High</strong> (9th-12th)</li>
+                </ul>
+                <p><strong>Why This Matters:</strong></p>
+                <ul>
+                    <li>The PAC proposal moves some Driggs families to <strong>Cottonwood Elementary</strong>, which feeds exclusively to Olympus High</li>
+                    <li>But Driggs serves <strong>both</strong> Olympus and Skyline networks—splitting the community disrupts established pathways</li>
+                    <li>Students living in the same neighborhood (Driggs boundary) could end up at different high schools depending on which elementary they're assigned to</li>
+                    <li><strong>Community cohesion broken:</strong> Neighbors who currently attend Driggs together would be split between Cottonwood (Olympus network) and remaining Driggs (Olympus/Skyline network)</li>
+                </ul>
+            </div>
+
+            <h3>PAC Proposal Impact on Feeder Patterns</h3>
+
+            <h4>Scenario: Eastwood Closure (PAC Recommendation)</h4>
+            <div class="alert alert-warning">
+                <p><strong>Current:</strong> Eastwood → Churchill Jr. High → Skyline High</p>
+                <p><strong>Proposed:</strong> Eastwood students consolidate to Oakridge → Churchill Jr. High → Skyline High</p>
+                <p><strong>Assessment:</strong> ✅ <strong>No feeder pattern disruption</strong> - Both Eastwood and Oakridge feed to Churchill Jr. High and Skyline High. This consolidation maintains the educational pathway.</p>
+            </div>
+
+            <h4>Scenario: Morningside DLI/ALC Magnet School Conversion</h4>
+            <div class="alert alert-success">
+                <p><strong>Current (2024-25):</strong> Morningside (all programs: Traditional boundary, DLI-French, ALC) → Churchill Jr. High OR Wasatch Jr. High → Skyline High</p>
+                <p><strong>October 21, 2025 Update:</strong> Morningside converts to DLI/ALC Magnet school</p>
+                <ul>
+                    <li><strong>DLI-French and ALC programs:</strong> Remain at Morningside, continue → Churchill/Wasatch Jr. High → Skyline High</li>
+                    <li><strong>Traditional boundary students:</strong> Unknown number need reassignment to Rosecrest and Driggs Elementary</li>
+                    <li><strong>No traditional neighborhood boundary:</strong> Morningside becomes choice-based magnet only</li>
+                </ul>
+                <p><strong>Assessment:</strong> ⚠️ <strong>Partial feeder pattern disruption (impact unclear)</strong></p>
+                <ul>
+                    <li>✅ Choice program students (DLI/ALC already enrolled) maintain educational pathway</li>
+                    <li>❓ <strong>Unknown impact:</strong> Of the 309 "boundary" students, many may already be in ALC/DLI and will stay. Only traditional neighborhood students need reassignment, but this number is unknown.</li>
+                    <li>❌ Traditional neighborhood students reassigned to schools with different feeder patterns (Rosecrest/Driggs may feed to different networks)</li>
+                    <li>✅ Community feedback successfully influenced district to keep ALC at Morningside</li>
+                </ul>
+                <p class="chart-note"><em>Note: The district initially proposed (Sept 2) consolidating all ALCs at Woodstock, then reversed (Sept 19) to keep Morningside ALC separate but relocate it. On October 21, the district further clarified that Morningside ALC will stay at Morningside and the school becomes a DLI/ALC Magnet (no boundary students).</em></p>
+            </div>
+
+            <h4>Scenario: Driggs Boundary Changes (PAC Under Consideration)</h4>
+            <div class="alert alert-danger">
+                <p><strong>Current:</strong> Driggs → Olympus Jr. High OR Churchill Jr. High → Olympus High OR Skyline High (split feeder)</p>
+                <p><strong>Proposed:</strong> Move some Driggs boundary area south of ~4500 South to Cottonwood Elementary</p>
+                <p><strong>Impact:</strong></p>
+                <ul>
+                    <li><strong>Students moved to Cottonwood:</strong> Cottonwood → Olympus Jr. High → <strong>Olympus High only</strong></li>
+                    <li><strong>Students remaining at Driggs:</strong> Driggs → Olympus/Churchill Jr. High → <strong>Olympus or Skyline High</strong></li>
+                </ul>
+                <p><strong>Problem:</strong></p>
+                <ul>
+                    <li>❌ <strong>Neighborhood split:</strong> Students living on the same street could end up at different high schools</li>
+                    <li>❌ <strong>Loss of choice:</strong> Families moved to Cottonwood lose the Skyline High option that Driggs provides</li>
+                    <li>❌ <strong>Community fragmentation:</strong> Driggs currently serves as a bridge between Olympus and Skyline networks; splitting it severs neighborhood cohesion</li>
+                </ul>
+            </div>
+
+            <h3>Geographic Analysis Issues</h3>
+            <div class="methodology">
+                <p>Without precise school locations and boundary maps, the following concerns are based on general area knowledge:</p>
+
+                <h4>Distance & Transportation Concerns</h4>
+                <ul>
+                    <li><strong>Cottonwood Elementary:</strong> Located in Cottonwood Heights, east of I-215
+                        <ul>
+                            <li>Parents report it's "too far away" for Driggs families (parent survey)</li>
+                            <li>Traffic congestion on Holladay Blvd during school hours</li>
+                            <li>Limited parking and drop-off infrastructure on busy road</li>
+                        </ul>
+                    </li>
+                    <li><strong>Eastwood Elementary:</strong> Parents noted walkability as a priority
+                        <ul>
+                            <li>"Being able to walk/ride our bikes safely to school is a priority" (parent survey)</li>
+                            <li>Consolidating to Oakridge may eliminate walkability for some families</li>
+                        </ul>
+                    </li>
+                    <li><strong>Morningside Elementary:</strong> Central location serves as hub for DLI/ALC Magnet programs
+                        <ul>
+                            <li>561 total students despite only 309 in-boundary residents</li>
+                            <li>Attracts 252 out-of-boundary students (82% more than boundary)</li>
+                            <li>Will become magnet school (no boundary students) serving DLI-French and ALC only</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>I-215 as Geographic Barrier</h4>
+                <ul>
+                    <li>I-215 freeway creates a significant divide in Area 5</li>
+                    <li>Boundary changes that move students across I-215 face greater resistance</li>
+                    <li>Example: Cottonwood (east of I-215) to Oakwood (west of I-215) consolidation would face transportation challenges</li>
+                </ul>
+            </div>
+
+            <h3>Recommendations Based on Feeder Patterns</h3>
+            <div class="alert alert-success">
+                <p><strong>To minimize disruption to educational pathways:</strong></p>
+                <ol>
+                    <li><strong>Preserve Driggs boundaries:</strong> Do not split Driggs between Cottonwood and remaining Driggs. The split feeder pattern already creates complexity; boundary changes compound the problem</li>
+                    <li><strong>Keep consolidations within the same feeder network:</strong> Eastwood → Oakridge works well (both feed to Churchill Jr/Skyline High)</li>
+                    <li><strong>Consider feeder-aligned alternatives:</strong>
+                        <ul>
+                            <li>If Cottonwood must receive students, draw from Penn/Rosecrest area (also Olympus network)</li>
+                            <li>Keep Driggs intact as the bridge school between Olympus and Skyline networks</li>
+                        </ul>
+                    </li>
+                    <li><strong>✅ Morningside ALC retention (Oct 21 decision):</strong> District's decision to keep ALC at Morningside preserves Skyline High feeder pathway - excellent outcome for feeder pattern coherence</li>
+                </ol>
+            </div>
+
+            <div class="chart-note">
+                <p><strong>Data Sources:</strong></p>
+                <ul>
+                    <li>Granite School District Feeder School Flow Chart, 2024-25 School Year (Updated 06/19/2024) <a href="https://drive.google.com/file/d/18ghegX70EPQaYtqxROfvgsWp2Eu3QgRH/view?usp=sharing" target="_blank" class="citation">2024-25 Feeder Chart PDF</a></li>
+                    <li>Granite School District Feeder School Flow Chart, 2025-26 School Year (Updated 12/11/2024) <a href="https://drive.google.com/file/d/1I4beJ9FK9RerG8mOEKOX5drjyfX0wAoO/view?usp=sharing" target="_blank" class="citation">2025-26 Feeder Chart PDF</a></li>
+                </ul>
+                <p><strong>Major Change for 2025-26:</strong> District-wide grade reconfiguration to uniform K-5, 6-8, 9-12. All 6th graders move to junior high. Area 5 elementary schools (already K-5) are unaffected by grade reconfiguration, but district-wide changes may impact enrollment patterns.</p>
+                <p><strong>Note:</strong> Detailed geographic analysis with interactive maps would require school addresses and boundary shapefiles from the district GIS system. The analysis above is based on feeder patterns and parent-reported geographic concerns.</p>
+            </div>
+        </div>
+
+        <!-- ===== SECTION 4: DISCUSSION ===== -->
+        <div class="section" id="discussion" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%); border: none; padding: 3rem 2rem; margin: 3rem 0 2rem 0;">
+            <h1 style="color: white; font-size: 2.5rem; text-align: center; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">4. DISCUSSION</h1>
         </div>
 
         <!-- Alternative Scenarios -->
@@ -1298,9 +2247,153 @@
 
             <h3>Evidence of Community Impact on Decisions</h3>
             <div class="alert alert-success">
-                <p><strong>September 19 MAJOR Reversal on ALC Consolidation</strong></p>
-                <p>The PAC's initial recommendation (presented September 2) proposed consolidating all east-side Advanced Learner Centers at Woodstock Elementary. After intense community feedback, district officials <strong>completely reversed this decision on September 19</strong>.</p>
-                <p><strong>What This Shows:</strong> Community input <em>absolutely can</em> influence PAC recommendations. The reversal demonstrates that the Board and PAC are responsive to parent concerns when feedback is strong and organized.</p>
+                <p><strong>ALC Consolidation Reversals (September-October 2025)</strong></p>
+                <p>The PAC's initial recommendation (presented September 2) proposed consolidating all east-side Advanced Learner Centers at Woodstock Elementary. After intense community feedback:</p>
+                <ul>
+                    <li><strong>September 19:</strong> District <strong>completely reversed</strong> - Morningside ALC would remain separate from Woodstock but relocate to a new site</li>
+                    <li><strong>October 21:</strong> District <strong>further clarified</strong> - Morningside ALC will <strong>remain at Morningside Elementary</strong> (no relocation)</li>
+                </ul>
+                <p><strong>What This Shows:</strong> Community input <em>absolutely can</em> influence PAC recommendations. The two reversals demonstrate that the Board and PAC are responsive to parent concerns when feedback is strong and organized.</p>
+            </div>
+
+            <h3>Parent-Led Survey Results (October 2025)</h3>
+            <p>A grassroots parent-led survey collected responses from 84 Area 5 families (October 9-13, 2025). The survey reveals strong community preferences and concerns about the boundary study:</p>
+            <p class="source-note">Source: Area 5 Parent Led Survey (Oct 9-13, 2025) - Grassroots community survey, 84 respondents. <em>Note: This is an independent parent-led survey, not an official district document.</em></p>
+
+            <h4>Survey Demographics</h4>
+            <ul>
+                <li><strong>Total Respondents:</strong> 84 families</li>
+                <li><strong>Current Elementary Students:</strong> 77% (65 families)</li>
+                <li><strong>Geographic Distribution:</strong> Majority from 4500-3900 South corridor (57%)</li>
+            </ul>
+
+            <h4>Current School Attendance (73 responses)</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>Howard R. Driggs:</strong> 64.4% (47 families)</li>
+                        <li><strong>Morningside:</strong> 16.4% (12 families)</li>
+                        <li><strong>Eastwood:</strong> 4.1% (3 families)</li>
+                        <li><strong>Other schools:</strong> 15.1% (11 families)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>First Choice School for 2026-2027 (80 responses)</h4>
+            <div class="alert alert-warning">
+                <p><strong>Overwhelming Preference for Driggs:</strong></p>
+                <ul>
+                    <li><strong>Howard R. Driggs:</strong> 71.3% (57 families) - Highest preference by far</li>
+                    <li><strong>Morningside:</strong> 13.8% (11 families)</li>
+                    <li><strong>Eastwood:</strong> 3.8% (3 families)</li>
+                    <li><strong>Crestview:</strong> 2.5% (2 families)</li>
+                    <li><strong>Other options:</strong> 8.8% (7 families including private/charter)</li>
+                </ul>
+                <p><strong>Key Finding:</strong> 71% of respondents want Driggs as their first choice, far exceeding any other school. This suggests that boundary changes moving students away from Driggs will face significant resistance.</p>
+            </div>
+
+            <h4>Second and Third Choice Preferences</h4>
+            <ul>
+                <li><strong>Second Choice Leaders:</strong> Crestview (35%), Canyon Rim Academy (19%), Driggs (14%)</li>
+                <li><strong>Third Choice Distribution:</strong> More diverse - Cottonwood (18%), Crestview (16%), Private School (12%), Driggs (12%)</li>
+                <li><strong>Notable:</strong> 16% of third-choice responses included "homeschool," "leave district," or "none" - suggesting some families may exit public education if boundary changes don't align with preferences</li>
+            </ul>
+
+            <h4>Barriers to Boundary School Attendance (52 responses)</h4>
+            <p>Parents who would not choose their assigned boundary school cited multiple concerns:</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Top Concerns About Cottonwood Elementary:</h5>
+                    <ul>
+                        <li><strong>Distance/Location:</strong> "Too far away" (multiple respondents)</li>
+                        <li><strong>School Quality:</strong> "Cottonwood is not a quality school"</li>
+                        <li><strong>Facility Concerns:</strong> "Old building," "struggling school"</li>
+                        <li><strong>Traffic Safety:</strong> "Pick-up and drop off... terrible and dangerous with it being right on a busy road"</li>
+                        <li><strong>Long-term Viability:</strong> "Instability of staying open long term"</li>
+                        <li><strong>Administration:</strong> "Concerning based on... previous leadership at Crestview"</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Reasons for Staying at Current School:</h5>
+                    <ul>
+                        <li><strong>Community/Friends:</strong> Mentioned by 15+ respondents</li>
+                        <li><strong>Class Size:</strong> Multiple mentions of concerns about larger classes</li>
+                        <li><strong>School Stability:</strong> "We don't want our kids having to leave a school they are comfortable with"</li>
+                        <li><strong>Program Continuity:</strong> DLI-French, ALC programs</li>
+                        <li><strong>Walkability:</strong> "Being able to walk/ride our bikes safely to school is a priority"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Parent Suggestions to the District (63 responses)</h4>
+            <div class="methodology">
+                <p><strong>Most Common Recommendations:</strong></p>
+                <ol>
+                    <li><strong>Keep Driggs Open:</strong> Mentioned in 20+ responses
+                        <ul>
+                            <li>"Keep Driggs! It is a great school!"</li>
+                            <li>"Leave Driggs boundaries alone"</li>
+                            <li>"Put the ALC at Cottonwood and keep Driggs boundary the same"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Move Programs to Cottonwood:</strong> 15+ suggestions
+                        <ul>
+                            <li>"Move Morningside ALC and traditional to Cottonwood"</li>
+                            <li>"Send the ALC kids to Cottonwood Elementary"</li>
+                            <li>"Close Cottonwood or make it the stand-alone DLI school"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Listen to Parents:</strong> 10+ responses
+                        <ul>
+                            <li>"Actually listen to what the parents are complaining/worried about"</li>
+                            <li>"Listen to the parents! My biggest worry is that... the wrong changes will make the problem worse"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Take More Time:</strong> Multiple requests
+                        <ul>
+                            <li>"Take another year to continue the study"</li>
+                            <li>"This study feels very rushed and not backed by data"</li>
+                            <li>"I think you all need to take another year and make a better decision"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Keep Neighborhoods Together:</strong> Repeated theme
+                        <ul>
+                            <li>"Keep neighborhoods together"</li>
+                            <li>"We don't want our neighborhood to be split between 2 schools"</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h4>Survey Analysis & Implications</h4>
+            <div class="alert alert-danger">
+                <p><strong>⚠️ Critical Disconnect:</strong></p>
+                <p>The parent-led survey reveals a <strong>major mismatch</strong> between PAC recommendations and parent preferences:</p>
+                <ul>
+                    <li><strong>71% want Driggs</strong> as their first choice, yet PAC boundary changes would move some Driggs families to Cottonwood</li>
+                    <li><strong>Zero families selected Cottonwood</strong> as first, second, or third choice (excluding "other" write-ins)</li>
+                    <li><strong>Oakridge received zero</strong> first or second choice votes despite being recommended to stay open</li>
+                    <li>Multiple families threatened to <strong>leave the district entirely</strong> if forced to attend Cottonwood</li>
+                </ul>
+                <p><strong>Risk:</strong> If boundary changes don't align with parent preferences, the district may see:</p>
+                <ul>
+                    <li>Increased <strong>open enrollment applications</strong> (families permitting to non-boundary schools)</li>
+                    <li><strong>Exodus to charter/private schools</strong> (multiple survey respondents mentioned this)</li>
+                    <li><strong>Continued enrollment decline</strong> at schools parents don't want (Cottonwood, Oakridge)</li>
+                    <li><strong>Administrative burden</strong> from managing high permit volumes</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-info">
+                <p><strong>Survey Limitations:</strong></p>
+                <ul>
+                    <li><strong>Sample Size:</strong> 84 responses is small relative to ~4,000 Area 5 students</li>
+                    <li><strong>Self-Selection Bias:</strong> Survey likely over-represents engaged Driggs families (64% of current attendees)</li>
+                    <li><strong>Geographic Bias:</strong> 51% from 4500-3900 South between 2300-2700 East (Driggs area)</li>
+                    <li><strong>Underrepresentation:</strong> Very few responses from Cottonwood, Oakridge, Penn, or Oakwood families</li>
+                </ul>
+                <p><strong>Despite these limitations,</strong> the survey provides valuable qualitative data on parent concerns that official district surveys may not capture. The intensity of preference for Driggs and aversion to Cottonwood is notable.</p>
             </div>
         </div>
 
@@ -1365,7 +2458,7 @@
             <h3>Key Strengths</h3>
             <div class="alert alert-success">
                 <ul>
-                    <li><strong>Best-in-Class Transparency:</strong> This may be the most transparent school closure study in Utah history</li>
+                    <li><strong>Exceptional Transparency:</strong> The study demonstrates a highly commendable level of transparency and public accessibility.</li>
                     <li>Proactive rather than reactive approach (avoiding SLC School District's mistakes)</li>
                     <li>Comprehensive PAC with multi-departmental expertise</li>
                     <li>Extended public input process with multiple touchpoints throughout the year</li>
@@ -1377,9 +2470,9 @@
             <div class="alert alert-danger">
                 <ul>
                     <li><strong>🚨 IN-BOUNDARY VS. TOTAL ENROLLMENT DISCREPANCY:</strong> The study's entire foundation rests on declining <em>resident</em> student forecasts, but many schools have significantly higher <em>total</em> enrollment due to choice-based attendance. Morningside (309 boundary vs 561 total), Penn (344 vs 606), Eastwood (173 vs 267) - this 50-80% discrepancy is never adequately explained or accounted for in closure decisions.</li>
-                    <li><strong>Morningside conversion lacks justification:</strong> The school has 561 students—it's not underenrolled. Converting to DLI-only removes neighborhood access for boundary families.</li>
+                    <li><strong>Morningside DLI/ALC Magnet conversion lacks justification:</strong> The school has 561 students—it's not underenrolled. Converting to magnet-only removes neighborhood access for 309 boundary families.</li>
                     <li><strong>Missing cost-benefit analysis:</strong> No specific figures on how much Granite saves by closing schools, what one-time closure costs are, or lifecycle cost comparisons between different buildings.</li>
-                    <li><strong>No analysis of school choice patterns:</strong> Where are boundary residents going? Why do out-of-boundary students choose certain schools? This data is critical for predicting whether consolidations will retain or lose students.</li>
+                    <li><strong>No analysis of school choice patterns:</strong> Where are boundary residents going? Why do out-of-boundary students choose certain schools? These data are critical for predicting whether consolidations will retain or lose students.</li>
                 </ul>
             </div>
         </div>
@@ -1456,7 +2549,7 @@
                 <ul>
                     <li><strong>Transparency:</strong> 11+ video recordings, individual school data PDFs, AI-summarized feedback—this is model transparency for school districts nationwide</li>
                     <li><strong>Community Engagement:</strong> 40-member community subcommittee, multiple feedback mechanisms, extended 12-month timeline</li>
-                    <li><strong>Responsiveness:</strong> The September 19 ALC reversal proves the district listens when community voices are strong and organized</li>
+                    <li><strong>Responsiveness:</strong> The ALC reversals (Sept 19 & Oct 21) prove the district listens when community voices are strong and organized - Morningside ALC now stays at Morningside</li>
                     <li><strong>Process Integrity:</strong> Follows board policy, includes 19+ departments, considers holistic factors beyond just numbers</li>
                 </ul>
             </div>
@@ -1467,7 +2560,7 @@
                     <li><strong>🚨 MOST CRITICAL:</strong> Reconcile in-boundary forecasts with actual total enrollment patterns - the 50-80% discrepancy at several schools undermines closure projections</li>
                     <li>Analyze out-of-boundary enrollment dynamics: Why do families choose schools outside their boundaries? Will they follow consolidations or leave the district?</li>
                     <li>Provide specific cost-benefit analysis with dollar amounts</li>
-                    <li>Clarify Morningside status and enrollment breakdowns (ALC vs DLI vs general education)</li>
+                    <li>Clarify Morningside DLI/ALC Magnet conversion and enrollment breakdowns (ALC vs DLI-French programs)</li>
                     <li>Analyze where boundary residents are actually going (charters, private schools, other GSD schools)</li>
                 </ul>
             </div>
@@ -1478,7 +2571,7 @@
                 <ol>
                     <li><strong>"Why is there such a large gap between in-boundary population and total enrollment at schools like Morningside (309 vs 561), Penn (344 vs 606), and Eastwood (173 vs 267)? Where are these out-of-boundary students coming from and why do they choose these schools?"</strong></li>
                     <li>"What analysis has been done to predict whether Eastwood's 94 out-of-boundary students will transfer to Oakridge or leave the district entirely after consolidation?"</li>
-                    <li>"Morningside has 561 students—why is it being treated as underenrolled? How many of those students are in ALC vs DLI vs general education?"</li>
+                    <li>"Morningside has 561 students—why is it being treated as underenrolled? Of the 309 'boundary' students, how many are already in ALC/DLI programs (and will stay) versus traditional neighborhood students who actually need reassignment?"</li>
                     <li>"Why not close Cottonwood instead of Eastwood? Cottonwood has the steepest enrollment decline (-42%) in Area 5."</li>
                     <li>"How much does Granite save annually by closing one elementary school? What are the one-time closure costs?"</li>
                     <li>"What happens to students at schools with high out-of-boundary draw when those schools are consolidated? Historical data from other consolidations?"</li>
@@ -1489,7 +2582,7 @@
             <ol style="margin-top: 15px;">
                 <li><strong>Out-of-boundary enrollment analysis:</strong> Survey families choosing schools outside their boundaries - Why do they make these choices? Will they follow consolidations or leave the district?</li>
                 <li><strong>Enrollment retention projections:</strong> For each proposed consolidation, what percentage of current students are expected to stay vs. leave?</li>
-                <li><strong>Morningside breakdown:</strong> How many students are in ALC vs. DLI vs. general education? What happens to each group under the conversion plan?</li>
+                <li><strong>Morningside DLI/ALC Magnet breakdown:</strong> Of the 309 "boundary" students, how many are enrolled in ALC/DLI programs (and will remain) versus traditional neighborhood students (who need reassignment)? This breakdown is essential for accurate enrollment projections.</li>
                 <li><strong>Cost-benefit analysis with dollar amounts:</strong> Annual savings from closures, one-time costs, and comparison to status quo operating costs</li>
             </ol>
 
@@ -1500,23 +2593,36 @@
                     <li>Publishing 11+ hours of video recordings so families can review every presentation and Q&A</li>
                     <li>Creating AI summaries of community feedback so all voices are heard</li>
                     <li>Establishing a 40-member community subcommittee with direct parent/teacher representation</li>
-                    <li>Reversing course on ALC consolidation when feedback was strong</li>
+                    <li>Reversing course on ALC consolidation when feedback was strong (Sept 19 & Oct 21 - Morningside ALC stays at Morningside)</li>
                     <li>Providing individual school mobility data tables</li>
                 </ul>
                 <p><strong>This is what transparent, community-engaged governance looks like.</strong> Other school districts should study Granite's process as a model—even if the analytical methodology needs refinement.</p>
             </div>
         </div>
 
+            </div>
+        </div>
     </div>
 
     <footer>
         <p>This independent analysis was prepared based on publicly available data from Granite School District as of January 2025.</p>
-        <p><strong>Official District Resources:</strong></p>
-        <p>📊 Full Study Data: <a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/">graniteschools.org/planning/2025-population-analysis-studies-amp-data/</a></p>
-        <p>📝 Feedback Form: <a href="https://forms.gle/7X1KgLqTVowhvKFf7">forms.gle/7X1KgLqTVowhvKFf7</a></p>
+
+        <p style="margin-top: 20px;"><strong>📊 Primary Data Sources:</strong></p>
+        <ul style="text-align: left; max-width: 800px; margin: 10px auto;">
+            <li><a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/" target="_blank">2025 Population Analysis Studies & Data</a> - Main study page</li>
+            <li><a href="https://drive.google.com/file/d/1yQWOwKZYxyzEkG3-YZqcYyZzqUxBYGzN/view" target="_blank">MGT Student Population Forecast 2024-2030</a> - Professional demographic analysis</li>
+            <li><a href="https://www.graniteschools.org/planning/student-mobility-and-population-tables/" target="_blank">Student Mobility and Population Tables</a> - Individual school data</li>
+            <li>Area 5 Parent Led Survey (Oct 9-13, 2025) - Community grassroots feedback (84 respondents, independent survey)</li>
+            <li><a href="https://www.graniteschools.org/planning/feeder-flow-charts/" target="_blank">Feeder Flow Charts (2024-25 & 2025-26)</a> - Educational pathway analysis</li>
+            <li><a href="https://www.youtube.com/@GraniteDistrict" target="_blank">Granite School District YouTube</a> - 11+ hours of public meeting recordings</li>
+        </ul>
+
+        <p style="margin-top: 20px;"><strong>Official District Resources:</strong></p>
+        <p>📝 Feedback Form: <a href="https://forms.gle/7X1KgLqTVowhvKFf7" target="_blank">forms.gle/7X1KgLqTVowhvKFf7</a></p>
         <p>📧 Email: boundaries@graniteschools.org | ☎️ Phone: (385) 646-4123</p>
         <p>📅 Public Hearings: November 18 & December 2, 2025 at 7:00 PM</p>
-        <p style="margin-top: 15px; font-size: 0.9em; font-style: italic;">Analyst Note: This website is not affiliated with Granite School District. It represents an independent analysis of publicly available data.</p>
+
+        <p style="margin-top: 15px; font-size: 0.9em; font-style: italic;">⚠️ Disclaimer: This website is not affiliated with Granite School District. It represents an independent analysis of publicly available data for educational and civic engagement purposes. All data sourced from official Granite School District publications.</p>
     </footer>
 
     <script>
@@ -1545,6 +2651,44 @@
                 navOverlay.classList.remove('active');
             });
         });
+
+        // Responsive legend configuration helper
+        function getResponsiveLegendConfig() {
+            const isMobile = window.innerWidth < 768;
+            return {
+                orientation: isMobile ? 'h' : 'v',
+                x: isMobile ? 0 : 1.02,
+                y: isMobile ? -0.2 : 1,
+                xanchor: isMobile ? 'left' : 'left',
+                yanchor: isMobile ? 'top' : 'top',
+                font: { color: '#9ca3af' }
+            };
+        }
+
+        // Standardized school colors - consistent across all charts
+        const schoolColors = {
+            'Cottonwood': '#ef4444',      // Red
+            'Crestview': '#f97316',        // Orange
+            'Driggs': '#fbbf24',           // Yellow/Gold
+            'Eastwood': '#10b981',         // Green
+            'Morningside': '#06b6d4',      // Cyan
+            'Oakridge': '#8b5cf6',         // Purple
+            'Penn': '#ec4899',             // Pink
+            'Rosecrest': '#14b8a6',        // Teal
+            'Upland Terrace': '#84cc16',   // Lime
+            'Oakwood': '#6366f1'           // Indigo
+        };
+
+        // Helper function to get color for a school
+        function getSchoolColor(schoolName) {
+            // Handle abbreviated names
+            const nameMap = {
+                'Upland T.': 'Upland Terrace',
+                'Howard R. Driggs': 'Driggs'
+            };
+            const fullName = nameMap[schoolName] || schoolName;
+            return schoolColors[fullName] || '#9ca3af';  // Default gray if not found
+        }
 
         // Chart Data
         const districtEnrollmentData = [
@@ -1590,17 +2734,20 @@
         ];
 
         const fciVsEnrollmentData = [
-            { school: 'Eastwood', fci: 4, enrollment: 270 },
-            { school: 'Oakridge', fci: 5, enrollment: 270 },
-            { school: 'Morningside', fci: 20, enrollment: 565 },
-            { school: 'Upland T.', fci: 22, enrollment: 395 },
-            { school: 'Driggs', fci: 27, enrollment: 440 },
-            { school: 'Rosecrest', fci: 32, enrollment: 300 },
-            { school: 'Cottonwood', fci: 37, enrollment: 340 },
-            { school: 'Crestview', fci: 39, enrollment: 460 },
-            { school: 'Penn', fci: 58, enrollment: 615 },
-            { school: 'Oakwood', fci: 60, enrollment: 510 }
-        ];
+            { school: 'Eastwood', fci: 4, enrollment: 270, capacity: 500 },
+            { school: 'Oakridge', fci: 5, enrollment: 270, capacity: 550 },
+            { school: 'Morningside', fci: 20, enrollment: 565, capacity: 600 },
+            { school: 'Upland T.', fci: 22, enrollment: 395, capacity: 550 },
+            { school: 'Driggs', fci: 27, enrollment: 440, capacity: 600 },
+            { school: 'Rosecrest', fci: 32, enrollment: 300, capacity: 500 },
+            { school: 'Cottonwood', fci: 37, enrollment: 340, capacity: 550 },
+            { school: 'Crestview', fci: 39, enrollment: 460, capacity: 650 },
+            { school: 'Penn', fci: 58, enrollment: 615, capacity: 700 },
+            { school: 'Oakwood', fci: 60, enrollment: 510, capacity: 700 }
+        ].map(d => ({
+            ...d,
+            utilizationPct: Math.round((d.enrollment / d.capacity) * 100)
+        }));
 
         const decliningSchoolsData = [
             { year: '2016', Cottonwood: 350, Crestview: 625, Morningside: 369 },
@@ -1687,9 +2834,9 @@
             font: { color: '#e8eaed' },
             xaxis: { title: 'Year', color: '#9ca3af', gridcolor: '#374151' },
             yaxis: { title: 'Enrollment', color: '#9ca3af', gridcolor: '#374151' },
-            margin: { l: 60, r: 30, t: 30, b: 80 },
+            margin: { l: 60, r: window.innerWidth < 768 ? 30 : 120, t: 30, b: window.innerWidth < 768 ? 120 : 80 },
             showlegend: true,
-            legend: { font: { color: '#9ca3af' } }
+            legend: getResponsiveLegendConfig()
         }, { responsive: true });
 
         // Boundary vs Total Chart
@@ -1712,219 +2859,47 @@
             paper_bgcolor: '#0f1419',
             plot_bgcolor: '#1a1f2e',
             font: { color: '#e8eaed' },
-            xaxis: { title: 'School', color: '#9ca3af', gridcolor: '#374151' },
+            xaxis: { title: 'School', color: '#9ca3af', gridcolor: '#374151', tickangle: window.innerWidth < 768 ? -45 : 0 },
             yaxis: { title: 'Students', color: '#9ca3af', gridcolor: '#374151' },
-            margin: { l: 60, r: 30, t: 30, b: 100 },
+            margin: { l: 60, r: window.innerWidth < 768 ? 30 : 120, t: 30, b: window.innerWidth < 768 ? 120 : 100 },
             showlegend: true,
-            legend: { font: { color: '#9ca3af' } },
+            legend: getResponsiveLegendConfig(),
             barmode: 'group'
         }, { responsive: true });
 
         // FCI vs Enrollment Scatter Chart
         Plotly.newPlot('fciVsEnrollmentChart', [{
             x: fciVsEnrollmentData.map(d => d.fci),
-            y: fciVsEnrollmentData.map(d => d.enrollment),
+            y: fciVsEnrollmentData.map(d => d.utilizationPct),
             text: fciVsEnrollmentData.map(d => d.school),
             mode: 'markers+text',
             type: 'scatter',
             textposition: 'top center',
             marker: {
                 size: 12,
-                color: '#06b6d4',
-                line: { color: '#0891b2', width: 2 }
+                color: fciVsEnrollmentData.map(d => getSchoolColor(d.school)),
+                line: { width: 2 }
             },
-            textfont: { color: '#e8eaed', size: 10 }
+            textfont: { color: '#e8eaed', size: 10 },
+            hovertemplate: '<b>%{text}</b><br>' +
+                'FCI: %{x}<br>' +
+                'Utilization: %{y}%<br>' +
+                '<extra></extra>',
+            customdata: fciVsEnrollmentData.map(d => [d.enrollment, d.capacity]),
+            hovertext: fciVsEnrollmentData.map(d => `${d.enrollment}/${d.capacity} students`)
         }], {
             paper_bgcolor: '#0f1419',
             plot_bgcolor: '#1a1f2e',
             font: { color: '#e8eaed' },
             xaxis: { title: 'Facility Condition Index (Higher = Better)', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: { title: 'Total Enrollment', color: '#9ca3af', gridcolor: '#374151' },
+            yaxis: {
+                title: 'Capacity Utilization (%)',
+                color: '#9ca3af',
+                gridcolor: '#374151',
+                range: [40, 100]
+            },
             margin: { l: 60, r: 30, t: 30, b: 80 },
             showlegend: false
-        }, { responsive: true });
-
-        // Declining Schools Line Chart
-        Plotly.newPlot('decliningSchoolsChart', [
-            {
-                x: decliningSchoolsData.map(d => d.year),
-                y: decliningSchoolsData.map(d => d.Cottonwood),
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Cottonwood',
-                line: { color: '#ef4444', width: 3 },
-                marker: { size: 8 }
-            },
-            {
-                x: decliningSchoolsData.map(d => d.year),
-                y: decliningSchoolsData.map(d => d.Crestview),
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Crestview',
-                line: { color: '#f97316', width: 3 },
-                marker: { size: 8 }
-            },
-            {
-                x: decliningSchoolsData.map(d => d.year),
-                y: decliningSchoolsData.map(d => d.Morningside),
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Morningside',
-                line: { color: '#fbbf24', width: 3 },
-                marker: { size: 8 }
-            }
-        ], {
-            paper_bgcolor: '#0f1419',
-            plot_bgcolor: '#1a1f2e',
-            font: { color: '#e8eaed' },
-            xaxis: { title: 'Year', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: { title: 'In-Boundary Population', color: '#9ca3af', gridcolor: '#374151' },
-            margin: { l: 60, r: 30, t: 30, b: 60 },
-            showlegend: true,
-            legend: { font: { color: '#9ca3af' } }
-        }, { responsive: true });
-
-        // Enrollment Change Bar Chart
-        const barColors = enrollmentChangeData.map(d =>
-            d.change < -30 ? '#ef4444' : d.change < -20 ? '#f97316' : '#fbbf24'
-        );
-
-        Plotly.newPlot('enrollmentChangeChart', [{
-            x: enrollmentChangeData.map(d => d.change),
-            y: enrollmentChangeData.map(d => d.school),
-            type: 'bar',
-            orientation: 'h',
-            marker: { color: barColors },
-            text: enrollmentChangeData.map(d => `${d.change}%`),
-            textposition: 'outside'
-        }], {
-            paper_bgcolor: '#0f1419',
-            plot_bgcolor: '#1a1f2e',
-            font: { color: '#e8eaed' },
-            xaxis: { title: 'Percent Change (%)', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: { title: '', color: '#9ca3af', gridcolor: '#374151' },
-            margin: { l: 100, r: 60, t: 30, b: 60 },
-            showlegend: false
-        }, { responsive: true });
-
-        // FCI Comparison Chart
-        const fciComparisonData = [
-            { school: 'Eastwood*', fci: 4, status: 'closing' },
-            { school: 'Oakridge', fci: 5, status: 'receiving' },
-            { school: 'Morningside', fci: 20, status: 'converting' },
-            { school: 'Upland T.', fci: 22, status: 'staying' },
-            { school: 'Driggs', fci: 27, status: 'staying' },
-            { school: 'Rosecrest', fci: 32, status: 'staying' },
-            { school: 'Cottonwood', fci: 37, status: 'staying' },
-            { school: 'Crestview', fci: 39, status: 'staying' },
-            { school: 'Penn', fci: 58, status: 'staying' },
-            { school: 'Oakwood', fci: 60, status: 'staying' }
-        ];
-
-        const fciBarColors = fciComparisonData.map(d =>
-            d.status === 'closing' ? '#ef4444' :
-            d.status === 'converting' ? '#f97316' :
-            d.fci > 50 ? '#fbbf24' :
-            d.fci > 30 ? '#06b6d4' : '#10b981'
-        );
-
-        Plotly.newPlot('fciComparisonChart', [{
-            x: fciComparisonData.map(d => d.school),
-            y: fciComparisonData.map(d => d.fci),
-            type: 'bar',
-            marker: { color: fciBarColors },
-            text: fciComparisonData.map(d => `FCI: ${d.fci}`),
-            textposition: 'outside'
-        }], {
-            paper_bgcolor: '#0f1419',
-            plot_bgcolor: '#1a1f2e',
-            font: { color: '#e8eaed' },
-            xaxis: { title: 'School', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: { title: 'FCI (Higher = Better)', color: '#9ca3af', gridcolor: '#374151' },
-            margin: { l: 60, r: 30, t: 40, b: 100 },
-            showlegend: false
-        }, { responsive: true });
-
-        // Normalized Total Enrollment Chart - All Schools
-        const schoolColors = {
-            'Cottonwood': '#ef4444',
-            'Crestview': '#f97316',
-            'Driggs': '#fbbf24',
-            'Eastwood': '#10b981',
-            'Morningside': '#06b6d4',
-            'Oakridge': '#8b5cf6',
-            'Penn': '#ec4899',
-            'Rosecrest': '#14b8a6',
-            'Upland Terrace': '#84cc16'
-        };
-
-        const totalEnrollmentTraces = Object.keys(normalizedTotalEnrollment).filter(k => k !== 'years').map(school => ({
-            x: normalizedTotalEnrollment.years,
-            y: normalizedTotalEnrollment[school],
-            type: 'scatter',
-            mode: 'lines+markers',
-            name: school,
-            line: { color: schoolColors[school], width: 3 },
-            marker: { size: 8 }
-        }));
-
-        Plotly.newPlot('normalizedTotalEnrollmentChart', totalEnrollmentTraces, {
-            paper_bgcolor: '#0f1419',
-            plot_bgcolor: '#1a1f2e',
-            font: { color: '#e8eaed' },
-            xaxis: { title: 'School Year', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: {
-                title: 'Normalized Enrollment (2021 = 100%)',
-                color: '#9ca3af',
-                gridcolor: '#374151',
-                range: [70, 125]
-            },
-            margin: { l: 60, r: 30, t: 30, b: 60 },
-            showlegend: true,
-            legend: { font: { color: '#9ca3af' }, x: 1.05, y: 1 },
-            shapes: [{
-                type: 'line',
-                x0: '2021',
-                x1: '2025',
-                y0: 100,
-                y1: 100,
-                line: { color: '#9ca3af', width: 2, dash: 'dash' }
-            }]
-        }, { responsive: true });
-
-        // Normalized In-Boundary Population Chart - All Schools
-        const boundaryPopTraces = Object.keys(normalizedBoundaryPop).filter(k => k !== 'years').map(school => ({
-            x: normalizedBoundaryPop.years,
-            y: normalizedBoundaryPop[school],
-            type: 'scatter',
-            mode: 'lines+markers',
-            name: school,
-            line: { color: schoolColors[school], width: 3 },
-            marker: { size: 8 }
-        }));
-
-        Plotly.newPlot('normalizedBoundaryPopChart', boundaryPopTraces, {
-            paper_bgcolor: '#0f1419',
-            plot_bgcolor: '#1a1f2e',
-            font: { color: '#e8eaed' },
-            xaxis: { title: 'School Year', color: '#9ca3af', gridcolor: '#374151' },
-            yaxis: {
-                title: 'Normalized In-Boundary Population (2021 = 100%)',
-                color: '#9ca3af',
-                gridcolor: '#374151',
-                range: [70, 125]
-            },
-            margin: { l: 60, r: 30, t: 30, b: 60 },
-            showlegend: true,
-            legend: { font: { color: '#9ca3af' }, x: 1.05, y: 1 },
-            shapes: [{
-                type: 'line',
-                x0: '2021',
-                x1: '2025',
-                y0: 100,
-                y1: 100,
-                line: { color: '#9ca3af', width: 2, dash: 'dash' }
-            }]
         }, { responsive: true });
 
         // Comparison Chart - Total Enrollment vs Boundary Population for Key Schools
@@ -1963,9 +2938,9 @@
                 gridcolor: '#374151',
                 range: [70, 125]
             },
-            margin: { l: 60, r: 150, t: 30, b: 60 },
+            margin: { l: 60, r: window.innerWidth < 768 ? 30 : 150, t: 30, b: window.innerWidth < 768 ? 160 : 60 },
             showlegend: true,
-            legend: { font: { color: '#9ca3af', size: 10 }, x: 1.02, y: 1 },
+            legend: { ...getResponsiveLegendConfig(), font: { color: '#9ca3af', size: window.innerWidth < 768 ? 9 : 10 } },
             shapes: [{
                 type: 'line',
                 x0: '2021',
@@ -1976,15 +2951,474 @@
             }],
             annotations: [{
                 text: 'Solid = Total Enrollment<br>Dotted = Boundary Population',
-                x: 1.02,
-                y: -0.15,
+                x: window.innerWidth < 768 ? 0 : 1.02,
+                y: window.innerWidth < 768 ? -0.25 : -0.15,
                 xref: 'paper',
                 yref: 'paper',
                 showarrow: false,
-                font: { color: '#9ca3af', size: 10 },
+                font: { color: '#9ca3af', size: window.innerWidth < 768 ? 9 : 10 },
                 xanchor: 'left'
             }]
         }, { responsive: true });
+
+        // Add window resize handler to update charts on orientation change
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Relayout all charts with responsive settings
+                const chartIds = [
+                    'districtEnrollmentChart',
+                    'boundaryVsTotalChart',
+                    'enrollmentVsBoundaryChart',
+                    'morningsideProgramsChart',
+                    'morningsideGradeStackedChart',
+                    'morningsideBoundaryDestChart',
+                    'morningsideFeederSourcesChart'
+                ];
+
+                chartIds.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element && element.layout) {
+                        Plotly.Plots.resize(id);
+                    }
+                });
+            }, 250);
+        });
+
+        // ==================== MORNINGSIDE DETAILED ANALYSIS CHARTS ====================
+
+        // Chart 1: Program Breakdown Pie Chart
+        Plotly.newPlot('morningsideProgramsChart', [{
+            values: [148, 261, 158],
+            labels: ['ALC (Advanced Learning Center)', 'DLI-French (Dual Language Immersion)', 'Traditional Neighborhood Program'],
+            type: 'pie',
+            marker: {
+                colors: ['#8b5cf6', '#06b6d4', '#ef4444']
+            },
+            textinfo: 'label+percent+value',
+            textposition: 'inside',
+            hovertemplate: '<b>%{label}</b><br>%{value} students (%{percent})<extra></extra>'
+        }], {
+            ...getResponsiveLegendConfig(),
+            title: {
+                text: 'Morningside Total Enrollment: 567 Students by Program',
+                font: { size: 16, color: '#e8eaed' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#e8eaed' },
+            showlegend: true
+        }, { responsive: true });
+
+        // Chart 2: Stacked Bar Chart - Enrollment by Grade and Program
+        // Data from "Copy of Morningside Kids Population - Enrollment by grade_ Sept 25 and Oct 1 2025.csv"
+        // Grades 0-5, broken down by ALC, DLI, Traditional
+        if (document.getElementById('morningsideGradeStackedChart')) {
+            const gradeData = {
+                grades: ['K (0)', '1st', '2nd', '3rd', '4th', '5th'],
+                alc: [0, 26, 26, 30, 35, 31],      // ALC has NO kindergarten
+                dli: [0, 57, 53, 54, 53, 44],      // DLI has NO kindergarten
+                traditional: [69, 12, 3, 26, 29, 19]  // Traditional serves ALL kindergartners
+            };
+
+            Plotly.newPlot('morningsideGradeStackedChart', [
+                {
+                    x: gradeData.grades,
+                    y: gradeData.traditional,
+                    name: 'Traditional',
+                    type: 'bar',
+                    marker: { color: '#ef4444' },
+                    hovertemplate: '<b>Traditional</b><br>Grade %{x}: %{y} students<extra></extra>'
+                },
+                {
+                    x: gradeData.grades,
+                    y: gradeData.dli,
+                    name: 'DLI-French',
+                    type: 'bar',
+                    marker: { color: '#06b6d4' },
+                    hovertemplate: '<b>DLI-French</b><br>Grade %{x}: %{y} students<extra></extra>'
+                },
+                {
+                    x: gradeData.grades,
+                    y: gradeData.alc,
+                    name: 'ALC',
+                    type: 'bar',
+                    marker: { color: '#8b5cf6' },
+                    hovertemplate: '<b>ALC</b><br>Grade %{x}: %{y} students<extra></extra>'
+                }
+            ], {
+                title: {
+                    text: 'Morningside Enrollment by Grade and Program (Oct 2025)',
+                    font: { size: 16, color: '#e8eaed' }
+                },
+                xaxis: {
+                    title: 'Grade Level',
+                    color: '#e8eaed',
+                    gridcolor: '#374151'
+                },
+                yaxis: {
+                    title: 'Number of Students',
+                    color: '#e8eaed',
+                    gridcolor: '#374151'
+                },
+                barmode: 'stack',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#e8eaed' },
+                showlegend: true,
+                legend: {
+                    orientation: window.innerWidth < 768 ? 'h' : 'v',
+                    x: window.innerWidth < 768 ? 0 : 1.02,
+                    y: window.innerWidth < 768 ? -0.2 : 1,
+                    xanchor: window.innerWidth < 768 ? 'left' : 'left',
+                    yanchor: window.innerWidth < 768 ? 'top' : 'top',
+                    bgcolor: 'rgba(26, 31, 46, 0.8)',
+                    bordercolor: '#374151',
+                    borderwidth: 1
+                }
+            }, { responsive: true });
+        } else {
+            console.error('Element morningsideGradeStackedChart not found!');
+        }
+
+        // Chart 3: Boundary Residents Destination
+        const boundaryDestData = [
+            { school: 'Morningside', students: 193, color: '#06b6d4' },
+            { school: 'Driggs', students: 38, color: '#fbbf24' },
+            { school: 'Eastwood', students: 19, color: '#10b981' },
+            { school: 'Oakridge', students: 15, color: '#8b5cf6' },
+            { school: 'Upland Terrace', students: 15, color: '#84cc16' },
+            { school: 'Alternative 3-A', students: 5, color: '#9ca3af' },
+            { school: 'Penn', students: 4, color: '#ec4899' },
+            { school: 'Rosecrest', students: 3, color: '#14b8a6' },
+            { school: 'Cottonwood', students: 1, color: '#ef4444' }
+        ];
+
+        Plotly.newPlot('morningsideBoundaryDestChart', [{
+            x: boundaryDestData.map(d => d.school),
+            y: boundaryDestData.map(d => d.students),
+            type: 'bar',
+            marker: {
+                color: boundaryDestData.map(d => d.color)
+            },
+            text: boundaryDestData.map(d => d.students),
+            textposition: 'outside',
+            hovertemplate: '<b>%{x}</b><br>%{y} students<extra></extra>'
+        }], {
+            ...getResponsiveLegendConfig(),
+            title: {
+                text: '293 Morningside Boundary Residents: Where They Go to School',
+                font: { size: 16, color: '#e8eaed' }
+            },
+            xaxis: {
+                title: 'School',
+                color: '#e8eaed',
+                tickangle: -45
+            },
+            yaxis: {
+                title: 'Number of Students',
+                color: '#e8eaed',
+                gridcolor: '#374151'
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#e8eaed' },
+            showlegend: false,
+            margin: { b: 120 }
+        }, { responsive: true });
+
+        // Chart 3: Top Feeder Sources to Morningside
+        const feederSourceData = [
+            { source: 'Morningside (In-Boundary)', students: 193, color: '#06b6d4' },
+            { source: 'Out Of District', students: 68, color: '#9ca3af' },
+            { source: 'Upland Terrace', students: 43, color: '#84cc16' },
+            { source: 'Driggs', students: 39, color: '#fbbf24' },
+            { source: 'Oakridge', students: 30, color: '#8b5cf6' },
+            { source: 'Crestview', students: 29, color: '#f97316' },
+            { source: 'Rosecrest', students: 26, color: '#14b8a6' },
+            { source: 'Lincoln', students: 23, color: '#6366f1' },
+            { source: 'Penn', students: 19, color: '#ec4899' },
+            { source: 'Cottonwood', students: 19, color: '#ef4444' }
+        ];
+
+        Plotly.newPlot('morningsideFeederSourcesChart', [{
+            x: feederSourceData.map(d => d.source),
+            y: feederSourceData.map(d => d.students),
+            type: 'bar',
+            marker: {
+                color: feederSourceData.map(d => d.color)
+            },
+            text: feederSourceData.map(d => d.students),
+            textposition: 'outside',
+            hovertemplate: '<b>%{x}</b><br>%{y} students<extra></extra>'
+        }], {
+            ...getResponsiveLegendConfig(),
+            title: {
+                text: 'Top 10 Sources of Students Attending Morningside (All Programs)',
+                font: { size: 16, color: '#e8eaed' }
+            },
+            xaxis: {
+                title: 'Boundary School',
+                color: '#e8eaed',
+                tickangle: -45
+            },
+            yaxis: {
+                title: 'Number of Students',
+                color: '#e8eaed',
+                gridcolor: '#374151'
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#e8eaed' },
+            showlegend: false,
+            margin: { b: 150 }
+        }, { responsive: true });
+
+        // ==================== SEARCH FUNCTIONALITY ====================
+        const searchToggle = document.getElementById('searchToggle');
+        const searchModal = document.getElementById('searchModal');
+        const searchClose = document.getElementById('searchClose');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchStats = document.getElementById('searchStats');
+
+        // Open search modal
+        searchToggle.addEventListener('click', () => {
+            searchModal.classList.add('active');
+            searchInput.focus();
+        });
+
+        // Close search modal
+        searchClose.addEventListener('click', () => {
+            searchModal.classList.remove('active');
+        });
+
+        // Close on background click
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                searchModal.classList.remove('active');
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                searchModal.classList.remove('active');
+            }
+        });
+
+        // Build search index from all sections
+        function buildSearchIndex() {
+            const sections = document.querySelectorAll('.section');
+            const index = [];
+
+            sections.forEach(section => {
+                const sectionId = section.id;
+                const sectionTitle = section.querySelector('h2')?.textContent || 'Untitled Section';
+
+                // Get all text content from the section
+                const textNodes = [];
+                const walker = document.createTreeWalker(
+                    section,
+                    NodeFilter.SHOW_TEXT,
+                    {
+                        acceptNode: (node) => {
+                            // Skip script and style tags
+                            const parent = node.parentElement;
+                            if (parent && (parent.tagName === 'SCRIPT' || parent.tagName === 'STYLE')) {
+                                return NodeFilter.FILTER_REJECT;
+                            }
+                            // Only accept non-empty text
+                            if (node.textContent.trim().length > 0) {
+                                return NodeFilter.FILTER_ACCEPT;
+                            }
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                    }
+                );
+
+                let node;
+                while (node = walker.nextNode()) {
+                    textNodes.push(node.textContent);
+                }
+
+                const fullText = textNodes.join(' ').replace(/\s+/g, ' ').trim();
+
+                // Also index subsections (h3, h4 elements)
+                const subsections = section.querySelectorAll('h3, h4');
+                subsections.forEach(subsection => {
+                    const subsectionTitle = subsection.textContent;
+                    let subsectionText = '';
+
+                    // Get text until the next heading or end of section
+                    let nextEl = subsection.nextElementSibling;
+                    while (nextEl && !nextEl.matches('h2, h3, h4')) {
+                        subsectionText += ' ' + nextEl.textContent;
+                        nextEl = nextEl.nextElementSibling;
+                    }
+
+                    index.push({
+                        sectionId,
+                        sectionTitle,
+                        subsectionTitle,
+                        text: subsectionText.replace(/\s+/g, ' ').trim(),
+                        fullText: fullText
+                    });
+                });
+
+                // Also add the main section
+                index.push({
+                    sectionId,
+                    sectionTitle,
+                    subsectionTitle: null,
+                    text: fullText,
+                    fullText: fullText
+                });
+            });
+
+            return index;
+        }
+
+        const searchIndex = buildSearchIndex();
+
+        // Perform search
+        function performSearch(query) {
+            if (!query || query.trim().length < 2) {
+                searchResults.innerHTML = '<div class="search-no-results">Enter at least 2 characters to search</div>';
+                searchStats.textContent = '';
+                return;
+            }
+
+            const normalizedQuery = query.trim().toLowerCase();
+            const results = [];
+
+            searchIndex.forEach(item => {
+                const searchText = item.text.toLowerCase();
+                const titleText = (item.sectionTitle + ' ' + (item.subsectionTitle || '')).toLowerCase();
+
+                // Check if query matches
+                const textMatch = searchText.includes(normalizedQuery);
+                const titleMatch = titleText.includes(normalizedQuery);
+
+                if (textMatch || titleMatch) {
+                    // Find context around match
+                    let context = '';
+                    let highlightedContext = '';
+
+                    if (titleMatch) {
+                        context = item.text.substring(0, 200);
+                        highlightedContext = highlightText(context, query);
+                    } else {
+                        const matchIndex = searchText.indexOf(normalizedQuery);
+                        const start = Math.max(0, matchIndex - 100);
+                        const end = Math.min(item.text.length, matchIndex + normalizedQuery.length + 100);
+                        context = (start > 0 ? '...' : '') + item.text.substring(start, end) + (end < item.text.length ? '...' : '');
+                        highlightedContext = highlightText(context, query);
+                    }
+
+                    // Calculate relevance score
+                    let score = 0;
+                    if (item.sectionTitle.toLowerCase().includes(normalizedQuery)) score += 10;
+                    if (item.subsectionTitle && item.subsectionTitle.toLowerCase().includes(normalizedQuery)) score += 8;
+
+                    // Count occurrences in text
+                    const occurrences = (searchText.match(new RegExp(normalizedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length;
+                    score += occurrences;
+
+                    results.push({
+                        ...item,
+                        context: highlightedContext,
+                        score
+                    });
+                }
+            });
+
+            // Sort by relevance score
+            results.sort((a, b) => b.score - a.score);
+
+            // Remove duplicates (same section)
+            const uniqueResults = [];
+            const seenSections = new Set();
+            results.forEach(result => {
+                const key = result.sectionId + (result.subsectionTitle || '');
+                if (!seenSections.has(key)) {
+                    seenSections.add(key);
+                    uniqueResults.push(result);
+                }
+            });
+
+            displayResults(uniqueResults, query);
+        }
+
+        // Highlight matching text
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        // Display search results
+        function displayResults(results, query) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-no-results">No results found for "' + query + '"</div>';
+                searchStats.textContent = '';
+                return;
+            }
+
+            searchStats.textContent = `Found ${results.length} result${results.length === 1 ? '' : 's'} for "${query}"`;
+
+            const html = results.map(result => {
+                const title = result.subsectionTitle
+                    ? `${result.sectionTitle} › ${result.subsectionTitle}`
+                    : result.sectionTitle;
+
+                return `
+                    <div class="search-result-item" data-section="${result.sectionId}">
+                        <div class="search-result-title">${highlightText(title, query)}</div>
+                        <div class="search-result-context">${result.context}</div>
+                    </div>
+                `;
+            }).join('');
+
+            searchResults.innerHTML = html;
+
+            // Add click handlers to navigate to section
+            document.querySelectorAll('.search-result-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const sectionId = item.dataset.section;
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        searchModal.classList.remove('active');
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                        // Highlight the section briefly
+                        section.style.transition = 'background-color 0.5s ease';
+                        section.style.backgroundColor = 'rgba(6, 182, 212, 0.1)';
+                        setTimeout(() => {
+                            section.style.backgroundColor = '';
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        // Search on input with debounce
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(e.target.value);
+            }, 300);
+        });
+
+        // Keyboard shortcut to open search (Ctrl+K or Cmd+K)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchModal.classList.add('active');
+                searchInput.focus();
+            }
+        });
     </script>
 
 </body>
