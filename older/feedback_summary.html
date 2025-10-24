@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feedback Summary - Area 5 Study</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --border-color: #3c4043;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            position: fixed;
+            top: 0.5rem;
+            left: 0.5rem;
+            z-index: 1000;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: var(--accent-cyan);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .nav-toggle.active {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 999;
+            padding: 4.5rem 1.5rem 1.5rem;
+        }
+
+        .nav-sidebar.active {
+            left: 0;
+        }
+
+        .nav-sidebar h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .nav-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-sidebar li {
+            margin-bottom: 0.75rem;
+        }
+
+        .nav-sidebar a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .nav-sidebar a:hover {
+            color: var(--accent-cyan);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--accent-purple);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .theme-box {
+            background: var(--bg-tertiary);
+            border-left: 4px solid var(--accent-purple);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .theme-box h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.75rem;
+        }
+
+        .quote {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--accent-green);
+            padding: 1rem;
+            margin: 0.75rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-cyan);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .concern-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concern-list li {
+            background: var(--bg-primary);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .concern-list li strong {
+            color: var(--accent-cyan);
+        }
+
+        .action-item {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 2px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .action-item h4 {
+            color: var(--accent-purple);
+            margin-bottom: 0.75rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--accent-cyan);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul style="border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+            <li><a href="intro.html">🏠 Home</a></li>
+            <li><a href="index.html">📊 Main Analysis</a></li>
+            <li><a href="student_mobility_data.html">🔄 Student Mobility Data</a></li>
+            <li><a href="mobility_matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="population_trends.html">📈 Population Trends</a></li>
+            <li><a href="feedback_summary.html" style="color: var(--accent-cyan); font-weight: bold;">💬 Community Feedback</a></li>
+            <li><a href="community_input.html">📝 Community Input</a></li>
+        </ul>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#statistics">Feedback Statistics</a></li>
+            <li><a href="#alc-program">ALC Program Concerns</a></li>
+            <li><a href="#eastwood">Eastwood Closure</a></li>
+            <li><a href="#morningside">Morningside Changes</a></li>
+            <li><a href="#boundary-changes">Boundary Changes</a></li>
+            <li><a href="#dli-program">DLI Program</a></li>
+            <li><a href="#key-themes">Key Themes</a></li>
+            <li><a href="#action-items">Action Items</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>💬 Community Feedback Summary</h1>
+            <p class="subtitle">Analysis of Community Input on Area 5 School Changes</p>
+            <p class="subtitle" style="font-size: 0.9rem; margin-top: 1rem;">Based on feedback collected September-October 2025</p>
+        </header>
+
+        <!-- Overview Section -->
+        <div class="section" id="overview">
+            <h2>📋 Overview</h2>
+            <p>This page summarizes community feedback submitted through official Granite School District channels regarding the Area 5 Population Analysis Study and proposed school changes. The feedback reveals strong community engagement and specific concerns about how the proposed changes will affect students, families, and programs.</p>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">3,100+</span>
+                    <span class="stat-label">Lines of Feedback</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">ALC-Specific Comments</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Major Themes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Schools Mentioned</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="section" id="statistics">
+            <h2>📊 Feedback Statistics</h2>
+
+            <div class="chart-container">
+                <div id="feedbackThemesChart"></div>
+            </div>
+
+            <h3>Feedback Sources</h3>
+            <ul style="color: var(--text-secondary);">
+                <li><strong>After Sept 2 Feedback:</strong> 3,109 lines from general community (all proposed changes)</li>
+                <li><strong>ALC-Specific Feedback:</strong> 30+ detailed responses focused on Advanced Learning Center program</li>
+                <li><strong>Submission Period:</strong> September 2 - October 14, 2025</li>
+            </ul>
+        </div>
+
+        <!-- ALC Program Concerns -->
+        <div class="section" id="alc-program">
+            <h2>🎓 ALC Program Concerns</h2>
+            <p><strong>By far the most significant concern</strong> expressed in community feedback relates to the proposed consolidation of the Advanced Learning Center (ALC) program from Morningside to Woodstock.</p>
+
+            <div class="theme-box">
+                <h4>Key ALC Concerns</h4>
+                <ul class="concern-list">
+                    <li><strong>Excessive Commute Burden:</strong> Families report Woodstock move would require 1-1.5 hours daily commute (30-40 minutes each way, twice daily). Emigration Canyon families face even longer commutes.</li>
+
+                    <li><strong>Program Reduction Not Data-Driven:</strong> Parents question the "5% threshold" for ALC enrollment, noting district materials state "5-10%" and no data has been provided showing harm from current 9% enrollment.</li>
+
+                    <li><strong>Lack of Transparency:</strong> Teachers were not consulted, no study of ALC program outcomes conducted, and parents report questions went unanswered at public meetings.</li>
+
+                    <li><strong>Woodstock Already Overcrowded:</strong> Woodstock currently at 120% capacity (576 students, capacity 480), with 32:1 student-teacher ratios and half of gym/art/music rooms already closed to accommodate current enrollment.</li>
+
+                    <li><strong>Disruption to Vulnerable Students:</strong> Many ALC students are twice-exceptional (gifted + ADHD, autism, etc.). Multiple school moves and program instability particularly harmful to these students.</li>
+
+                    <li><strong>Feeder Pattern Disruption:</strong> Woodstock feeds to Bonneville Jr. High → Cottonwood High (no IB program). Current ALC families at Morningside feed to Churchill/Wasatch Jr. → Olympus/Skyline High (IB available).</li>
+
+                    <li><strong>Sibling/Family Logistics:</strong> First graders face potential 3 schools in 3 years (Morningside → Woodstock → retest with fewer slots → unknown). Parents with multiple children face impossible scheduling conflicts.</li>
+                </ul>
+            </div>
+
+            <h3>Representative Quotes</h3>
+
+            <div class="quote">
+                "My daughter is in the first grade ALC... if we committed to [Woodstock], she might test out at the end of next year since there will be fewer slots sending her to a 4th new school in 4 years, for someone whose giftedness means she also struggles to make friends."
+            </div>
+
+            <div class="quote">
+                "I spoke to a parent whose children were relocated last year to Woodstock... Their children are now in 32:1 student:teacher classrooms. Accommodating the student increase required closure of half of the gym, dance room, art room, music room, and a STEM lab that was less than a year old."
+            </div>
+
+            <div class="quote">
+                "The ALC program is a service like speech therapy or special education. Do kids need to start driving thirty minutes multiple times a week to see their speech therapist?? How would this set-up change our speech outcomes?"
+            </div>
+
+            <div class="quote">
+                "The only reason we have been given for why the ALC on the east side needs to be halved over the next 1-2 years is this arbitrary '5%' number... 'Top 5%' on CogAT is not a national standard, a Utah State Board of Education recommendation, nor a GSD policy."
+            </div>
+
+            <h3>Requested Alternatives</h3>
+            <ul style="color: var(--text-secondary);">
+                <li><strong>Keep ALC at Morningside</strong> alongside French DLI (similar to Spanish DLI/ALC model on west side)</li>
+                <li><strong>Move ALC to central Area 5 school</strong> (Driggs, Upland Terrace, Oakridge) instead of Woodstock</li>
+                <li><strong>Grandfather current 1st-2nd graders</strong> through 5th grade without retesting to provide stability</li>
+                <li><strong>Conduct comprehensive ALC study</strong> before making changes - examine outcomes, not just percentages</li>
+                <li><strong>Expand ALC, don't shrink it</strong> - market to out-of-district students, increase access</li>
+            </ul>
+        </div>
+
+        <!-- Eastwood Closure -->
+        <div class="section" id="eastwood">
+            <h2>🏫 Eastwood Closure Concerns</h2>
+
+            <div class="theme-box">
+                <h4>Community Impact</h4>
+                <ul class="concern-list">
+                    <li><strong>Broken Promise:</strong> Community voted for 2017 bond believing Eastwood would be rebuilt. Closure recommendation destroys trust in district leadership.</li>
+
+                    <li><strong>Emigration Canyon:</strong> Families already commute 30+ minutes to Eastwood. Moving to Oakridge adds further distance and isolates canyon residents.</li>
+
+                    <li><strong>Open Space Preservation:</strong> Community uses Eastwood fields for youth soccer, softball, baseball, and paragliding. Strong desire to preserve green space and prevent development.</li>
+
+                    <li><strong>Community Identity:</strong> Eastwood defines the neighborhood. Multiple generations have attended, with strong emotional and historical connections.</li>
+
+                    <li><strong>School Choice Competition:</strong> Families report considering private schools, charter schools, or other districts if Eastwood closes.</li>
+                </ul>
+            </div>
+
+            <h3>Representative Quote</h3>
+            <div class="quote">
+                "Eastwood defines our neighborhood and community. We voted in favor of the school bond in 2017 because we were told that Eastwood would be rebuilt. Recommending to close it instead destroys all trust in Granite's leadership. Not a mistake we will make twice."
+            </div>
+
+            <div class="quote">
+                "I was born and raised in the Eastwood boundaries, graduated from Skyline High in 1973... I have been involved to keep my Eastwood Community thriving... we were the first for coop classrooms - success. first for preschool - success. first for Kindergarten Academy - success."
+            </div>
+        </div>
+
+        <!-- Morningside Changes -->
+        <div class="section" id="morningside">
+            <h2>🏫 Morningside Closure/Conversion Concerns</h2>
+
+            <div class="theme-box">
+                <h4>Key Issues</h4>
+                <ul class="concern-list">
+                    <li><strong>Efficiency Paradox:</strong> Keeping Morningside open for French DLI (at 41% capacity) defeats stated goal of increasing utilization and reducing costs. Still need principal, office staff, maintenance, utilities.</li>
+
+                    <li><strong>Traditional Track Families Unrepresented:</strong> PAC subcommittee only included DLI and ALC representatives. Traditional track Morningside families had no voice in decisions affecting them.</li>
+
+                    <li><strong>French Program Viability Questioned:</strong> Other French DLI in district not full ("accepting all applications"). No waitlist data or enrollment projections provided to support "feeling" that French will grow.</li>
+
+                    <li><strong>Safety Concerns:</strong> Morningside boundary students reassigned to Driggs must walk along 4500 S - parents call this "terrifying" for elementary students.</li>
+
+                    <li><strong>Special Education Impact:</strong> Morningside has one of strongest special education teams in district. Dismantling team harmful to vulnerable learners.</li>
+                </ul>
+            </div>
+
+            <h3>Alternative Proposals from Community</h3>
+            <ul style="color: var(--text-secondary);">
+                <li><strong>Keep Traditional + French DLI</strong> at Morningside (like William Penn model)</li>
+                <li><strong>Close Morningside completely</strong> if not viable, invest savings in other Area 5 schools</li>
+                <li><strong>Move French DLI to Woodstock</strong> (border location better for attracting out-of-district students)</li>
+                <li><strong>Keep building name</strong> if converted to DLI - Morningside has strong reputation that helps enrollment</li>
+            </ul>
+
+            <h3>Representative Quote</h3>
+            <div class="quote">
+                "This doesn't seem like a sound solution to any of the proclaimed issues with low attendance or old buildings... Morningside will become a French dli school and the neighborhood families will be kicked out... The school with almost 100% attendance and a great Alc program will close???? The building will remain???"
+            </div>
+        </div>
+
+        <!-- Boundary Changes -->
+        <div class="section" id="boundary-changes">
+            <h2>🗺️ Boundary Change Concerns</h2>
+
+            <div class="theme-box">
+                <h4>Driggs → Cottonwood Reassignment (~100 students)</h4>
+                <ul class="concern-list">
+                    <li><strong>Community Identity:</strong> Families report multi-generational connections to Driggs (parents, siblings taught there). Driggs is "part of our identity" and reason for home purchase.</li>
+
+                    <li><strong>School Choice Imbalance:</strong> Driggs allows many out-of-boundary students via permit. Forcing boundary residents out while accepting distant permits feels unfair.</li>
+
+                    <li><strong>Geographic Logic:</strong> Crestview and Driggs both closer to affected area than Cottonwood. Why Cottonwood?</li>
+
+                    <li><strong>Future Jr. High Concerns:</strong> Affected families live 0.5 miles from Olympus Jr. High. Rumors that Cottonwood Elementary may eventually feed to Cottonwood High (not Olympus) in 5-7 years creates uncertainty.</li>
+
+                    <li><strong>Conflict of Interest Allegations:</strong> Some feedback alleges board member attended Cottonwood Elementary and is "hyper focused on saving" it for personal reasons.</li>
+                </ul>
+            </div>
+
+            <h3>Representative Quote</h3>
+            <div class="quote">
+                "My husband went to Driggs, my sister in law taught there for many years and our entire network and extended families attend Driggs. You have to recognize it's part of our identity and the reason we purchased our home where we did... We want reassurance that we have flexibility to attend Driggs if that meets the needs of our family."
+            </div>
+        </div>
+
+        <!-- DLI Program -->
+        <div class="section" id="dli-program">
+            <h2>🌍 French DLI Program Feedback</h2>
+
+            <h3>Supportive Comments</h3>
+            <div class="theme-box">
+                <p style="color: var(--text-secondary);">"I think the narrowed PAC recommendation provided on September 2 sounds like a great plan for the district. Would be really excited to have a French Immersion dedicated school and think it would attract a lot of families."</p>
+            </div>
+
+            <h3>Critical Concerns</h3>
+            <ul class="concern-list">
+                <li><strong>Equity Question:</strong> "Why keeping the French program at Morningside if programs are cost drivers and that's why you are closing ALC?"</li>
+
+                <li><strong>Enrollment Uncertainty:</strong> No data showing French DLI demand. Other GSD French program not full. Based on "feeling" rather than waitlists or projections.</li>
+
+                <li><strong>Sibling Impact:</strong> "French DLI program will likely lose more participants, by removing it from a shared boundary school with the ALC program, than it gains. Many students have siblings in the program and that is a key consideration."</li>
+
+                <li><strong>Name Retention:</strong> "If you choose to make Morningside a DLI school, it would be VERY UNWISE TO CHANGE THE NAME. Morningside has a reputation of being a good school. Because French is a less popular language than Spanish, it will be more difficult to grow."</li>
+            </ul>
+        </div>
+
+        <!-- Key Themes -->
+        <div class="section" id="key-themes">
+            <h2>🔑 Key Themes Across All Feedback</h2>
+
+            <div class="theme-box">
+                <h4>1. Process Concerns</h4>
+                <ul style="color: var(--text-secondary);">
+                    <li>Feeling "blindsided" - ALC changes not part of initial stated goals</li>
+                    <li>Insufficient data provided to support decisions</li>
+                    <li>Questions unanswered at public meetings</li>
+                    <li>Teachers not consulted about programs they teach</li>
+                    <li>Traditional track families unrepresented on PAC subcommittee</li>
+                </ul>
+            </div>
+
+            <div class="theme-box">
+                <h4>2. Equity & Access</h4>
+                <ul style="color: var(--text-secondary);">
+                    <li>Excessive commute times disproportionately burden working families</li>
+                    <li>ALC access barriers particularly affect neurodiverse students who need the program most</li>
+                    <li>Geographic placement favors families with transportation flexibility</li>
+                    <li>Out-of-district student funding prioritized over in-district student needs</li>
+                </ul>
+            </div>
+
+            <div class="theme-box">
+                <h4>3. Goal Misalignment</h4>
+                <ul style="color: var(--text-secondary);">
+                    <li>Keeping Morningside open at 41% capacity contradicts efficiency goals</li>
+                    <li>Moving ALC to already-overcrowded Woodstock contradicts capacity goals</li>
+                    <li>Changes don't address underenrolled schools (Crestview, Cottonwood, Upland Terrace)</li>
+                    <li>Focus on program consolidation not part of original boundary study scope</li>
+                </ul>
+            </div>
+
+            <div class="theme-box">
+                <h4>4. Student Impact Prioritization</h4>
+                <ul style="color: var(--text-secondary);">
+                    <li>Changes prioritize adult logistics over student needs</li>
+                    <li>Twice-exceptional students face particular harm from instability</li>
+                    <li>Social relationships disrupted (feeder patterns, cohorts)</li>
+                    <li>Program "wants" (French DLI) prioritized over program "needs" (ALC for gifted learners)</li>
+                </ul>
+            </div>
+
+            <div class="theme-box">
+                <h4>5. District Retention Risk</h4>
+                <ul style="color: var(--text-secondary);">
+                    <li>Many families report considering private schools, charter schools, or other districts</li>
+                    <li>Utah Fits All scholarship program makes alternatives more financially accessible</li>
+                    <li>Loss of engaged families would reduce state funding to district</li>
+                    <li>Trust in district leadership damaged by perceived broken promises</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="section" id="action-items">
+            <h2>✅ Community-Requested Action Items</h2>
+
+            <div class="action-item">
+                <h4>Immediate Actions</h4>
+                <ul>
+                    <li><strong>Provide comprehensive ALC data:</strong> Test score distributions, outcomes data, teacher input, and evidence supporting 5% vs 9% threshold</li>
+                    <li><strong>Verify Woodstock capacity:</strong> Clarify how already-overcrowded school (120% capacity) can accommodate ALC transfer</li>
+                    <li><strong>Study ALC program comprehensively:</strong> Commission district-wide analysis before making changes</li>
+                    <li><strong>Explain Morningside efficiency:</strong> Justify keeping building open at 41% capacity when closure was supposed to save money</li>
+                </ul>
+            </div>
+
+            <div class="action-item">
+                <h4>Alternative Solutions to Consider</h4>
+                <ul>
+                    <li><strong>Keep ALC at Morningside</strong> with French DLI (two-program model like west side schools)</li>
+                    <li><strong>Place ALC at central Area 5 location</strong> (Driggs, Upland, Oakridge) instead of Woodstock</li>
+                    <li><strong>Close Morningside completely</strong> if not financially viable, redistribute students to nearby schools</li>
+                    <li><strong>Expand ALC program</strong> rather than shrink it - market to out-of-district students</li>
+                    <li><strong>Address truly underenrolled schools</strong> (Crestview 70%, Cottonwood 66%, Upland 72%)</li>
+                </ul>
+            </div>
+
+            <div class="action-item">
+                <h4>Student Protection Measures</h4>
+                <ul>
+                    <li><strong>Grandfather current ALC 1st-2nd graders</strong> through 5th grade without retesting</li>
+                    <li><strong>Guarantee sibling placement</strong> at same school to prevent family splits</li>
+                    <li><strong>Provide transportation solutions</strong> for families affected by long commutes</li>
+                    <li><strong>Ensure IB pathway access</strong> for ALC students (currently broken if Woodstock → Bonneville → Cottonwood)</li>
+                </ul>
+            </div>
+
+            <div class="action-item">
+                <h4>Process Improvements</h4>
+                <ul>
+                    <li><strong>Include all stakeholder groups</strong> on PAC subcommittees (traditional track families were excluded)</li>
+                    <li><strong>Consult teachers</strong> who run programs before making program changes</li>
+                    <li><strong>Extend timeline</strong> if comprehensive program study is needed</li>
+                    <li><strong>Answer community questions</strong> with data at public meetings, not dismissals</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Back to Analysis -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="intro.html" class="back-link">← Back to Home</a>
+            <a href="index.html" class="back-link">View Main Analysis →</a>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); margin-top: 3rem; border-top: 1px solid var(--border-color);">
+            <p><strong>Community Feedback Summary</strong></p>
+            <p>Based on official Granite School District feedback submissions, September-October 2025</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">This is an independent analysis for educational and civic engagement purposes.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navOverlay = document.getElementById('navOverlay');
+
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            navSidebar.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        navToggle.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Close nav on link click
+        navSidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('href').startsWith('#')) {
+                    toggleNav();
+                }
+            });
+        });
+
+        // Close nav on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navSidebar.classList.contains('active')) {
+                toggleNav();
+            }
+        });
+
+        // Feedback Themes Chart
+        const themesData = [{
+            x: ['ALC Program<br>Changes', 'Eastwood<br>Closure', 'Morningside<br>Conversion', 'Boundary<br>Changes', 'DLI Program<br>Concerns'],
+            y: [30, 15, 20, 12, 8],
+            type: 'bar',
+            marker: {
+                color: ['#06b6d4', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444']
+            },
+            text: ['30+ comments', '15+ comments', '20+ comments', '12+ comments', '8+ comments'],
+            textposition: 'outside',
+            hovertemplate: '<b>%{x}</b><br>%{y} comments<extra></extra>'
+        }];
+
+        const themesLayout = {
+            title: {
+                text: 'Major Feedback Themes (Approximate Counts)',
+                font: { size: 18, color: '#e8eaed' }
+            },
+            xaxis: {
+                title: '',
+                color: '#9aa0a6',
+                gridcolor: '#3c4043'
+            },
+            yaxis: {
+                title: 'Number of Comments',
+                color: '#9aa0a6',
+                gridcolor: '#3c4043'
+            },
+            paper_bgcolor: '#1a1a1a',
+            plot_bgcolor: '#1a1a1a',
+            font: { color: '#e8eaed' },
+            margin: { t: 60, b: 80, l: 60, r: 30 }
+        };
+
+        Plotly.newPlot('feedbackThemesChart', themesData, themesLayout, { responsive: true });
+
+        // Resize charts on window resize
+        window.addEventListener('resize', () => {
+            Plotly.Plots.resize('feedbackThemesChart');
+        });
+    </script>
+</body>
+</html>

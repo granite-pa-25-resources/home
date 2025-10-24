@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area 5 Population Trends | Granite School District</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #252b3b;
+            --text-primary: #e8eaed;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-yellow: #fbbf24;
+            --accent-purple: #8b5cf6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #252b3b 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-cyan);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            color: var(--accent-cyan);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            header p {
+                font-size: 0.95rem;
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1400px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                padding: 1rem;
+                margin: 1rem auto;
+                border-radius: 8px;
+            }
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .toggle-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-color: var(--accent-cyan);
+        }
+
+        .chart-container {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                padding: 0.75rem;
+                margin: 1rem 0;
+                border-radius: 6px;
+            }
+
+            #trendsChart {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .chart-container {
+                padding: 0.5rem;
+            }
+
+            #trendsChart {
+                min-height: 350px;
+            }
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .alert-info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--accent-yellow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 2px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        select:hover,
+        select:focus {
+            border-color: var(--accent-cyan);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        label:has(input[type="radio"]:hover) {
+            color: var(--accent-cyan) !important;
+        }
+
+        @media (max-width: 768px) {
+            .back-link {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+                margin: 0.5rem;
+            }
+
+            .alert {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .stat-card {
+                padding: 0.75rem;
+            }
+
+            .chart-container {
+                padding: 0.75rem;
+            }
+
+            select {
+                font-size: 0.9rem !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Navigation Components */
+        .nav-toggle {
+            position: fixed;
+            top: 0.5rem;
+            left: 0.5rem;
+            z-index: 1000;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.6rem 0.85rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .nav-toggle:hover {
+            background: var(--accent-cyan);
+            transform: scale(1.05);
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 999;
+            padding: 80px 20px 20px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-sidebar.active {
+            left: 0;
+        }
+
+        .nav-sidebar h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-sidebar ul {
+            list-style: none;
+        }
+
+        .nav-sidebar li {
+            margin: 8px 0;
+        }
+
+        .nav-sidebar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-sidebar a:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            padding-left: 20px;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul style="border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+            <li><a href="intro.html">🏠 Home</a></li>
+            <li><a href="index.html">📊 Main Analysis</a></li>
+            <li><a href="student_mobility_data.html">🔄 Student Mobility Data</a></li>
+            <li><a href="mobility_matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="population_trends.html" style="color: var(--accent-cyan); font-weight: bold;">📈 Population Trends</a></li>
+            <li><a href="feedback_summary.html">💬 Community Feedback</a></li>
+            <li><a href="community_input.html">📝 Community Input</a></li>
+        </ul>
+        <h3>Quick Links</h3>
+        <ul>
+            <li><a href="#about">About These Data</a></li>
+            <li><a href="#key-insights">Key Insights</a></li>
+            <li><a href="#enrollment-chart">Enrollment Trends Chart</a></li>
+            <li><a href="#methodology">Statistical Methods</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay for mobile -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <header>
+        <h1>📈 Area 5 Enrollment Trends (2004-2024) & Forecasts (2025-2029)</h1>
+        <p>Historical enrollment data with multiple statistical forecast methods for all 10 Area 5 elementary schools</p>
+        <p style="font-size: 0.9em; margin-top: 0.5rem;">Data from Granite School District enrollment records | 7 Forecast Methods Available</p>
+    </header>
+
+    <div class="container-fluid px-2 px-md-4 " >
+        <div class="content-section">
+            <div class="alert alert-info mb-3 mb-md-4" id="about" style = 'color: #baa;'>
+                <h3 class="h4 mb-3">📊 About These Data</h3>
+                <p><strong>Enrollment history from 2003-04 through 2023-24</strong> shows long-term population trends for each school, with <strong>statistical forecasts through 2029</strong> using multiple forecasting methods.</p>
+                <p style="margin-top: 1rem;">Key features:</p>
+                <ul>
+                    <li><strong>21 years of historical data</strong> (solid lines) - Comprehensive enrollment perspective from 2004-2024</li>
+                    <li><strong>5-year forecasts</strong> (dotted lines) - Projections through 2029 using selected statistical method</li>
+                    <li><strong>95% confidence intervals</strong> (shaded areas) - Statistical uncertainty around forecasts forming a "cone of uncertainty". There's a 95% probability actual enrollment will fall within these bands.</li>
+                    <li><strong>7 forecast methods available</strong> - Linear Regression, Polynomial (Quadratic), Moving Average, Weighted Moving Average, Exponential Smoothing, Damped Trend, and Autoregressive (AR-2)</li>
+                    <li><strong>Model fitted values</strong> (dashed lines) - Shows how well the selected model fits historical data. Extends naturally into forecast period.</li>
+                    <li><strong>Toggle between views</strong> - Absolute student numbers or % of minimum building capacity</li>
+                    <li><strong>Color-coded by school</strong> - Consistent with other analysis pages</li>
+                    <li><strong>Interactive legend</strong> - Click school name to show/hide all its data</li>
+                </ul>
+            </div>
+
+            <div class="chart-container" id="enrollment-chart">
+                <div id="trendsChart"></div>
+                
+                <!-- Controls below chart -->
+                <div id="chartControls" class="mt-3 mt-md-4 p-3 p-md-4" style="background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <div class="row g-3 g-md-4">
+                        <!-- Forecast Method Dropdown -->
+                        <div class="col-12 col-md-6">
+                            <label for="forecastMethodSelect" style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
+                                📊 Forecast Method
+                            </label>
+                            <select id="forecastMethodSelect" onchange="toggleForecastMethod(this.value)" 
+                                    style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-secondary); color: var(--text-primary); 
+                                           border: 2px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; cursor: pointer;
+                                           transition: all 0.3s ease; font-family: inherit;">
+                                <option value="linear">Linear Regression</option>
+                                <option value="polynomial">Polynomial (Quadratic) Regression</option>
+                                <option value="moving">Simple Moving Average (3-year)</option>
+                                <option value="weighted">Weighted Moving Average</option>
+                                <option value="exponential">Exponential Smoothing with Trend</option>
+                                <option value="damped">Damped Trend Smoothing</option>
+                                <option value="autoregressive">Autoregressive Model (AR-2)</option>
+                            </select>
+            </div>
+
+                        <!-- Display Mode Radio Buttons -->
+                        <div class="col-12 col-md-6">
+                            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
+                                📈 Display Mode
+                            </label>
+                            <div class="d-flex flex-wrap gap-3 gap-md-4 align-items-center pt-2">
+                                <label class="d-flex align-items-center gap-2" style="cursor: pointer; color: var(--text-primary); font-size: 0.95rem; transition: color 0.3s ease;">
+                                    <input type="radio" name="displayMode" value="absolute" checked onchange="toggleView('absolute')"
+                                           style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent-cyan);">
+                                    <span>Student Count</span>
+                                </label>
+                                <label class="d-flex align-items-center gap-2" style="cursor: pointer; color: var(--text-primary); font-size: 0.95rem; transition: color 0.3s ease;">
+                                    <input type="radio" name="displayMode" value="percent" onchange="toggleView('percent')"
+                                           style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent-cyan);">
+                                    <span>% Min Capacity</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+                <div class="alert alert-info mt-3 mb-3" id="methodology">
+                    <p style="color: #ddd;"><strong>📊 Forecast Method Information:</strong></p>
+                    <div id="forecastMethodInfo" style="color: #ddd;"></div>
+                </div>
+
+                <div class="mt-3 p-3 p-md-4" style="background: rgba(6, 182, 212, 0.05); border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+                    <p class="mb-2 fw-bold" style="color: var(--text-secondary);">📖 How to Use This Chart:</p>
+                    <ul class="mb-3" style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <li class="mb-1"><strong>Solid lines with markers</strong> = Actual historical enrollment data (2004-2024)</li>
+                        <li class="mb-1"><strong>Dashed lines</strong> = Model fitted values showing how the selected method fits historical data</li>
+                        <li class="mb-1"><strong>Dotted lines</strong> = Forecast point estimates extending from fitted line (2025-2029)</li>
+                        <li class="mb-1"><strong>Shaded areas (cone)</strong> = 95% Confidence Intervals widening with time. Hover to see upper/lower bounds</li>
+                    </ul>
+                    <p class="mb-0 small fst-italic" style="color: var(--text-secondary);">
+                        💡 <strong>Tips:</strong> Try different forecast methods to compare projections. Click a school name in the legend to isolate its data. 
+                        Your selection will be preserved when switching methods or display modes. The fitted line shows how well the model captures historical patterns.
+                    </p>
+                </div>
+            </div>
+
+            <div class="alert alert-warning" id="key-insights">
+                <h3 style="color: #ddd;">⚠️ Key Trends from the Data</h3>
+                <div id="trendsSummary"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 px-3">
+        <div class="container-fluid">
+            <p class="mb-3"><strong>Data Source:</strong> Granite School District Enrollment Records (2003-2024)</p>
+            <p class="mb-3">Building capacity data from <a href="index.html">Area 5 Population Analysis Study</a></p>
+            
+            <div class="mt-4 mb-4" style="border-top: 2px solid var(--border-color); padding-top: 1.5rem;">
+                <h4 class="mb-3" style="color: var(--accent-cyan); font-size: 1.1rem;">📄 Source Enrollment Data PDFs</h4>
+                <p class="mb-3 small" style="color: var(--text-secondary);">
+                    Official enrollment history tables from Granite School District for each Area 5 elementary school (2003-2024):
+                </p>
+                
+                <div class="row g-2 g-md-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Cottonwood Elementary.pdf" target="_blank" 
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #ef4444; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#ef4444'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Cottonwood</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Crestview Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #f97316; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#f97316'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Crestview</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Driggs Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #fbbf24; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#fbbf24'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Driggs</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Eastwood Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #10b981; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#10b981'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Eastwood</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Morningside Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #06b6d4; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#06b6d4'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Morningside</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Oakridge Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #8b5cf6; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#8b5cf6'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Oakridge</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Oakwood Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #6366f1; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#6366f1'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Oakwood</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Penn Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #ec4899; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#ec4899'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Penn</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Rosecrest Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #14b8a6; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#14b8a6'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Rosecrest</span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="tables/population/Upland Terrace Elementary.pdf" target="_blank"
+                           style="display: block; padding: 0.75rem 1rem; background: var(--bg-tertiary); border-radius: 8px; 
+                                  color: #84cc16; text-decoration: none; border: 1px solid var(--border-color); transition: all 0.3s ease;"
+                           onmouseover="this.style.borderColor='#84cc16'; this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
+                            <span style="font-size: 0.9rem;">📊 Upland Terrace</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mb-0 mt-4 small fst-italic" style="color: var(--text-secondary);">
+                ⚠️ This is an independent analysis. Not affiliated with Granite School District.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // School colors (matching other pages)
+        const schoolColors = {
+            'Cottonwood': '#ef4444',
+            'Crestview': '#f97316',
+            'Driggs': '#fbbf24',
+            'Eastwood': '#10b981',
+            'Morningside': '#06b6d4',
+            'Oakridge': '#8b5cf6',
+            'Penn': '#ec4899',
+            'Rosecrest': '#14b8a6',
+            'Upland Terrace': '#84cc16',
+            'Oakwood': '#6366f1'
+        };
+
+        // Building capacities (minimum values)
+        const capacities = {
+            'Cottonwood': 500,
+            'Crestview': 550,
+            'Driggs': 650,
+            'Eastwood': 450,
+            'Morningside': 600,
+            'Oakridge': 550,
+            'Oakwood': 700,
+            'Penn': 600,
+            'Rosecrest': 450,
+            'Upland Terrace': 650
+        };
+
+        // Years from 2003-04 through 2023-24
+        const years = [
+            '2004', '2005', '2006', '2007', '2008', '2009',
+            '2010', '2011', '2012', '2013', '2014', '2015', '2016',
+            '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'
+        ];
+
+        // Enrollment data from PDFs (2003-04 through 2023-24)
+        const enrollmentData = {
+            'Cottonwood': [520, 527, 552, 520, 513, 489, 487, 487, 490, 493, 491, 486, 510, 512, 509, 495, 511, 422, 402, 381, 343],
+            'Crestview': [623, 605, 609, 605, 602, 599, 606, 612, 639, 677, 652, 681, 712, 701, 704, 678, 646, 515, 504, 473, 489],
+            'Driggs': [628, 665, 671, 679, 653, 630, 655, 677, 695, 661, 643, 658, 643, 638, 606, 599, 582, 466, 457, 439, 445],
+            'Eastwood': [486, 479, 480, 495, 466, 455, 491, 487, 478, 492, 475, 450, 453, 393, 313, 274, 290, 275, 275, 303, 283],
+            'Morningside': [422, 403, 399, 573, 444, 481, 356, 567, 579, 614, 686, 699, 709, 698, 455, 446, 557, 667, 565, 571, 585],
+            'Oakridge': [560, 574, 548, 568, 528, 540, 557, 533, 549, 561, 663, 569, 576, 566, 438, 433, 396, 382, 331, 313, 299],
+            'Oakwood': [436, 462, 439, 430, 431, 447, 469, 433, 462, 517, 510, 505, 479, 490, 495, 459, 445, 413, 344, 312, 543],
+            'Penn': [466, 496, 532, 598, 587, 621, 623, 631, 656, 649, 666, 650, 641, 629, 674, 620, 643, 556, 552, 520, 665],
+            'Rosecrest': [525, 491, 509, 456, 394, 390, 406, 408, 410, 499, 480, 461, 481, 462, 438, 424, 397, 320, 284, 295, 295],
+            'Upland Terrace': [550, 557, 589, 589, 572, 576, 588, 548, 569, 574, 561, 556, 546, 547, 431, 420, 466, 494, 480, 481, 476]
+        };
+
+        // Forecast years (2024-25 through 2028-29)
+        const forecastYears = ['2025', '2026', '2027', '2028', '2029'];
+        const allYears = [...years, ...forecastYears];
+
+        let currentView = 'absolute';
+        let forecastMethod = 'linear';
+        let visibilityState = {}; // Track which schools are visible
+
+        // Convert hex color to rgba
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Calculate linear regression with proper statistics
+        function linearRegression(x, y) {
+            const n = x.length;
+            if (n < 2) {
+                return { slope: NaN, intercept: NaN, se: NaN, mse: NaN, rSquared: NaN, pValue: NaN };
+            }
+            const meanX = x.reduce((a, b) => a + b, 0) / n;
+            const meanY = y.reduce((a, b) => a + b, 0) / n;
+
+            let num = 0;
+            let den = 0;
+            for (let i = 0; i < n; i++) {
+                num += (x[i] - meanX) * (y[i] - meanY);
+                den += (x[i] - meanX) ** 2;
+            }
+            const slope = den === 0 ? 0 : num / den;
+            const intercept = meanY - slope * meanX;
+
+            // Calculate predicted y for each x
+            const yPred = x.map(xi => slope * xi + intercept);
+
+            // Calculate residuals and statistics
+            const residuals = y.map((yi, i) => yi - yPred[i]);
+            const sse = residuals.reduce((sum, r) => sum + r * r, 0);
+            const sst = y.reduce((sum, yi) => sum + Math.pow(yi - meanY, 2), 0);
+            const rSquared = sst > 0 ? 1 - (sse / sst) : 0;
+            
+            const degreesOfFreedom = n - 2;
+            const mse = degreesOfFreedom > 0 ? sse / degreesOfFreedom : NaN;
+            const se = isNaN(mse) ? NaN : Math.sqrt(mse);
+
+            // Calculate standard error of slope
+            const seSlope = den > 0 ? se / Math.sqrt(den) : NaN;
+            
+            // Calculate t-statistic and p-value
+            const tStat = seSlope > 0 ? Math.abs(slope / seSlope) : 0;
+            const pValue = tDistributionPValue(tStat, degreesOfFreedom);
+
+            return { slope, intercept, se, mse, rSquared, pValue, tStat, seSlope };
+        }
+
+        // Calculate two-tailed p-value from t-distribution
+        function tDistributionPValue(t, df) {
+            if (df <= 0 || isNaN(t) || isNaN(df)) return 1;
+            
+            // Using approximation for t-distribution CDF
+            // For simplicity, using normal approximation for large df
+            if (df > 30) {
+                // Normal approximation
+                return 2 * (1 - normalCDF(t));
+            }
+            
+            // For smaller df, use a reasonable approximation
+            const x = df / (df + t * t);
+            const a = df / 2;
+            const b = 0.5;
+            
+            // Incomplete beta function approximation
+            let betaApprox;
+            if (x < 0.5) {
+                betaApprox = incompleteBeta(x, a, b);
+            } else {
+                betaApprox = 1 - incompleteBeta(1 - x, b, a);
+            }
+            
+            return betaApprox;
+        }
+
+        // Standard normal CDF
+        function normalCDF(x) {
+            const t = 1 / (1 + 0.2316419 * Math.abs(x));
+            const d = 0.3989423 * Math.exp(-x * x / 2);
+            const prob = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+            return x > 0 ? 1 - prob : prob;
+        }
+
+        // Incomplete beta function approximation
+        function incompleteBeta(x, a, b) {
+            if (x <= 0) return 0;
+            if (x >= 1) return 1;
+            
+            // Using series expansion for approximation
+            const lnBeta = logGamma(a) + logGamma(b) - logGamma(a + b);
+            const front = Math.exp(Math.log(x) * a + Math.log(1 - x) * b - lnBeta) / a;
+            
+            let f = 1, c = 1, d = 0;
+            
+            for (let i = 0; i <= 200; i++) {
+                const m = i / 2;
+                let numerator;
+                if (i === 0) {
+                    numerator = 1;
+                } else if (i % 2 === 0) {
+                    numerator = (m * (b - m) * x) / ((a + 2 * m - 1) * (a + 2 * m));
+                } else {
+                    numerator = -((a + m) * (a + b + m) * x) / ((a + 2 * m) * (a + 2 * m + 1));
+                }
+                
+                d = 1 + numerator * d;
+                if (Math.abs(d) < 1e-30) d = 1e-30;
+                d = 1 / d;
+                
+                c = 1 + numerator / c;
+                if (Math.abs(c) < 1e-30) c = 1e-30;
+                
+                const cd = c * d;
+                f *= cd;
+                
+                if (Math.abs(cd - 1) < 1e-8) break;
+            }
+            
+            return front * f;
+        }
+
+        // Log gamma function
+        function logGamma(x) {
+            const cof = [76.18009172947146, -86.50532032941677, 24.01409824083091,
+                        -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+            let y = x;
+            let tmp = x + 5.5;
+            tmp -= (x + 0.5) * Math.log(tmp);
+            let ser = 1.000000000190015;
+            for (let j = 0; j < 6; j++) {
+                ser += cof[j] / ++y;
+            }
+            return -tmp + Math.log(2.5066282746310005 * ser / x);
+        }
+
+        // Polynomial regression (quadratic)
+        function polynomialRegression(x, y, degree = 2) {
+            const n = x.length;
+            if (n < degree + 1) {
+                return { coefficients: [], se: NaN };
+            }
+
+            // Build design matrix for polynomial fitting
+            const X = [];
+            for (let i = 0; i < n; i++) {
+                const row = [];
+                for (let j = 0; j <= degree; j++) {
+                    row.push(Math.pow(x[i], j));
+                }
+                X.push(row);
+            }
+
+            // Solve using normal equations: (X'X)^-1 X'y
+            const Xt = transpose(X);
+            const XtX = matrixMultiply(Xt, X);
+            const XtXinv = matrixInverse(XtX);
+            const Xty = matrixVectorMultiply(Xt, y);
+            const coefficients = matrixVectorMultiply(XtXinv, Xty);
+
+            // Calculate standard error
+            const yPred = X.map(row => row.reduce((sum, val, idx) => sum + val * coefficients[idx], 0));
+            const residuals = y.map((yi, i) => yi - yPred[i]);
+            const sse = residuals.reduce((sum, r) => sum + r * r, 0);
+            const degreesOfFreedom = n - (degree + 1);
+            const mse = degreesOfFreedom > 0 ? sse / degreesOfFreedom : 0;
+            const se = Math.sqrt(mse);
+
+            return { coefficients, se, predict: (xVal) => {
+                let result = 0;
+                for (let i = 0; i <= degree; i++) {
+                    result += coefficients[i] * Math.pow(xVal, i);
+                }
+                return result;
+            }};
+        }
+
+        // Matrix operations for polynomial regression
+        function transpose(matrix) {
+            return matrix[0].map((_, i) => matrix.map(row => row[i]));
+        }
+
+        function matrixMultiply(a, b) {
+            const result = [];
+            for (let i = 0; i < a.length; i++) {
+                result[i] = [];
+                for (let j = 0; j < b[0].length; j++) {
+                    let sum = 0;
+                    for (let k = 0; k < a[0].length; k++) {
+                        sum += a[i][k] * b[k][j];
+                    }
+                    result[i][j] = sum;
+                }
+            }
+            return result;
+        }
+
+        function matrixVectorMultiply(matrix, vector) {
+            return matrix.map(row => row.reduce((sum, val, idx) => sum + val * vector[idx], 0));
+        }
+
+        function matrixInverse(matrix) {
+            const n = matrix.length;
+            const identity = matrix.map((row, i) => row.map((_, j) => i === j ? 1 : 0));
+            const augmented = matrix.map((row, i) => [...row, ...identity[i]]);
+
+            // Gaussian elimination
+            for (let i = 0; i < n; i++) {
+                let maxRow = i;
+                for (let k = i + 1; k < n; k++) {
+                    if (Math.abs(augmented[k][i]) > Math.abs(augmented[maxRow][i])) {
+                        maxRow = k;
+                    }
+                }
+                [augmented[i], augmented[maxRow]] = [augmented[maxRow], augmented[i]];
+
+                const pivot = augmented[i][i];
+                if (Math.abs(pivot) < 1e-10) continue;
+
+                for (let j = 0; j < 2 * n; j++) {
+                    augmented[i][j] /= pivot;
+                }
+
+                for (let k = 0; k < n; k++) {
+                    if (k !== i) {
+                        const factor = augmented[k][i];
+                        for (let j = 0; j < 2 * n; j++) {
+                            augmented[k][j] -= factor * augmented[i][j];
+                        }
+                    }
+                }
+            }
+
+            return augmented.map(row => row.slice(n));
+        }
+
+        // Moving average forecast
+        function movingAverageForecast(data, periods = 3, stepsAhead = 5) {
+            const forecasts = [];
+            for (let i = 0; i < stepsAhead; i++) {
+                const recentData = i === 0
+                    ? data.slice(-periods)
+                    : [...data.slice(-periods + i), ...forecasts.slice(0, i)];
+                const avg = recentData.slice(-periods).reduce((a, b) => a + b, 0) / periods;
+                forecasts.push(avg);
+            }
+            return forecasts;
+        }
+
+        // Weighted moving average (more recent = higher weight)
+        function weightedMovingAverage(data, periods = 3, stepsAhead = 5) {
+            const forecasts = [];
+            const weights = Array.from({length: periods}, (_, i) => i + 1);
+            const weightSum = weights.reduce((a, b) => a + b, 0);
+            
+            for (let i = 0; i < stepsAhead; i++) {
+                const recentData = i === 0
+                    ? data.slice(-periods)
+                    : [...data.slice(-(periods - i)), ...forecasts];
+                
+                const lastPeriods = recentData.slice(-periods);
+                const weightedSum = lastPeriods.reduce((sum, val, idx) => 
+                    sum + val * weights[idx], 0);
+                forecasts.push(weightedSum / weightSum);
+            }
+            return forecasts;
+        }
+
+        // Autoregressive model (AR)
+        function autoregressiveForecast(data, lag = 2, stepsAhead = 5) {
+            const n = data.length;
+            if (n < lag + 1) return Array(stepsAhead).fill(data[n-1]);
+            
+            // Build X and y for AR model
+            const X = [];
+            const y = [];
+            for (let i = lag; i < n; i++) {
+                const row = [];
+                for (let j = 0; j < lag; j++) {
+                    row.push(data[i - lag + j]);
+                }
+                X.push(row);
+                y.push(data[i]);
+            }
+            
+            // Estimate AR coefficients using least squares
+            const Xt = transpose(X);
+            const XtX = matrixMultiply(Xt, X);
+            const XtXinv = matrixInverse(XtX);
+            const Xty = matrixVectorMultiply(Xt, y);
+            const coefficients = matrixVectorMultiply(XtXinv, Xty);
+            
+            // Generate forecasts
+            const forecasts = [];
+            const allData = [...data];
+            
+            for (let i = 0; i < stepsAhead; i++) {
+                const recent = allData.slice(-lag);
+                const forecast = recent.reduce((sum, val, idx) => 
+                    sum + val * coefficients[idx], 0);
+                forecasts.push(forecast);
+                allData.push(forecast);
+            }
+            
+            return forecasts;
+        }
+
+        // Damped trend exponential smoothing
+        function dampedTrendSmoothing(data, alpha = 0.3, beta = 0.1, phi = 0.9, stepsAhead = 5) {
+            const n = data.length;
+            if (n < 2) return Array(stepsAhead).fill(data[0] || 0);
+            
+            // Initialize level and trend
+            let level = data[0];
+            let trend = data[1] - data[0];
+            
+            // Update through historical data
+            for (let i = 1; i < n; i++) {
+                const prevLevel = level;
+                const prevTrend = trend;
+                
+                level = alpha * data[i] + (1 - alpha) * (prevLevel + phi * prevTrend);
+                trend = beta * (level - prevLevel) + (1 - beta) * phi * prevTrend;
+            }
+            
+            // Generate forecasts with damped trend
+            const forecasts = [];
+            let dampingFactor = phi;
+            for (let i = 1; i <= stepsAhead; i++) {
+                const forecast = level + dampingFactor * trend;
+                forecasts.push(forecast);
+                dampingFactor *= phi; // Trend dampens over time
+            }
+            
+            return forecasts;
+        }
+
+        // Exponential smoothing forecast
+        function exponentialSmoothing(data, alpha = 0.3, stepsAhead = 5) {
+            let smoothed = data[0];
+            for (let i = 1; i < data.length; i++) {
+                smoothed = alpha * data[i] + (1 - alpha) * smoothed;
+            }
+            // Calculate trend using linear regression on last few points
+            const recentPoints = 5;
+            const recentData = data.slice(-recentPoints);
+            const recentX = Array.from({length: recentPoints}, (_, i) => i);
+            const regression = linearRegression(recentX, recentData);
+            const trend = regression.slope;
+            
+            // Project forward
+            return Array(stepsAhead).fill(0).map((_, i) => smoothed + trend * (i + 1));
+        }
+
+        // Calculate forecast error standard deviation for confidence intervals
+        function calculateForecastError(data, forecastValues) {
+            // Use historical data to estimate forecast error
+            const errors = [];
+            const n = data.length;
+            const startIdx = Math.max(5, Math.floor(n * 0.3)); // Use at least 30% of data for validation
+            
+            // Calculate one-step-ahead forecast errors using the same method
+            for (let i = startIdx; i < n; i++) {
+                const historicalData = data.slice(0, i);
+                const x = Array.from({length: i}, (_, idx) => idx);
+                let prediction;
+                
+                if (forecastMethod === 'linear') {
+                    const reg = linearRegression(x, historicalData);
+                    prediction = reg.slope * i + reg.intercept;
+                } else if (forecastMethod === 'polynomial') {
+                    const polyReg = polynomialRegression(x, historicalData, 2);
+                    prediction = polyReg.predict(i);
+                } else if (forecastMethod === 'moving') {
+                    const recent = historicalData.slice(-3);
+                    prediction = recent.reduce((a, b) => a + b, 0) / recent.length;
+                } else if (forecastMethod === 'weighted') {
+                    const periods = 3;
+                    const recent = historicalData.slice(-periods);
+                    const weights = Array.from({length: periods}, (_, idx) => idx + 1);
+                    const weightSum = weights.reduce((a, b) => a + b, 0);
+                    prediction = recent.reduce((sum, val, idx) => sum + val * weights[idx], 0) / weightSum;
+                } else if (forecastMethod === 'exponential') {
+                    const alpha = 0.3;
+                    let smoothed = historicalData[0];
+                    for (let j = 1; j < historicalData.length; j++) {
+                        smoothed = alpha * historicalData[j] + (1 - alpha) * smoothed;
+                    }
+                    const recentPoints = 5;
+                    const recentData = historicalData.slice(-recentPoints);
+                    const recentX = Array.from({length: recentPoints}, (_, idx) => idx);
+                    const reg = linearRegression(recentX, recentData);
+                    prediction = smoothed + reg.slope;
+                } else if (forecastMethod === 'damped') {
+                    const forecasts = dampedTrendSmoothing(historicalData, 0.3, 0.1, 0.9, 1);
+                    prediction = forecasts[0];
+                } else if (forecastMethod === 'autoregressive') {
+                    const forecasts = autoregressiveForecast(historicalData, 2, 1);
+                    prediction = forecasts[0];
+                }
+                
+                errors.push(data[i] - prediction);
+            }
+            
+            // Calculate standard deviation of errors
+            if (errors.length === 0) return 10; // fallback
+            const meanError = errors.reduce((a, b) => a + b, 0) / errors.length;
+            const variance = errors.reduce((sum, e) => sum + Math.pow(e - meanError, 2), 0) / Math.max(1, errors.length - 1);
+            return Math.sqrt(variance);
+        }
+
+        // Save current visibility state from the chart
+        function saveVisibilityState() {
+            const chartDiv = document.getElementById('trendsChart');
+            if (chartDiv && chartDiv.data) {
+                Object.keys(enrollmentData).forEach((school) => {
+                    const trace = chartDiv.data.find(t => t.name === school);
+                    if (trace) {
+                        visibilityState[school] = trace.visible !== 'legendonly';
+                    }
+                });
+            }
+        }
+
+        function createChart() {
+            // Save current visibility state before recreating chart
+            saveVisibilityState();
+
+            const traces = [];
+            const xValues = Array.from({length: years.length}, (_, i) => i);
+            const allXValues = Array.from({length: allYears.length}, (_, i) => i);
+            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => years.length + i);
+
+            // Create a trace for each school
+            Object.keys(enrollmentData).forEach((school, idx) => {
+                const yValues = currentView === 'absolute'
+                    ? enrollmentData[school]
+                    : enrollmentData[school].map(val => (val / capacities[school]) * 100);
+
+                const rawData = currentView === 'absolute'
+                    ? enrollmentData[school]
+                    : enrollmentData[school].map(val => (val / capacities[school]) * 100);
+
+                // Calculate regression (always for reference)
+                const regression = linearRegression(xValues, yValues);
+
+                // Generate fitted values and forecast based on selected method
+                let fittedValues;
+                let forecast;
+                let standardError;
+
+                if (forecastMethod === 'linear') {
+                    fittedValues = xValues.map(x => regression.slope * x + regression.intercept);
+                    forecast = forecastXValues.map(x => regression.slope * x + regression.intercept);
+                    standardError = regression.se;
+                } else if (forecastMethod === 'polynomial') {
+                    const polyReg = polynomialRegression(xValues, yValues, 2);
+                    fittedValues = xValues.map(x => polyReg.predict(x));
+                    forecast = forecastXValues.map(x => polyReg.predict(x));
+                    standardError = polyReg.se;
+                } else if (forecastMethod === 'moving') {
+                    // For moving average, fitted values are just the moving averages
+                    fittedValues = yValues.map((_, i) => {
+                        if (i < 3) return yValues[i];
+                        const recent = yValues.slice(Math.max(0, i - 2), i + 1);
+                        return recent.reduce((a, b) => a + b, 0) / recent.length;
+                    });
+                    forecast = movingAverageForecast(rawData, 3, 5);
+                    standardError = calculateForecastError(rawData, forecast);
+                } else if (forecastMethod === 'weighted') {
+                    fittedValues = yValues.map((_, i) => {
+                        if (i < 3) return yValues[i];
+                        const periods = 3;
+                        const recent = yValues.slice(Math.max(0, i - periods + 1), i + 1);
+                        const actualPeriods = recent.length;
+                        const weights = Array.from({length: actualPeriods}, (_, idx) => idx + 1);
+                        const weightSum = weights.reduce((a, b) => a + b, 0);
+                        return recent.reduce((sum, val, idx) => sum + val * weights[idx], 0) / weightSum;
+                    });
+                    forecast = weightedMovingAverage(rawData, 3, 5);
+                    standardError = calculateForecastError(rawData, forecast);
+                } else if (forecastMethod === 'exponential') {
+                    // Calculate smoothed values through history
+                    const alpha = 0.3;
+                    fittedValues = [];
+                    let smoothed = yValues[0];
+                    fittedValues.push(smoothed);
+                    for (let i = 1; i < yValues.length; i++) {
+                        smoothed = alpha * yValues[i] + (1 - alpha) * smoothed;
+                        fittedValues.push(smoothed);
+                    }
+                    forecast = exponentialSmoothing(rawData, 0.3, 5);
+                    standardError = calculateForecastError(rawData, forecast);
+                } else if (forecastMethod === 'damped') {
+                    // Damped trend fitted values
+                    const alpha = 0.3, beta = 0.1, phi = 0.9;
+                    let level = yValues[0];
+                    let trend = yValues.length > 1 ? yValues[1] - yValues[0] : 0;
+                    fittedValues = [level];
+                    
+                    for (let i = 1; i < yValues.length; i++) {
+                        const prevLevel = level;
+                        const prevTrend = trend;
+                        level = alpha * yValues[i] + (1 - alpha) * (prevLevel + phi * prevTrend);
+                        trend = beta * (level - prevLevel) + (1 - beta) * phi * prevTrend;
+                        fittedValues.push(level + phi * trend);
+                    }
+                    forecast = dampedTrendSmoothing(rawData, 0.3, 0.1, 0.9, 5);
+                    standardError = calculateForecastError(rawData, forecast);
+                } else if (forecastMethod === 'autoregressive') {
+                    // AR fitted values
+                    const lag = 2;
+                    fittedValues = yValues.map((_, i) => {
+                        if (i < lag) return yValues[i];
+                        const historical = yValues.slice(0, i);
+                        const forecasts = autoregressiveForecast(historical, lag, 1);
+                        return forecasts[0];
+                    });
+                    forecast = autoregressiveForecast(rawData, 2, 5);
+                    standardError = calculateForecastError(rawData, forecast);
+                }
+
+                // Calculate confidence intervals (95%)
+                const tStat = 2.086; // t-value for 95% CI with ~19 df
+                let ciUpper, ciLower;
+
+                if (forecastMethod === 'linear' || forecastMethod === 'polynomial') {
+                const xMean = xValues.reduce((a, b) => a + b, 0) / xValues.length;
+                const xVar = xValues.reduce((sum, x) => sum + Math.pow(x - xMean, 2), 0);
+                    ciUpper = forecast.map((yPred, i) => {
+                    const x = forecastXValues[i];
+                        const seForecast = standardError * Math.sqrt(1 + 1/xValues.length + Math.pow(x - xMean, 2) / xVar);
+                    return yPred + tStat * seForecast;
+                });
+                    ciLower = forecast.map((yPred, i) => {
+                    const x = forecastXValues[i];
+                        const seForecast = standardError * Math.sqrt(1 + 1/xValues.length + Math.pow(x - xMean, 2) / xVar);
+                    return yPred - tStat * seForecast;
+                });
+                } else {
+                    // For non-parametric methods, use empirical forecast error
+                    // Confidence intervals widen with forecast horizon
+                    ciUpper = forecast.map((yPred, i) => {
+                        const horizonFactor = Math.sqrt(i + 1); // Error grows with forecast horizon
+                        return yPred + tStat * standardError * horizonFactor;
+                    });
+                    ciLower = forecast.map((yPred, i) => {
+                        const horizonFactor = Math.sqrt(i + 1);
+                        return yPred - tStat * standardError * horizonFactor;
+                    });
+                }
+
+                // Determine visibility based on saved state
+                const isVisible = visibilityState[school] !== undefined 
+                    ? visibilityState[school] 
+                    : true;
+                const visibleValue = isVisible ? true : 'legendonly';
+
+                // Main data line (historical)
+                traces.push({
+                    x: years,
+                    y: yValues,
+                    name: school,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: {
+                        color: schoolColors[school],
+                        width: 2
+                    },
+                    marker: {
+                        size: 6,
+                        color: schoolColors[school]
+                    },
+                    legendgroup: school,
+                    showlegend: true,
+                    visible: visibleValue
+                });
+
+                // Fitted/Trend line (historical period) - shows model fit
+                traces.push({
+                    x: years,
+                    y: fittedValues,
+                    name: `${school} fitted`,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                        color: schoolColors[school],
+                        width: 1.5,
+                        dash: 'dash'
+                    },
+                    legendgroup: school,
+                    showlegend: false,
+                    visible: visibleValue,
+                    hovertemplate: currentView === 'absolute'
+                        ? 'Fitted: %{y:.0f}<br>%{x}<extra></extra>'
+                        : 'Fitted: %{y:.1f}%<br>%{x}<extra></extra>'
+                });
+
+                // Forecast line
+                traces.push({
+                    x: forecastYears,
+                    y: forecast,
+                    name: `${school} forecast`,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                        color: schoolColors[school],
+                        width: 2,
+                        dash: 'dot'
+                    },
+                    legendgroup: school,
+                    showlegend: false,
+                    visible: visibleValue,
+                    hovertemplate: currentView === 'absolute'
+                        ? '%{y:.0f} students<br>%{x}<br>(95% CI)<extra></extra>'
+                        : '%{y:.1f}% capacity<br>%{x}<br>(95% CI)<extra></extra>'
+                });
+
+                // Confidence interval (upper bound)
+                traces.push({
+                    x: forecastYears,
+                    y: ciUpper,
+                    mode: 'lines',
+                    line: { color: 'transparent' },
+                    showlegend: false,
+                    visible: visibleValue,
+                    hovertemplate: currentView === 'absolute'
+                        ? 'Upper 95% CI: %{y:.0f}<br>%{x}<extra></extra>'
+                        : 'Upper 95% CI: %{y:.1f}%<br>%{x}<extra></extra>',
+                    legendgroup: school,
+                    name: `${school} CI Upper`
+                });
+
+                // Confidence interval (lower bound)
+                traces.push({
+                    x: forecastYears,
+                    y: ciLower,
+                    mode: 'lines',
+                    line: { color: 'transparent' },
+                    showlegend: false,
+                    visible: visibleValue,
+                    fill: 'tonexty',
+                    fillcolor: hexToRgba(schoolColors[school], 0.15),
+                    hovertemplate: currentView === 'absolute'
+                        ? 'Lower 95% CI: %{y:.0f}<br>%{x}<extra></extra>'
+                        : 'Lower 95% CI: %{y:.1f}%<br>%{x}<extra></extra>',
+                    legendgroup: school,
+                    name: `${school} CI Lower`
+                });
+            });
+
+            const methodName = {
+                'linear': 'Linear Regression',
+                'polynomial': 'Polynomial Regression',
+                'moving': 'Moving Average',
+                'weighted': 'Weighted Moving Average',
+                'exponential': 'Exponential Smoothing',
+                'damped': 'Damped Trend',
+                'autoregressive': 'Autoregressive (AR-2)'
+            }[forecastMethod];
+
+            // Responsive layout based on screen size
+            const isMobile = window.innerWidth < 768;
+            const isSmallMobile = window.innerWidth < 576;
+
+            const layout = {
+                title: {
+                    text: currentView === 'absolute'
+                        ? `Area 5 Schools Enrollment Trends (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`
+                        : `Area 5 Schools Enrollment as % of Min Building Capacity (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`,
+                    font: { size: isMobile ? 14 : 18, color: '#e8eaed' }
+                },
+                xaxis: {
+                    title: isMobile ? '' : 'School Year',
+                    color: '#9ca3af',
+                    gridcolor: '#374151',
+                    tickangle: -45,
+                    tickfont: { size: isMobile ? 9 : 12 }
+                },
+                yaxis: {
+                    title: isMobile ? '' : (currentView === 'absolute' ? 'Student Count' : '% of Min Capacity'),
+                    color: '#9ca3af',
+                    gridcolor: '#374151',
+                    tickfont: { size: isMobile ? 10 : 12 }
+                },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#e8eaed', size: isMobile ? 10 : 12 },
+                hovermode: 'closest',
+                legend: {
+                    x: isMobile ? 0 : 1.05,
+                    y: isMobile ? -0.2 : 1,
+                    xanchor: isMobile ? 'left' : 'left',
+                    yanchor: isMobile ? 'top' : 'top',
+                    orientation: isMobile ? 'h' : 'v',
+                    bgcolor: 'rgba(37, 43, 59, 0.9)',
+                    bordercolor: '#374151',
+                    borderwidth: 1,
+                    font: { size: isMobile ? 9 : 12 }
+                },
+                margin: isMobile 
+                    ? { t: 40, b: isSmallMobile ? 120 : 100, l: 50, r: 20 }
+                    : { t: 60, b: 100, l: 80, r: 150 },
+                height: isMobile ? (isSmallMobile ? 450 : 500) : 600,
+                autosize: true
+                };
+
+            Plotly.newPlot('trendsChart', traces, layout, { responsive: true }).then(function() {
+                // Add event listener to track legend clicks
+                const chartDiv = document.getElementById('trendsChart');
+                chartDiv.on('plotly_legendclick', function(data) {
+                    // Update visibility state when legend is clicked
+                    const schoolName = data.data[data.curveNumber].name;
+                    // Find the main school name (without suffixes like 'fitted', 'forecast', etc)
+                    const schools = Object.keys(enrollmentData);
+                    const clickedSchool = schools.find(s => schoolName === s || schoolName.startsWith(s));
+                    
+                    if (clickedSchool) {
+                        // Toggle visibility state
+                        const currentlyVisible = visibilityState[clickedSchool] !== false;
+                        visibilityState[clickedSchool] = !currentlyVisible;
+                    }
+                });
+            });
+            updateTrendsSummary();
+        }
+
+        function updateTrendsSummary() {
+            const summaryDiv = document.getElementById('trendsSummary');
+            const xValues = Array.from({length: years.length}, (_, i) => i);
+            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => years.length + i);
+
+            const methodName = {
+                'linear': 'Linear Regression',
+                'polynomial': 'Polynomial',
+                'moving': 'Moving Avg',
+                'weighted': 'Weighted MA',
+                'exponential': 'Exp Smoothing',
+                'damped': 'Damped Trend',
+                'autoregressive': 'AR-2'
+            }[forecastMethod];
+
+            // Categorize schools by trend
+            const declining = [];
+            const growing = [];
+            const noTrend = [];
+
+            Object.keys(enrollmentData).forEach(school => {
+                const data = enrollmentData[school];
+                const regression = linearRegression(xValues, data);
+                
+                const schoolData = {
+                    name: school,
+                    data: data,
+                    regression: regression,
+                    start: data[0],
+                    end: data[data.length - 1]
+                };
+
+                // Categorize based on p-value (α = 0.05)
+                if (regression.pValue < 0.05) {
+                    if (regression.slope < 0) {
+                        declining.push(schoolData);
+                    } else {
+                        growing.push(schoolData);
+                    }
+                } else {
+                    noTrend.push(schoolData);
+                }
+            });
+
+            let summaryHTML = `
+                <div style="color: #ddd; margin-bottom: 1.5rem;">
+                    <p style="margin: 0 0 0.5rem 0;"><strong>Historical Trends (2004-2024) and ${methodName} Forecasts (2025-2029):</strong></p>
+                    <p style="margin: 0; font-size: 0.9rem; font-style: italic; color: #aaa;">
+                        Statistical significance determined by p-value &lt; 0.05. R² shows goodness of fit.
+                    </p>
+                </div>
+            `;
+
+            // Function to render school cards
+            const renderSchool = (schoolData) => {
+                const school = schoolData.name;
+                const data = schoolData.data;
+                const regression = schoolData.regression;
+                const start = schoolData.start;
+                const end = schoolData.end;
+                const change = end - start;
+                const percentChange = ((change / start) * 100).toFixed(1);
+                const avgAnnualChange = (regression.slope).toFixed(1);
+
+                // Generate forecast for this school
+                let forecast2029;
+                
+                if (forecastMethod === 'linear') {
+                    forecast2029 = regression.slope * (years.length + 4) + regression.intercept;
+                } else if (forecastMethod === 'polynomial') {
+                    const polyReg = polynomialRegression(xValues, data, 2);
+                    forecast2029 = polyReg.predict(years.length + 4);
+                } else if (forecastMethod === 'moving') {
+                    const forecasts = movingAverageForecast(data, 3, 5);
+                    forecast2029 = forecasts[4];
+                } else if (forecastMethod === 'weighted') {
+                    const forecasts = weightedMovingAverage(data, 3, 5);
+                    forecast2029 = forecasts[4];
+                } else if (forecastMethod === 'exponential') {
+                    const forecasts = exponentialSmoothing(data, 0.3, 5);
+                    forecast2029 = forecasts[4];
+                } else if (forecastMethod === 'damped') {
+                    const forecasts = dampedTrendSmoothing(data, 0.3, 0.1, 0.9, 5);
+                    forecast2029 = forecasts[4];
+                } else if (forecastMethod === 'autoregressive') {
+                    const forecasts = autoregressiveForecast(data, 2, 5);
+                    forecast2029 = forecasts[4];
+                }
+
+                const forecastChange = Math.round(forecast2029 - end);
+                
+                // Determine trend category and styling
+                let trendLabel, trendIcon, trendClass;
+                if (regression.pValue < 0.05) {
+                    if (regression.slope < 0) {
+                        trendLabel = 'Statistically Significant Decline';
+                        trendIcon = '📉';
+                        trendClass = 'color: #ef4444;';
+                    } else {
+                        trendLabel = 'Statistically Significant Growth';
+                        trendIcon = '📈';
+                        trendClass = 'color: #10b981;';
+                    }
+                } else {
+                    trendLabel = 'No Significant Trend';
+                    trendIcon = '📊';
+                    trendClass = 'color: #fbbf24;';
+                }
+
+                const forecastTrendClass = forecastChange < 0 ? 'color: #ef4444;' : 'color: #10b981;';
+
+                return `
+                    <div style="padding: 1rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 4px solid ${schoolColors[school]};">
+                        <div style="margin-bottom: 0.75rem;">
+                            <strong style="color: ${schoolColors[school]}; font-size: 1.05rem;">${school}</strong>
+                            <span style="${trendClass}; margin-left: 0.5rem; font-weight: 600;">${trendIcon} ${trendLabel}</span>
+                        </div>
+                        <div style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">
+                            <div style="margin-bottom: 0.25rem;">
+                                <strong>Historical:</strong> ${start} (2004) → ${end} (2024) = 
+                        <strong style="${change < 0 ? 'color: #ef4444;' : 'color: #10b981;'}">${change > 0 ? '+' : ''}${change} students (${percentChange}%)</strong>
+                            </div>
+                            <div style="margin-bottom: 0.25rem;">
+                                <strong>Linear Trend:</strong> ${avgAnnualChange > 0 ? '+' : ''}${avgAnnualChange} students/year 
+                                <span style="color: #aaa; font-size: 0.85rem;">
+                                    (R² = ${regression.rSquared.toFixed(3)}, p = ${regression.pValue < 0.001 ? '< 0.001' : regression.pValue.toFixed(3)})
+                                </span>
+                            </div>
+                            <div>
+                                <strong>${methodName} Forecast:</strong> ${Math.round(forecast2029)} students by 2029 
+                                <span style="${forecastTrendClass}">(${forecastChange > 0 ? '+' : ''}${forecastChange} from 2024)</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Render categorized schools
+            summaryHTML += '<div style="display: grid; gap: 1rem;">';
+            
+            if (declining.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: #ef4444; margin-bottom: 0.75rem; font-size: 1.1rem;">
+                            📉 Declining Enrollment (${declining.length} schools)
+                        </h4>
+                        <div style="display: grid; gap: 0.75rem;">
+                            ${declining.map(renderSchool).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (growing.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: #10b981; margin-bottom: 0.75rem; font-size: 1.1rem;">
+                            📈 Growing Enrollment (${growing.length} schools)
+                        </h4>
+                        <div style="display: grid; gap: 0.75rem;">
+                            ${growing.map(renderSchool).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (noTrend.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: #fbbf24; margin-bottom: 0.75rem; font-size: 1.1rem;">
+                            📊 No Significant Trend (${noTrend.length} schools)
+                        </h4>
+                        <div style="display: grid; gap: 0.75rem;">
+                            ${noTrend.map(renderSchool).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            summaryHTML += '</div>';
+            summaryDiv.innerHTML = summaryHTML;
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            createChart();
+        }
+
+        function toggleForecastMethod(method) {
+            forecastMethod = method;
+            updateForecastMethodInfo();
+            createChart();
+        }
+
+        function updateForecastMethodInfo() {
+            const infoDiv = document.getElementById('forecastMethodInfo');
+            let infoHTML = '';
+            
+            if (forecastMethod === 'linear') {
+                infoHTML = `
+                    <p><strong>Linear Regression:</strong> Fits a straight line through historical data using ordinary least squares (OLS). 
+                    Projects future enrollment based on the constant long-term trend. Equation: y = mx + b</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on regression standard error with proper statistical formulas. 
+                    Intervals widen as forecasts extend further from historical data.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with consistent linear enrollment trends over time</em></p>
+                `;
+            } else if (forecastMethod === 'polynomial') {
+                infoHTML = `
+                    <p><strong>Polynomial (Quadratic) Regression:</strong> Fits a curved parabola (degree 2 polynomial) through historical data. 
+                    Can capture acceleration or deceleration in enrollment trends. Equation: y = ax² + bx + c</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on polynomial regression standard error. Accounts for model complexity 
+                    and extrapolation uncertainty.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with accelerating/decelerating enrollment changes, or U-shaped trends</em></p>
+                `;
+            } else if (forecastMethod === 'moving') {
+                infoHTML = `
+                    <p><strong>Simple Moving Average (3-year):</strong> Uses the unweighted average of the most recent 3 years to predict the next year. 
+                    Simple and robust to outliers. Each forecast feeds into the next.</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on historical one-step-ahead forecast errors. Intervals widen with forecast 
+                    horizon using √time rule to reflect compounding uncertainty.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with stable recent enrollment and minimal trend</em></p>
+                `;
+            } else if (forecastMethod === 'weighted') {
+                infoHTML = `
+                    <p><strong>Weighted Moving Average (3-year):</strong> Averages the most recent 3 years with linearly increasing weights 
+                    (weights: 1, 2, 3). More recent years have greater influence on forecasts.</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on historical forecast errors. Intervals grow with forecast horizon 
+                    to account for increasing uncertainty in predictions.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools where recent enrollment patterns are more indicative than older data</em></p>
+                `;
+            } else if (forecastMethod === 'exponential') {
+                infoHTML = `
+                    <p><strong>Exponential Smoothing with Trend:</strong> Smoothes historical data with exponentially decreasing weights (α=0.3). 
+                    Incorporates linear trend estimated from recent 5-year pattern for projection.</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on empirical forecast errors from cross-validation. Intervals widen 
+                    with forecast horizon using square-root scaling.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with gradual trend changes where recent data is most informative</em></p>
+                `;
+            } else if (forecastMethod === 'damped') {
+                infoHTML = `
+                    <p><strong>Damped Trend Exponential Smoothing:</strong> Advanced method that separates level and trend components with damping 
+                    factor φ=0.9. Trends gradually flatten in forecasts, preventing unrealistic long-term extrapolation.</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on one-step-ahead forecast errors. Intervals account for both model 
+                    uncertainty and trend damping effects.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with trends that may moderate over time; conservative long-range forecasts</em></p>
+                `;
+            } else if (forecastMethod === 'autoregressive') {
+                infoHTML = `
+                    <p><strong>Autoregressive Model (AR-2):</strong> Statistical model where each value depends on the previous 2 values. 
+                    Coefficients estimated via least squares. Captures short-term dependencies and momentum.</p>
+                    <p><strong>95% Confidence Intervals:</strong> Based on historical prediction errors from rolling cross-validation. 
+                    Reflects uncertainty in AR coefficients and forecast propagation.</p>
+                    <p style="margin-top: 0.5rem;"><em>Best for: Schools with enrollment patterns that exhibit momentum or short-term autocorrelation</em></p>
+                `;
+            }
+            
+            infoDiv.innerHTML = infoHTML;
+        }
+
+        // Initialize chart on page load
+        updateForecastMethodInfo();
+        createChart();
+    </script>
+
+    <!-- Navigation Toggle Script -->
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navOverlay = document.getElementById('navOverlay');
+
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            navSidebar.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        navToggle.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Close nav when clicking a link
+        const navLinks = navSidebar.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (link.getAttribute('href').startsWith('#')) {
+                    toggleNav();
+                }
+            });
+        });
+
+        // Close nav on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navSidebar.classList.contains('active')) {
+                toggleNav();
+            }
+        });
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

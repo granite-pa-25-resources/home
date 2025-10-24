@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Mobility Matrices - Area 5 Study</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="population-trends.html">📈 Population Trends</a></li>
+            <li><a href="student-mobility.html">🔄 Student Mobility</a></li>
+            <li><a href="mobility-matrices.html" style="color: var(--accent-cyan); font-weight: bold;">📊 Mobility Matrices</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+        </ul>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#matrix1">Matrix 1: Basic Schools</a></li>
+            <li><a href="#matrix2">Matrix 2: Program Breakouts</a></li>
+            <li><a href="#matrix3">Matrix 3: Geographic Portions</a></li>
+        </ul>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="container-fluid">
+        <header id="overview">
+            <h1>📊 Student Mobility Matrices</h1>
+            <p class="subtitle">Boundary-to-School Enrollment Flow Analysis</p>
+            <p class="subtitle" style="font-size: 0.9rem; margin-top: 0.5rem;">2024-2025 School Year Data</p>
+        </header>
+
+        <section>
+            <div class="alert alert-info">
+                <h3>Key Findings: Student Enrollment Patterns</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-cyan);">
+                        <h4 style="color: var(--accent-cyan); margin-top: 0;">Total Enrollment</h4>
+                        <p><strong>Area 5 residents:</strong> 3,508 students</p>
+                        <p><strong>Area 5 schools enrollment:</strong> 4,222 students</p>
+                        <p style="margin-bottom: 0;"><strong>Attending boundary school:</strong> 2,660 students</p>
+                    </div>
+                    
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-green);">
+                        <h4 style="color: var(--accent-green); margin-top: 0;">Area 5 Residents</h4>
+                        <p><strong style="color: var(--accent-cyan); font-size: 1.2rem;">75.8%</strong> attend their boundary school (2,660)</p>
+                        <p><strong>20.5%</strong> attend a different Area 5 school (596)</p>
+                        <p style="margin-bottom: 0;"><strong>3.7%</strong> attend a non-Area 5 school (130)</p>
+                    </div>
+                    
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-purple);">
+                        <h4 style="color: var(--accent-purple); margin-top: 0;">Area 5 Schools</h4>
+                        <p><strong style="color: var(--accent-cyan); font-size: 1.2rem;">80.0%</strong> from Area 5 boundaries (3,378)</p>
+                        <p style="margin-bottom: 0;"><strong>20.0%</strong> from outside Area 5 (844)</p>
+                    </div>
+                </div>
+                
+                <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        <strong>Key Insight:</strong> While 3 out of 4 Area 5 residents attend their boundary school, 1 in 5 students in Area 5 schools come from outside the area, indicating significant cross-boundary enrollment and district-wide appeal of these schools.
+                    </p>
+                </div>
+                
+                <h3>School Color Legend</h3>
+                <div class="color-legend">
+                    <div class="legend-item">
+                        <div class="legend-color cottonwood"></div>
+                        <span>Cottonwood</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color crestview"></div>
+                        <span>Crestview</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color driggs"></div>
+                        <span>Driggs</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color eastwood"></div>
+                        <span>Eastwood</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color morningside"></div>
+                        <span>Morningside</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color oakridge"></div>
+                        <span>Oakridge</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color oakwood"></div>
+                        <span>Oakwood</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color penn"></div>
+                        <span>Penn</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color rosecrest"></div>
+                        <span>Rosecrest</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color upland"></div>
+                        <span>Upland Terrace</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color other"></div>
+                        <span>Other Schools</span>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">
+                    <strong>Diagonal cells (bold)</strong> show students who live in a boundary and attend that same school.
+                    <strong>Zero values</strong> are shown in gray.
+                </p>
+            </div>
+        </section>
+
+        <div class="matrix-section" id="matrix1">
+            <h2>Matrix 1: Basic 10 Schools</h2>
+
+            <div class="alert alert-info">
+                <p><strong>Description:</strong> Shows enrollment flow from 44 boundaries to the 10 Area 5 schools under study. Uses only basic mobility tables with no program or geographic breakouts.</p>
+                <p><strong>Total Students (from Area 5 boundaries):</strong> 3,508</p>
+                <p><strong>Total Students (all boundaries):</strong> 4,222</p>
+                <p><strong>Dimensions:</strong> 44 boundaries × 10 schools</p>
+                <p><strong>Data Source:</strong> <a href="tables/student_mobility2_matrices/matrix1_basic_10_schools.csv" download>📥 Download Matrix 1 CSV</a></p>
+            </div>
+
+            <div class="chart-container">
+                <div id="sankey1" style="min-height: 700px;"></div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 1 Data Table</h3>
+            <div class="matrix-table-container">
+                <table class="matrix-table" id="matrix1-table">
+                    <!-- Will be populated by JavaScript -->
+                </table>
+            </div>
+        </div>
+
+        <div class="matrix-section" id="matrix2">
+            <h2>Matrix 2: With Program Breakouts</h2>
+
+            <div class="alert alert-info">
+                <p><strong>Description:</strong> Separates DLI and ALC programs into distinct columns. Traditional tracks calculated as Total - ALC - DLI to avoid double counting.</p>
+                <p><strong>Total Students:</strong> 4,226</p>
+                <p><strong>Dimensions:</strong> 44 boundaries × 14 schools/programs</p>
+                <p><strong>Programs Broken Out:</strong></p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>Morningside → ALC (144) + DLI (267) + Traditional (150)</li>
+                    <li>Oakwood → DLI (160) + Traditional (373)</li>
+                    <li>Penn → DLI (441) + Traditional (165)</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Data Source:</strong> <a href="tables/student_mobility2_matrices/matrix2_with_programs.csv" download>📥 Download Matrix 2 CSV</a></p>
+            </div>
+
+            <div class="chart-container">
+                <div id="sankey2" style="min-height: 700px;"></div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 2 Data Table</h3>
+            <div class="matrix-table-container">
+                <table class="matrix-table" id="matrix2-table">
+                    <!-- Will be populated by JavaScript -->
+                </table>
+            </div>
+        </div>
+
+        <div class="matrix-section" id="matrix3">
+            <h2>Matrix 3: With Geographic Portions</h2>
+
+            <div class="alert alert-info">
+                <p><strong>Description:</strong> Breaks out geographic sub-portions as separate boundary rows. Main boundaries adjusted to subtract portions and avoid double counting.</p>
+                <p><strong>Total Students:</strong> 4,222</p>
+                <p><strong>Dimensions:</strong> 47 boundaries/portions × 10 schools</p>
+                <p><strong>Geographic Portions:</strong></p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>Morningside North Portion (44 students) - subset of Morningside boundary</li>
+                    <li>Oakwood Southeast Portion (1 student) - IN Area 5 study</li>
+                    <li>Oakwood West Portion (401 students) - NOT in Area 5 study</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Data Source:</strong> <a href="tables/student_mobility2_matrices/matrix3_with_geographic_portions.csv" download>📥 Download Matrix 3 CSV</a></p>
+            </div>
+
+            <div class="chart-container">
+                <div id="sankey3" style="min-height: 700px;"></div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 3 Data Table</h3>
+            <div class="matrix-table-container">
+                <table class="matrix-table" id="matrix3-table">
+                    <!-- Will be populated by JavaScript -->
+                </table>
+            </div>
+        </div>
+
+        <div class="matrix-section">
+            <h2>📋 Source Data & References</h2>
+            
+            <div class="alert alert-info">
+                <p><strong>Source:</strong> All mobility data originally published by Granite School District on their <a href="https://www.graniteschools.org/planning/2025-population-analysis-studies-amp-data/" target="_blank">2025 Population Analysis Studies & Data</a> page (Area 5 Mobility Data section).</p>
+            </div>
+
+            <h3>Area 5 Elementary School Mobility Data (2024-2025)</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Main Boundary Schools</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>📄 <a href="tables/student_mobility2/Cottonwood_Elementary_Mobility_Data_2025.pdf" target="_blank">Cottonwood Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Crestview_Elementary_Mobility_Data_2025.pdf" target="_blank">Crestview Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Driggs_Elementary_Mobility_Data_2025.pdf" target="_blank">Driggs Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Eastwood_Elementary_Mobility_Data_2025.pdf" target="_blank">Eastwood Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Oakridge_Elementary_Mobility_Data_2025.pdf" target="_blank">Oakridge Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Rosecrest_Elementary_Mobility_Data_2025.pdf" target="_blank">Rosecrest Elementary Mobility Data 2025</a></li>
+                        <li>📄 <a href="tables/student_mobility2/Upland_Terrace_Elementary_Mobility_Data_2025.pdf" target="_blank">Upland Terrace Elementary Mobility Data 2025</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Schools with Programs & Portions</h4>
+                    
+                    <h5>Morningside Elementary</h5>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>📄 <a href="tables/student_mobility2/Morningside_Elementary_Mobility_Data_2025_Total.pdf" target="_blank">Morningside Elementary - Total Enrollment</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Morningside_Elementary_ALC_Mobility_Data_2025.pdf" target="_blank">Morningside Elementary - ALC Program</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Morningside_Elementary_DLI_Mobility_Data_2025.pdf" target="_blank">Morningside Elementary - DLI Program</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Morningside_North_Portion_Mobility_Data_2025.pdf" target="_blank">Morningside North Portion</a></li>
+                    </ul>
+
+                    <h5>Oakwood Elementary</h5>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>📄 <a href="tables/student_mobility2/Oakwood_Mobility_Data_2025.pdf" target="_blank">Oakwood Elementary - Total</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Oakwood_DLI_Mobility_Data_2025.pdf" target="_blank">Oakwood - DLI Program</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Oakwood_Southeast_Portion_Mobility_Data_2025.pdf" target="_blank">Oakwood Southeast Portion (In Area 5)</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Oakwood_West_Portion_Mobility_Data_2025.pdf" target="_blank">Oakwood West Portion (Not in Area 5)</a></li>
+                    </ul>
+
+                    <h5>Penn Elementary</h5>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>📄 <a href="tables/student_mobility2/Penn_Elementary_Mobility_Data_2025.pdf" target="_blank">Penn Elementary - Total</a></li>
+                        <li style="margin-left: 1.5rem;">📄 <a href="tables/student_mobility2/Penn_Elementary_DLI_Mobility_Data_2025.pdf" target="_blank">Penn Elementary - DLI Program</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mb-1 mt-2 small fst-italic" style="color: var(--text-secondary);">
+                ⚠️ This is an independent analysis. Not affiliated with Granite School District.
+            </p>
+        </div>
+        
+    </div>
+    
+    <script src="utils.js"></script>
+    <script>
+        // Load all matrices and create visualizations
+        async function loadAllMatrices() {
+            try {
+                // Matrix 1
+                const matrix1 = await loadCSV('tables/student_mobility2_matrices/matrix1_basic_10_schools.csv');
+                createSankey('sankey1', matrix1, 'Enrollment Flow - Basic 10 Schools');
+                createMatrixTable('matrix1-table', matrix1);
+
+                // Matrix 2
+                const matrix2 = await loadCSV('tables/student_mobility2_matrices/matrix2_with_programs.csv');
+                createSankey('sankey2', matrix2, 'Enrollment Flow - With Program Breakouts');
+                createMatrixTable('matrix2-table', matrix2);
+
+                // Matrix 3
+                const matrix3 = await loadCSV('tables/student_mobility2_matrices/matrix3_with_geographic_portions.csv');
+                createSankey('sankey3', matrix3, 'Enrollment Flow - With Geographic Portions');
+                createMatrixTable('matrix3-table', matrix3);
+
+            } catch (error) {
+                console.error('Error loading matrices:', error);
+            }
+        }
+
+        // Load everything when page loads
+        window.addEventListener('load', loadAllMatrices);
+    </script>
+</body>
+</html>

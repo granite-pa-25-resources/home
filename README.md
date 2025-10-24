@@ -58,15 +58,18 @@ The district earns an **A+** for transparency:
 
 ```
 PAC_Study/
+├── intro.html                     # Home page with navigation and resource links
 ├── index.html                     # Main analysis (dark theme with interactive charts)
 ├── student_mobility_data.html     # Student mobility data visualization page
 ├── population_trends.html         # 21-year enrollment trends (2003-2024)
+├── feedback_summary.html          # Community feedback analysis (3,100+ submissions)
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
 ├── .gitignore                     # Git ignore rules
 └── tables/
     ├── student_mobility/          # PDF files with mobility data for each school
-    └── population/                # PDF files with historical enrollment data
+    ├── population/                # PDF files with historical enrollment data
+    └── feedback/                  # CSV files with community feedback
 ```
 
 ## 🔧 Features
@@ -121,17 +124,19 @@ All data sourced from official Granite School District publications:
    ```
 
 2. **Open the analysis:**
+   - **Start Here:** Open `intro.html` for an overview and navigation to all pages
    - **Main Analysis:** Open `index.html` in your web browser for the complete independent analysis
    - **Student Mobility Data:** Open `student_mobility_data.html` for interactive school-by-school enrollment visualizations with Sankey diagrams
    - **Population Trends:** Open `population_trends.html` for 21-year historical enrollment trends (2003-2024) with linear regression
+   - **Community Feedback:** Open `feedback_summary.html` for analysis of 3,100+ community submissions
    - No build process or dependencies required
    - Works completely offline
 
 3. **Navigate:**
-   - Use the hamburger menu (☰) in the top-left corner to browse sections
-   - Use the search button (🔍) in the top-right corner or press Ctrl+K (Cmd+K on Mac) to search
+   - Use the hamburger menu (☰) in the top-left corner to browse sections and switch between pages
+   - Use the search button (🔍) in the top-right corner or press Ctrl+K (Cmd+K on Mac) to search (on index.html)
    - Click any section to jump directly to it
-   - Access the student mobility data page from the "Data Sources" section
+   - All pages have consistent navigation for easy cross-referencing
    - Scroll through for linear reading
 
 ## 📊 Key Visualizations

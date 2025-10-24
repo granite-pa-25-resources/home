@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Input & Response - Area 5 Study</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --border-color: #3c4043;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-yellow: #fbbf24;
+            --accent-red: #ef4444;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            position: fixed;
+            top: 0.5rem;
+            left: 0.5rem;
+            z-index: 1000;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: var(--accent-cyan);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .nav-sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 999;
+            padding: 4.5rem 1.5rem 1.5rem;
+        }
+
+        .nav-sidebar.active {
+            left: 0;
+        }
+
+        .nav-sidebar h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .nav-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-sidebar li {
+            margin-bottom: 0.75rem;
+        }
+
+        .nav-sidebar a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .nav-sidebar a:hover {
+            color: var(--accent-cyan);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--accent-purple);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            color: var(--accent-green);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        h5 {
+            color: var(--accent-orange);
+            margin: 0.75rem 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--accent-green);
+        }
+
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--accent-yellow);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-red);
+        }
+
+        .alert-info {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--accent-cyan);
+        }
+
+        .methodology {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-purple);
+            margin: 1.5rem 0;
+        }
+
+        .source-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        .row {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .col-md-6 {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .col-md-6 {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+
+    <!-- Navigation Sidebar -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul style="border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+            <li><a href="intro.html">🏠 Home</a></li>
+            <li><a href="index.html">📊 Main Analysis</a></li>
+            <li><a href="student_mobility_data.html">🔄 Student Mobility Data</a></li>
+            <li><a href="mobility_matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="population_trends.html">📈 Population Trends</a></li>
+            <li><a href="feedback_summary.html">💬 Community Feedback</a></li>
+            <li><a href="community_input.html" style="color: var(--accent-cyan); font-weight: bold;">📝 Community Input</a></li>
+        </ul>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#top">Overview</a></li>
+            <li><a href="#feedback">Feedback Mechanisms</a></li>
+            <li><a href="#evidence">Evidence of Impact</a></li>
+            <li><a href="#survey">Parent Survey Results</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="container">
+        <header id="top">
+            <h1>💬 Community Input & Response</h1>
+            <p class="subtitle">How to Provide Feedback and Evidence of Community Impact on PAC Decisions</p>
+            <p class="subtitle" style="font-size: 0.9rem; margin-top: 0.5rem;">Area 5 Boundary Study 2024-2025</p>
+        </header>
+
+        <section id="feedback">
+            <h2>Public Feedback Mechanisms</h2>
+            <ul>
+                <li><strong>Online Feedback Forms:</strong>
+                    <ul>
+                        <li><a href="https://forms.gle/7X1KgLqTVowhvKFf7" target="_blank">General Feedback Form</a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1gMY4Ttoq41tH_z71El6ucxsCYkLleILZzIrzJibxXk0/edit" target="_blank">Post-Sept 2 Feedback Responses</a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1lbN_kWEokykChQYN7xJXkMTeFxEPadCt-i-ljpY57Pk/edit" target="_blank">ALC-Specific Feedback</a></li>
+                    </ul>
+                </li>
+                <li><strong>Email:</strong> boundaries@graniteschools.org</li>
+                <li><strong>Phone:</strong> Steve Hogan, Director - (385) 646-4123</li>
+                <li><strong>Public Hearings:</strong> November 18 and December 2, 2025 (7:00 PM)</li>
+            </ul>
+
+            <h3>Community Subcommittee</h3>
+            <p>The district created a Community Subcommittee with over 40 members including:</p>
+            <ul>
+                <li>2 parent SCC representatives per school (20 parents total)</li>
+                <li>1 teacher representative per school (10 teachers)</li>
+                <li>City council representatives from Millcreek and Holladay</li>
+            </ul>
+        </section>
+
+        <section id="evidence">
+            <h2>Evidence of Community Impact on Decisions</h2>
+            <div class="alert alert-success">
+                <p><strong>ALC Consolidation Reversals (September-October 2025)</strong></p>
+                <p>The PAC's initial recommendation (presented September 2) proposed consolidating all east-side Advanced Learner Centers at Woodstock Elementary. After intense community feedback:</p>
+                <ul>
+                    <li><strong>September 19:</strong> District <strong>completely reversed</strong> - Morningside ALC would remain separate from Woodstock but relocate to a new site</li>
+                    <li><strong>October 21:</strong> District <strong>further clarified</strong> - Morningside ALC will <strong>remain at Morningside Elementary</strong> (no relocation)</li>
+                </ul>
+                <p><strong>What This Shows:</strong> Community input <em>absolutely can</em> influence PAC recommendations. The two reversals demonstrate that the Board and PAC are responsive to parent concerns when feedback is strong and organized.</p>
+            </div>
+        </section>
+
+        <section id="survey">
+            <h2>Parent-Led Survey Results (October 2025)</h2>
+            <p>A grassroots parent-led survey collected responses from 84 Area 5 families (October 9-13, 2025). The survey reveals strong community preferences and concerns about the boundary study:</p>
+            <p class="source-note">Source: Area 5 Parent Led Survey (Oct 9-13, 2025) - Grassroots community survey, 84 respondents. <em>Note: This is an independent parent-led survey, not an official district document.</em></p>
+
+            <h3>Survey Demographics</h3>
+            <ul>
+                <li><strong>Total Respondents:</strong> 84 families</li>
+                <li><strong>Current Elementary Students:</strong> 77% (65 families)</li>
+                <li><strong>Geographic Distribution:</strong> Majority from 4500-3900 South corridor (57%)</li>
+            </ul>
+
+            <h3>Current School Attendance (73 responses)</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>Howard R. Driggs:</strong> 64.4% (47 families)</li>
+                        <li><strong>Morningside:</strong> 16.4% (12 families)</li>
+                        <li><strong>Eastwood:</strong> 4.1% (3 families)</li>
+                        <li><strong>Other schools:</strong> 15.1% (11 families)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>First Choice School for 2026-2027 (80 responses)</h3>
+            <div class="alert alert-warning">
+                <p><strong>Overwhelming Preference for Driggs:</strong></p>
+                <ul>
+                    <li><strong>Howard R. Driggs:</strong> 71.3% (57 families) - Highest preference by far</li>
+                    <li><strong>Morningside:</strong> 13.8% (11 families)</li>
+                    <li><strong>Eastwood:</strong> 3.8% (3 families)</li>
+                    <li><strong>Crestview:</strong> 2.5% (2 families)</li>
+                    <li><strong>Other options:</strong> 8.8% (7 families including private/charter)</li>
+                </ul>
+                <p><strong>Key Finding:</strong> 71% of respondents want Driggs as their first choice, far exceeding any other school. This suggests that boundary changes moving students away from Driggs will face significant resistance.</p>
+            </div>
+
+            <h3>Second and Third Choice Preferences</h3>
+            <ul>
+                <li><strong>Second Choice Leaders:</strong> Crestview (35%), Canyon Rim Academy (19%), Driggs (14%)</li>
+                <li><strong>Third Choice Distribution:</strong> More diverse - Cottonwood (18%), Crestview (16%), Private School (12%), Driggs (12%)</li>
+                <li><strong>Notable:</strong> 16% of third-choice responses included "homeschool," "leave district," or "none" - suggesting some families may exit public education if boundary changes don't align with preferences</li>
+            </ul>
+
+            <h3>Barriers to Boundary School Attendance (52 responses)</h3>
+            <p>Parents who would not choose their assigned boundary school cited multiple concerns:</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Top Concerns About Cottonwood Elementary:</h4>
+                    <ul>
+                        <li><strong>Distance/Location:</strong> "Too far away" (multiple respondents)</li>
+                        <li><strong>School Quality:</strong> "Cottonwood is not a quality school"</li>
+                        <li><strong>Facility Concerns:</strong> "Old building," "struggling school"</li>
+                        <li><strong>Traffic Safety:</strong> "Pick-up and drop off... terrible and dangerous with it being right on a busy road"</li>
+                        <li><strong>Long-term Viability:</strong> "Instability of staying open long term"</li>
+                        <li><strong>Administration:</strong> "Concerning based on... previous leadership at Crestview"</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Reasons for Staying at Current School:</h4>
+                    <ul>
+                        <li><strong>Community/Friends:</strong> Mentioned by 15+ respondents</li>
+                        <li><strong>Class Size:</strong> Multiple mentions of concerns about larger classes</li>
+                        <li><strong>School Stability:</strong> "We don't want our kids having to leave a school they are comfortable with"</li>
+                        <li><strong>Program Continuity:</strong> DLI-French, ALC programs</li>
+                        <li><strong>Walkability:</strong> "Being able to walk/ride our bikes safely to school is a priority"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Parent Suggestions to the District (63 responses)</h3>
+            <div class="methodology">
+                <p><strong>Most Common Recommendations:</strong></p>
+                <ol>
+                    <li><strong>Keep Driggs Open:</strong> Mentioned in 20+ responses
+                        <ul>
+                            <li>"Keep Driggs! It is a great school!"</li>
+                            <li>"Leave Driggs boundaries alone"</li>
+                            <li>"Put the ALC at Cottonwood and keep Driggs boundary the same"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Move Programs to Cottonwood:</strong> 15+ suggestions
+                        <ul>
+                            <li>"Move Morningside ALC and traditional to Cottonwood"</li>
+                            <li>"Send the ALC kids to Cottonwood Elementary"</li>
+                            <li>"Close Cottonwood or make it the stand-alone DLI school"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Listen to Parents:</strong> 10+ responses
+                        <ul>
+                            <li>"Actually listen to what the parents are complaining/worried about"</li>
+                            <li>"Listen to the parents! My biggest worry is that... the wrong changes will make the problem worse"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Take More Time:</strong> Multiple requests
+                        <ul>
+                            <li>"Take another year to continue the study"</li>
+                            <li>"This study feels very rushed and not backed by data"</li>
+                            <li>"I think you all need to take another year and make a better decision"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Keep Neighborhoods Together:</strong> Repeated theme
+                        <ul>
+                            <li>"Keep neighborhoods together"</li>
+                            <li>"We don't want our neighborhood to be split between 2 schools"</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3>Survey Analysis & Implications</h3>
+            <div class="alert alert-danger">
+                <p><strong>⚠️ Critical Disconnect:</strong></p>
+                <p>The parent-led survey reveals a <strong>major mismatch</strong> between PAC recommendations and parent preferences:</p>
+                <ul>
+                    <li><strong>71% want Driggs</strong> as their first choice, yet PAC boundary changes would move some Driggs families to Cottonwood</li>
+                    <li><strong>Zero families selected Cottonwood</strong> as first, second, or third choice (excluding "other" write-ins)</li>
+                    <li><strong>Oakridge received zero</strong> first or second choice votes despite being recommended to stay open</li>
+                    <li>Multiple families threatened to <strong>leave the district entirely</strong> if forced to attend Cottonwood</li>
+                </ul>
+                <p><strong>Risk:</strong> If boundary changes don't align with parent preferences, the district may see:</p>
+                <ul>
+                    <li>Increased <strong>open enrollment applications</strong> (families permitting to non-boundary schools)</li>
+                    <li><strong>Exodus to charter/private schools</strong> (multiple survey respondents mentioned this)</li>
+                    <li><strong>Continued enrollment decline</strong> at schools parents don't want (Cottonwood, Oakridge)</li>
+                    <li><strong>Administrative burden</strong> from managing high permit volumes</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-info">
+                <p><strong>Survey Limitations:</strong></p>
+                <ul>
+                    <li><strong>Sample Size:</strong> 84 responses is small relative to ~4,000 Area 5 students</li>
+                    <li><strong>Self-Selection Bias:</strong> Survey likely over-represents engaged Driggs families (64% of current attendees)</li>
+                    <li><strong>Geographic Bias:</strong> 51% from 4500-3900 South between 2300-2700 East (Driggs area)</li>
+                    <li><strong>Underrepresentation:</strong> Very few responses from Cottonwood, Oakridge, Penn, or Oakwood families</li>
+                </ul>
+                <p><strong>Despite these limitations,</strong> the survey provides valuable qualitative data on parent concerns that official district surveys may not capture. The intensity of preference for Driggs and aversion to Cottonwood is notable.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation toggle functionality
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navOverlay = document.getElementById('navOverlay');
+
+        navToggle.addEventListener('click', () => {
+            navSidebar.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navSidebar.classList.remove('active');
+            navOverlay.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+
+        // Close sidebar when clicking a link
+        navSidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navSidebar.classList.remove('active');
+                navOverlay.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
