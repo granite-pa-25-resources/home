@@ -14,11 +14,12 @@
     <nav class="nav-sidebar" id="navSidebar">
         <h3>Pages</h3>
         <ul>
-            <li><a href="index.html">🏠 Home</a></li>
-            <li><a href="population-trends.html">📈 Population Trends</a></li>
-            <li><a href="student-mobility.html">🔄 Student Mobility</a></li>
-            <li><a href="mobility-matrices.html" style="color: var(--accent-cyan); font-weight: bold;">📊 Mobility Matrices</a></li>
+            <li><a href="index.html" style="color: var(--accent-cyan); font-weight: bold;">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
+            <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
             <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            
         </ul>
         <h3>Contents</h3>
         <ul>
@@ -41,32 +42,80 @@
         <section>
             <div class="alert alert-info">
                 <h3>Key Findings: Student Enrollment Patterns</h3>
-                
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                     <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-cyan);">
-                        <h4 style="color: var(--accent-cyan); margin-top: 0;">Total Enrollment</h4>
-                        <p><strong>Area 5 residents:</strong> 3,508 students</p>
-                        <p><strong>Area 5 schools enrollment:</strong> 4,222 students</p>
-                        <p style="margin-bottom: 0;"><strong>Attending boundary school:</strong> 2,660 students</p>
+                        <h4 style="color: var(--accent-cyan); margin-top: 0;">📊 Total Enrollment</h4>
+                        <p><strong>Area 5 boundaries:</strong> 3,521 students</p>
+                        <p><strong>Area 5 schools:</strong> 4,226 students</p>
+                        <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-secondary);">Includes all students across 44 boundaries and 21 schools</p>
                     </div>
-                    
+
                     <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-green);">
-                        <h4 style="color: var(--accent-green); margin-top: 0;">Area 5 Residents</h4>
-                        <p><strong style="color: var(--accent-cyan); font-size: 1.2rem;">75.8%</strong> attend their boundary school (2,660)</p>
-                        <p><strong>20.5%</strong> attend a different Area 5 school (596)</p>
-                        <p style="margin-bottom: 0;"><strong>3.7%</strong> attend a non-Area 5 school (130)</p>
+                        <h4 style="color: var(--accent-green); margin-top: 0;">🎯 Retention Rates</h4>
+                        <p><strong style="color: var(--accent-cyan); font-size: 1.2rem;">83.5%</strong> Cottonwood (highest)</p>
+                        <p><strong style="color: var(--accent-purple); font-size: 1.2rem;">61.2%</strong> Morningside (lowest)</p>
+                        <p style="margin-bottom: 0;"><strong>Average:</strong> 75.2% stay at boundary school</p>
                     </div>
-                    
+
                     <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-purple);">
-                        <h4 style="color: var(--accent-purple); margin-top: 0;">Area 5 Schools</h4>
-                        <p><strong style="color: var(--accent-cyan); font-size: 1.2rem;">80.0%</strong> from Area 5 boundaries (3,378)</p>
-                        <p style="margin-bottom: 0;"><strong>20.0%</strong> from outside Area 5 (844)</p>
+                        <h4 style="color: var(--accent-purple); margin-top: 0;">🏫 Largest Schools</h4>
+                        <p><strong>Penn:</strong> 606 students</p>
+                        <p><strong>Morningside:</strong> 561 students</p>
+                        <p style="margin-bottom: 0;"><strong>Oakwood:</strong> 533 students</p>
                     </div>
                 </div>
-                
+
+                <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent-cyan); margin-top: 0;">🔄 Top Cross-Boundary Flows</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p style="margin: 0.5rem 0;"><strong>1.</strong> Oakwood → Cottonwood: <strong>45</strong> students</p>
+                            <p style="margin: 0.5rem 0;"><strong>2.</strong> Upland Terrace → Morningside: <strong>42</strong> students</p>
+                            <p style="margin: 0.5rem 0;"><strong>3.</strong> Driggs → Morningside: <strong>38</strong> students</p>
+                        </div>
+                        <div>
+                            <p style="margin: 0.5rem 0;"><strong>4.</strong> Oakridge → Morningside: <strong>36</strong> students</p>
+                            <p style="margin: 0.5rem 0;"><strong>5.</strong> Morningside → Driggs: <strong>33</strong> students</p>
+                            <p style="margin: 0.5rem 0;"><strong>6.</strong> Rosecrest → Penn: <strong>31</strong> students</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-green);">
+                        <h4 style="color: var(--accent-green); margin-top: 0;">🧲 Highest Inflow Schools</h4>
+                        <p><strong>Morningside:</strong> 66.3% from elsewhere (372/561)</p>
+                        <p><strong>Penn:</strong> 55.0% from elsewhere (333/606)</p>
+                        <p style="margin-bottom: 0;"><strong>Eastwood:</strong> 53.2% from elsewhere (142/267)</p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-secondary);">These "destination schools" draw heavily from other boundaries</p>
+                    </div>
+
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-purple);">
+                        <h4 style="color: var(--accent-purple); margin-top: 0;">🌍 Out of District</h4>
+                        <p><strong>323 students</strong> from out of district attend Area 5 schools</p>
+                        <p><strong>Top recipients:</strong></p>
+                        <p style="margin: 0.25rem 0 0.25rem 1rem;">• Oakwood: 84 students</p>
+                        <p style="margin: 0.25rem 0 0.25rem 1rem;">• Morningside: 73 students</p>
+                        <p style="margin: 0.25rem 0 0 1rem;">• Penn: 50 students</p>
+                    </div>
+
+                    <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #f39c12;">
+                        <h4 style="color: #f39c12; margin-top: 0;">🎓 Alternative Schools</h4>
+                        <p><strong>138 students</strong> from Area 5 attend non-Area 5 schools</p>
+                        <p><strong>Top destinations:</strong></p>
+                        <p style="margin: 0.25rem 0 0.25rem 1rem;">• Alternative 3-A: 65 students</p>
+                        <p style="margin: 0.25rem 0 0.25rem 1rem;">• Woodstock: 62 students</p>
+                        <p style="margin: 0.25rem 0 0 1rem;">• 9 other schools: 11 students</p>
+                    <p style="margin-top: 1rem; font-size: 0.92rem; color: var(--text-secondary);">
+                        <strong>Note:</strong> The Area 5 study does not include data on students who leave public schools for private schools or home schooling. Therefore, these tables <u>do not include</u> students who leave public schools for private schools or home schooling. 
+                    </p>
+                    </div>
+                </div>
+
                 <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
                     <p style="margin: 0; color: var(--text-secondary);">
-                        <strong>Key Insight:</strong> While 3 out of 4 Area 5 residents attend their boundary school, 1 in 5 students in Area 5 schools come from outside the area, indicating significant cross-boundary enrollment and district-wide appeal of these schools.
+                        <strong>Key Insight:</strong> Morningside emerges as a regional "magnet school" appearing in 10 of the top 15 cross-boundary flows and drawing 66% of its students from outside its boundary. Meanwhile, Cottonwood shows the strongest local loyalty with 83.5% retention. This suggests diverse school preferences across Area 5, with some families prioritizing proximity while others seek specific programs or school characteristics.
                     </p>
                 </div>
                 
@@ -121,6 +170,22 @@
                     <strong>Diagonal cells (bold)</strong> show students who live in a boundary and attend that same school.
                     <strong>Zero values</strong> are shown in gray.
                 </p>
+            <div style="margin-top:1.5rem; color: var(--text-secondary); max-width: 1000px;">
+                <h3>About Sankey Charts and Matrix Tables</h3>
+                <p>
+                    <strong>Sankey charts</strong> are powerful visual tools for showing flows or transfers between groups. In this context, a Sankey diagram illustrates how groups of students move from their <strong>home boundary</strong> (where they live) to the <strong>school they actually attend</strong>. Each flow's width is proportional to the number of students, helping you instantly see where the largest enrollments and movements occur.
+                </p>
+                <p>
+                    The <strong>matrix data tables</strong> below each Sankey chart provide the same information in a detailed, structured grid: each row represents a boundary, and each column shows how many students from that boundary attend a particular school. The <strong>diagonal values (bolded)</strong> highlight students attending their neighborhood school. Off-diagonal values show the degree of mobility or transfers between boundaries and schools.
+                </p>
+                <p>
+                    <strong>Why use both?</strong><br>
+                    Sankey charts make it easy to see the <em>pattern and scale</em> of student movement at a glance—especially large flows and unusual transfers, which can be hard to spot in a numeric table. The matrix tables give the exact underlying numbers for analysis and reference.
+                </p>
+                <p>
+                    Together, Sankey diagrams and matrix tables provide both an intuitive visual overview and precise details about student enrollment mobility. This enables deeper insights for planning, equity analysis, and understanding how specialized programs affect attendance patterns across boundaries.
+                </p>
+            </div>
             </div>
         </section>
 
@@ -128,10 +193,11 @@
             <h2>Matrix 1: Basic 10 Schools</h2>
 
             <div class="alert alert-info">
-                <p><strong>Description:</strong> Shows enrollment flow from 44 boundaries to the 10 Area 5 schools under study. Uses only basic mobility tables with no program or geographic breakouts.</p>
-                <p><strong>Total Students (from Area 5 boundaries):</strong> 3,508</p>
-                <p><strong>Total Students (all boundaries):</strong> 4,222</p>
-                <p><strong>Dimensions:</strong> 44 boundaries × 10 schools</p>
+                <p><strong>Description:</strong> Shows enrollment flow from 44 boundaries to 21 schools (10 Area 5 schools plus 11 alternative/specialty schools). Uses only basic mobility tables with no program or geographic breakouts.</p>
+                <p><strong>Total Students:</strong> 4,366 students across all boundaries and schools</p>
+                <p><strong>Area 5 Boundaries:</strong> 3,521 students (from 10 Area 5 boundaries)</p>
+                <p><strong>Area 5 Schools:</strong> 4,226 students (attending 10 Area 5 schools)</p>
+                <p><strong>Dimensions:</strong> 44 boundaries × 21 schools</p>
                 <p><strong>Data Source:</strong> <a href="tables/student_mobility2_matrices/matrix1_basic_10_schools.csv" download>📥 Download Matrix 1 CSV</a></p>
             </div>
 
@@ -139,7 +205,7 @@
                 <div id="sankey1" style="min-height: 700px;"></div>
             </div>
 
-            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 1 Data Table</h3>
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 1 Data Table: Basic 10 Schools</h3>
             <div class="matrix-table-container">
                 <table class="matrix-table" id="matrix1-table">
                     <!-- Will be populated by JavaScript -->
@@ -156,9 +222,9 @@
                 <p><strong>Dimensions:</strong> 44 boundaries × 14 schools/programs</p>
                 <p><strong>Programs Broken Out:</strong></p>
                 <ul style="margin-top: 0.5rem;">
-                    <li>Morningside → ALC (144) + DLI (267) + Traditional (150)</li>
-                    <li>Oakwood → DLI (160) + Traditional (373)</li>
-                    <li>Penn → DLI (441) + Traditional (165)</li>
+                    <li>Morningside → ALC (144) + DLI (267) + Traditional (151)</li>
+                    <li>Oakwood → DLI (160) + Traditional (376)</li>
+                    <li>Penn → DLI (440) + Traditional (166)</li>
                 </ul>
                 <p style="margin-top: 1rem;"><strong>Data Source:</strong> <a href="tables/student_mobility2_matrices/matrix2_with_programs.csv" download>📥 Download Matrix 2 CSV</a></p>
             </div>
@@ -167,7 +233,7 @@
                 <div id="sankey2" style="min-height: 700px;"></div>
             </div>
 
-            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 2 Data Table</h3>
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 2 Data Table: With Program Breakouts</h3>
             <div class="matrix-table-container">
                 <table class="matrix-table" id="matrix2-table">
                     <!-- Will be populated by JavaScript -->
@@ -195,7 +261,7 @@
                 <div id="sankey3" style="min-height: 700px;"></div>
             </div>
 
-            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 3 Data Table</h3>
+            <h3 style="margin-top: 2rem; color: var(--accent-purple);">Matrix 3 Data Table: With Geographic Portions</h3>
             <div class="matrix-table-container">
                 <table class="matrix-table" id="matrix3-table">
                     <!-- Will be populated by JavaScript -->
@@ -253,7 +319,7 @@
                 </div>
             </div>
             <p class="mb-1 mt-2 small fst-italic" style="color: var(--text-secondary);">
-                ⚠️ This is an independent analysis. Not affiliated with Granite School District.
+                ⚠️ This is an independent analysis. Not affiliated with Granite School District. The goal of this analysis is to improve accessilibty to the PAC Area 5 2025 Boundary Study data. If you find inaccuracies in the data or any other mistakes, or would like to contribute directly, please reach out to <a href='https://github.com/granite-pa-25-resources/home/issues' target='_blank'>https://github.com/granite-pa-25-resources/home/issues</a> and submit a bug report. . 
             </p>
         </div>
         
@@ -266,17 +332,17 @@
             try {
                 // Matrix 1
                 const matrix1 = await loadCSV('tables/student_mobility2_matrices/matrix1_basic_10_schools.csv');
-                createSankey('sankey1', matrix1, 'Enrollment Flow - Basic 10 Schools');
+                createSankey('sankey1', matrix1, 'Enrollment Flow Sankey Diagram - Basic 10 Schools');
                 createMatrixTable('matrix1-table', matrix1);
 
                 // Matrix 2
                 const matrix2 = await loadCSV('tables/student_mobility2_matrices/matrix2_with_programs.csv');
-                createSankey('sankey2', matrix2, 'Enrollment Flow - With Program Breakouts');
+                createSankey('sankey2', matrix2, 'Enrollment Flow Sankey Diagram - With Program Breakouts');
                 createMatrixTable('matrix2-table', matrix2);
 
                 // Matrix 3
                 const matrix3 = await loadCSV('tables/student_mobility2_matrices/matrix3_with_geographic_portions.csv');
-                createSankey('sankey3', matrix3, 'Enrollment Flow - With Geographic Portions');
+                createSankey('sankey3', matrix3, 'Enrollment Flow Sankey Diagram - With Geographic Portions');
                 createMatrixTable('matrix3-table', matrix3);
 
             } catch (error) {

@@ -133,37 +133,17 @@ penn_dli = {
 # Now calculate TRADITIONAL tracks by subtracting specialty programs from totals
 # ==============================================================================
 
-# Morningside Total (from Matrix 1)
-morningside_total = {
-    'ACADEMY PARK': 2,
-    'COTTONWOOD': 18,
-    'CRESTVIEW': 25,
-    'DIAMOND RIDGE': 1,
-    'DRIGGS': 38,
-    'EASTWOOD': 10,
-    'FARNSWORTH': 2,
-    'FREMONT': 2,
-    'GRANGER': 1,
-    'LINCOLN': 16,
-    'MORNINGSIDE': 189,
-    'MOSS': 12,
-    'OAKRIDGE': 36,
-    'OAKWOOD': 9,
-    'OLENE WALKER': 2,
-    'ORCHARD': 2,
-    'Out of District': 73,
-    'PENN': 16,
-    'ROSECREST': 29,
-    'SILVER HILLS': 2,
-    'SOUTH KEARNS': 1,
-    'TAYLORSVILLE': 3,
-    'TRUMAN': 1,
-    'UPLAND TERRACE': 42,
-    'VALLEY CREST': 3,
-    'VISTA': 1,
-    'WILSON': 11,
-    'WOODSTOCK': 14
-}
+# Import Matrix 1 as starting point (now includes ALL schools)
+import pandas as pd
+matrix1 = pd.read_csv('C:/PAC_Study/tables/student_mobility2_matrices/matrix1_basic_10_schools.csv', index_col=0)
+
+# Extract Morningside Total from Matrix 1 CSV
+morningside_total = {}
+if 'Morningside' in matrix1.columns:
+    for boundary in matrix1.index:
+        count = matrix1.loc[boundary, 'Morningside']
+        if count > 0:
+            morningside_total[boundary] = int(count)
 
 # Calculate Morningside Traditional
 morningside_trad = {}
@@ -176,31 +156,13 @@ for boundary in all_boundaries:
     if trad > 0:
         morningside_trad[boundary] = trad
 
-# Oakwood Total (from Matrix 1)
-oakwood_total = {
-    'COTTONWOOD': 3,
-    'CRESTVIEW': 9,
-    'DRIGGS': 2,
-    'EASTWOOD': 1,
-    'FREMONT': 3,
-    'LINCOLN': 8,
-    'MORNINGSIDE': 1,
-    'MOSS': 31,
-    'OAKRIDGE': 2,
-    'OAKWOOD': 329,
-    'OLENE WALKER': 5,
-    'ORCHARD': 1,
-    'Out of District': 84,
-    'PENN': 7,
-    'PLYMOUTH': 1,
-    'ROSECREST': 2,
-    'SMITH': 2,
-    'TAYLORSVILLE': 1,
-    'TRUMAN': 1,
-    'VISTA': 1,
-    'WILSON': 9,
-    'WOODSTOCK': 30
-}
+# Extract Oakwood Total from Matrix 1 CSV
+oakwood_total = {}
+if 'Oakwood' in matrix1.columns:
+    for boundary in matrix1.index:
+        count = matrix1.loc[boundary, 'Oakwood']
+        if count > 0:
+            oakwood_total[boundary] = int(count)
 
 # Calculate Oakwood Traditional
 oakwood_trad = {}
@@ -212,34 +174,13 @@ for boundary in all_boundaries_oakwood:
     if trad > 0:
         oakwood_trad[boundary] = trad
 
-# Penn Total (from Matrix 1)
-penn_total = {
-    'ARCADIA': 2,
-    'BACCHUS': 1,
-    'COTTONWOOD': 11,
-    'CRESTVIEW': 26,
-    'DRIGGS': 11,
-    'EASTWOOD': 2,
-    'FREMONT': 3,
-    'FROST': 1,
-    'GRANGER': 1,
-    'LINCOLN': 70,
-    'MORNINGSIDE': 6,
-    'MOSS': 48,
-    'OAKRIDGE': 1,
-    'OAKWOOD': 10,
-    'OLENE WALKER': 13,
-    'Out of District': 50,
-    'PENN': 273,
-    'PLYMOUTH': 1,
-    'ROSECREST': 31,
-    'STANSBURY': 1,
-    'TAYLORSVILLE': 4,
-    'TRUMAN': 2,
-    'UPLAND TERRACE': 12,
-    'WILSON': 20,
-    'WOODSTOCK': 6
-}
+# Extract Penn Total from Matrix 1 CSV
+penn_total = {}
+if 'Penn' in matrix1.columns:
+    for boundary in matrix1.index:
+        count = matrix1.loc[boundary, 'Penn']
+        if count > 0:
+            penn_total[boundary] = int(count)
 
 # Calculate Penn Traditional
 penn_trad = {}
@@ -254,10 +195,6 @@ for boundary in all_boundaries_penn:
 # ==============================================================================
 # Build Matrix 2 with all school columns (including program breakouts)
 # ==============================================================================
-
-# Import Matrix 1 as starting point (now includes ALL schools)
-import pandas as pd
-matrix1 = pd.read_csv('C:/PAC_Study/tables/student_mobility2_matrices/matrix1_basic_10_schools.csv', index_col=0)
 
 # Create new matrix with additional columns for programs
 # Matrix 2 will have ALL schools from Matrix 1, but with Morningside, Oakwood, and Penn split into program-specific columns

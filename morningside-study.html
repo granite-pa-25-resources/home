@@ -14,10 +14,12 @@
     <nav class="nav-sidebar" id="navSidebar">
         <h3>Pages</h3>
         <ul>
-            <li><a href="index.html">🏠 Home</a></li>
-            <li><a href="population-trends.html">📈 Population Trends</a></li>
+            <li><a href="index.html" style="color: var(--accent-cyan); font-weight: bold;">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
             <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
-            <li><a href="morningside-study.html" style="color: var(--accent-cyan); font-weight: bold;">🎓 Morningside Study</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            
         </ul>
     </nav>
 
@@ -66,7 +68,7 @@
             </div>
         </section>
         <p class="mb-0 mt-4 small fst-italic" style="color: var(--text-secondary);">
-            ⚠️ This is an independent analysis. Not affiliated with Granite School District.
+            ⚠️ This is an independent analysis. Not affiliated with Granite School District. The goal of this analysis is to improve accessilibty to the PAC Area 5 2025 Boundary Study data. If you find inaccuracies in the data or any other mistakes, or would like to contribute directly, please reach out to <a href='https://github.com/granite-pa-25-resources/home/issues' target='_blank'>https://github.com/granite-pa-25-resources/home/issues</a> and submit a bug report. . 
         </p>
     </div>
 
@@ -128,8 +130,11 @@
                 font: { size: 12, color: '#fbbf24' },
                 bgcolor: '#2d2d2d',
                 bordercolor: '#fbbf24',
-                borderwidth: 2
-            }]
+                borderwidth: 2,
+                
+            }],
+            height:600,
+            autosize: true
         };
 
         Plotly.newPlot('morningsideGradeStackedChart', data, layout, { responsive: true });

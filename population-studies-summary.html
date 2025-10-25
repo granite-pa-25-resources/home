@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Population Studies Summary | Granite School District Area 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page-specific styles to complement style.css */
+        .citation {
+            font-size: 0.85em;
+            color: var(--accent-cyan);
+            font-style: italic;
+            background: rgba(6, 182, 212, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            display: inline-block;
+            margin: 0 2px;
+        }
+        
+        .report-box {
+            background: var(--bg-secondary);
+            border-left: 5px solid var(--accent-cyan);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .report-box.report-2025 {
+            border-left-color: var(--accent-purple);
+        }
+        
+        .key-findings {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 5px solid var(--accent-yellow);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--bg-secondary);
+        }
+        
+        .comparison-table th {
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .comparison-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .strengths {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 5px solid var(--accent-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .weaknesses {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 5px solid var(--accent-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .stat-highlight {
+            display: inline-block;
+            background: var(--accent-cyan);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .stat-highlight.negative {
+            background: var(--accent-red);
+        }
+        
+        .stat-highlight.positive {
+            background: var(--accent-green);
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .timeline-item {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        
+        .timeline-item h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-item p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+        
+        .source-note {
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--text-secondary);
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            border-radius: 4px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .content p, .content li {
+            color: var(--text-primary);
+        }
+        
+        .content a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+        
+        .content a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 2px solid var(--border-color);
+        }
+        
+        footer a {
+            color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html" style="color: var(--accent-cyan); font-weight: bold;">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
+            <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+        </ul>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#overview">Executive Overview</a></li>
+            <li><a href="#findings">Key Findings</a></li>
+            <li><a href="#factors">Driving Factors</a></li>
+            <li><a href="#methodology">Methodology</a></li>
+            <li><a href="#population-vs-enrollment">Population vs Enrollment</a></li>
+            <li><a href="#strengths">Strengths</a></li>
+            <li><a href="#weaknesses">Weaknesses</a></li>
+            <li><a href="#recommendations">Recommendations</a></li>
+            <li><a href="#conclusions">Conclusions</a></li>
+        </ul>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>📊 Demographic Reports Analysis</h1>
+            <p class="subtitle">Comprehensive Summary and Critical Review of Granite SD Population Studies</p>
+        </header>
+        
+        <div class="content">
+            <section id="overview">
+                <h2>Executive Overview</h2>
+                <p>This analysis examines two comprehensive demographic studies commissioned by Granite School District to forecast student population trends and inform facility planning decisions. The reports, prepared five years apart, reveal a consistent pattern of enrollment decline driven by demographic shifts in the Salt Lake County area.</p>
+                
+                <div class="alert alert-info" style="margin: 1.5rem 0;">
+                    <h4 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 1rem;">📄 Source Reports</h4>
+                    <div class="row gy-2">
+                        <div class="col-md-6">
+                            <a href="demographic_study_reports/GraniteSD_Final Student Population Forecast Report_DD_April 2020.pdf" 
+                               target="_blank" 
+                               style="display: block; padding: 1rem; background: var(--bg-tertiary); border-left: 4px solid var(--accent-cyan); border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">
+                                <strong style="color: var(--accent-cyan); font-size: 1rem;">📥 2020 Residence Study (DDP)</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.9rem;">Davis Demographics & Planning | April 2020 | 601 pages</span>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="demographic_study_reports/MGT SY2425 Report_GraniteSD_FINAL revision 03.13.25.pdf" 
+                               target="_blank" 
+                               style="display: block; padding: 1rem; background: var(--bg-tertiary); border-left: 4px solid var(--accent-purple); border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">
+                                <strong style="color: var(--accent-purple); font-size: 1rem;">📥 2025 MGT Study</strong><br>
+                                <span style="color: var(--text-secondary); font-size: 0.9rem;">MGT Consulting | March 2025 | 143 pages</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>2020 Report</h4>
+                        <p><strong>Prepared by:</strong> Davis Demographics & Planning, Inc. (DDP)</p>
+                        <p><strong>Study Period:</strong> 2019/20 baseline</p>
+                        <p><strong>Forecast:</strong> 2020/21 - 2024/25</p>
+                        <p><strong>Date:</strong> April 6, 2020</p>
+                        <p><strong>Length:</strong> 601 pages</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>2025 Report</h4>
+                        <p><strong>Prepared by:</strong> MGT Consulting</p>
+                        <p><strong>Study Period:</strong> 2024/25 baseline</p>
+                        <p><strong>Forecast:</strong> 2025/26 - 2029/30</p>
+                        <p><strong>Date:</strong> March 11, 2025</p>
+                        <p><strong>Length:</strong> 143 pages</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="findings">
+                <h2>Key Findings Comparison</h2>
+                
+                <div class="report-box">
+                    <h3>📉 2020 Report (Davis Demographics & Planning, Inc.)</h3>
+                    <div class="key-findings">
+                        <h4>Baseline & Projections:</h4>
+                        <ul>
+                            <li><strong>2019/20 Enrollment:</strong> <span class="stat-highlight">61,349 total students</span> (59,166 resident, 2,183 non-resident) <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                            
+                            <li><strong>Historical Trend:</strong> Declined 6.5% from 65,597 students in 2016/17 to 61,349 in 2019/20 <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                            
+                            <li><strong>Five-Year Projection:</strong> Decline to <span class="stat-highlight negative">57,877 by 2024/25</span> (<strong>-3.7% decrease</strong>) <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                            
+                            <li><strong>K-5 Forecast:</strong> -4% decrease <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                            
+                            <li><strong>Grades 6-8 Forecast:</strong> -13.7% decrease <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                            
+                            <li><strong>Grades 9-12 Forecast:</strong> -1.7% decrease <span class="citation">DDP 2020, Executive Summary, p. 3</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="report-box report-2025">
+                    <h3>📉 2025 Report (MGT Consulting)</h3>
+                    <div class="key-findings">
+                        <h4>Baseline & Projections:</h4>
+                        <ul>
+                            <li><strong>2024/25 Average:</strong> <span class="stat-highlight">4,178.8 students per grade level</span> <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                            
+                            <li><strong>Five-Year Projection:</strong> Drop to <span class="stat-highlight negative">3,655.3 students per grade by 2029/30</span> <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                            
+                            <li><strong>Overall Decline:</strong> <span class="stat-highlight negative">-12.5% over 5 years</span> <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                            
+                            <li><strong>K-5 Forecast:</strong> -13.7% decrease over five years, -2.6% next year <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                            
+                            <li><strong>Grades 6-8 Forecast:</strong> -10.8% decrease over five years, -2.0% next year <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                            
+                            <li><strong>Grades 9-12 Forecast:</strong> -12.2% decrease over five years, -2.3% next year <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🔍 Critical Observation</h3>
+                <div class="key-findings">
+                    <p><strong>The 2020 forecast proved significantly too optimistic.</strong> The 2020 report predicted only a 3.7% decline over five years <span class="citation">DDP 2020, Executive Summary, p. 3</span>, but the 2025 report shows the district facing a 12.5% decline over the next five years <span class="citation">MGT 2025, Executive Summary, p. 2</span>—more than <strong>3 times steeper</strong> than originally forecast. This suggests either accelerating demographic trends or forecasting methodology limitations in the 2020 analysis.</p>
+                </div>
+            </section>
+
+            <section id="factors">
+                <h2>Common Factors Driving Decline</h2>
+                
+                <h3>1. Birth Rate Decline</h3>
+                <div class="methodology-box">
+                    <p><strong>2020 Report:</strong> Salt Lake County births declined from a recent high of 19,591 in 2008 to 16,746 in 2017, directly impacting kindergarten class sizes and affecting forecasted kindergarten estimates. <span class="citation">DDP 2020, Executive Summary, p. 3</span></p>
+                    
+                    <p><strong>2025 Report:</strong> Granite School District births from 2014 to 2019 showed an overall declining trend that will continue to produce smaller kindergarten and future elementary class sizes. Births peaked in 2014 at 4,357, followed by a significant drop in 2015 to 3,751. After a slight increase in 2016, the numbers continued to decrease steadily, reaching 3,434 in 2018, with a small rebound to 3,537 in 2019. <span class="citation">MGT 2025, Forecast Factors, p. 6</span> The declining birth rate is identified as the <strong>main contributing factor</strong> for enrollment decline. <span class="citation">MGT 2025, Executive Summary, p. 2</span></p>
+                    
+                    <p>💡 <em>Both reports identify declining birth rates as the fundamental driver of smaller incoming cohorts, representing a regional demographic shift extending beyond district boundaries. The decline ranges from 14-19% depending on measurement period.</em></p>
+                </div>
+
+                <h3>2. Negative Student Mobility</h3>
+                <div class="methodology-box">
+                    <p><strong>2020 Report:</strong> The two main reasons for enrollment decline are negative mobility (more students moving out of the district than into it) and declining area births. Nearly all grade transitions showed negative mobility. For example, District Wide mobility for grade 4 to grade 5 is 97%, meaning over the last four years there has been an average 3% decline in students transitioning from 4th to 5th grade. <span class="citation">DDP 2020, Executive Summary, p. 3</span></p>
+                    
+                    <p><strong>2025 Report:</strong> Mobility shows student retention rates by grade for schools in the Granite School District, with most early grades near or slightly above 1.0 (indicating stable enrollment), but many higher grades below 1.0, suggesting declining retention as students age. <span class="citation">MGT 2025, Executive Summary, p. 2</span></p>
+                    
+                    <p>💡 <em>Consistent pattern across both reports: more families are leaving the district than entering through relocations, compounding the birth rate problem. The pattern worsens in higher grades, suggesting families may be more likely to relocate or choose alternative schools as children get older.</em></p>
+                </div>
+
+                <h3>3. New Housing Development</h3>
+                <div class="methodology-box">
+                    <p><strong>2020 Report:</strong> Since 2014, approximately 6,000 new housing units were built within District boundaries. While that seems like a lot of units, about half were multifamily units that do not yield as many students as single-family housing. Through discussions with area developers, city and county officials, and district staff, Davis Demographics estimates approximately 6,000 additional units will be built within the District by the year 2024. Most of the new units will also be multifamily units with relatively low student yield rates. <span class="citation">DDP 2020, Executive Summary, p. 3</span></p>
+                    
+                    <p><strong>2025 Report:</strong> The forecast includes 40 active or planned projects totaling 4,254 residential units, with 74% being apartments (3,160 units), 5% being single-family detached homes, and Cottonwood High School anticipating the largest increase in residential units. <span class="citation">MGT 2025, Executive Summary, p. 2</span></p>
+                    
+                    <h4>Student Yield Factors (2025):</h4>
+                    <p>The Student Yield Factor (SYF) for the Granite School District indicates that for every 100 newly built housing units, the district gains approximately: <span class="citation">MGT 2025, Executive Summary, p. 2</span></p>
+                    <ul>
+                        <li>Single-family detached homes: <span class="stat-highlight positive">48 students per 100 units</span></li>
+                        <li>Multi-family attached homes: <span class="stat-highlight">18 students per 100 units</span></li>
+                        <li>Apartments: <span class="stat-highlight negative">12 students per 100 units</span></li>
+                    </ul>
+                    
+                    <p>💡 <em>Critical insight: While new development continues, it is overwhelmingly apartment-based (74% of planned units), which yields only 12 students per 100 units—just 25% of the yield from single-family homes (48 students per 100 units). This housing mix is insufficient to offset declining births and negative mobility.</em></p>
+                </div>
+
+                <h3>4. District Capture Rates</h3>
+                <div class="methodology-box">
+                    <p><strong>2025 Report Only:</strong> The district capture rates show the district is capturing 85% of the high school students in the area, 76% of the junior high school students and 68% of the elementary school students. <span class="citation">MGT 2025, Executive Summary, p. 2</span></p>
+                    <ul>
+                        <li>Elementary students: <strong>68%</strong> capture rate (32% attend elsewhere)</li>
+                        <li>Junior high students: <strong>76%</strong> capture rate (24% attend elsewhere)</li>
+                        <li>High school students: <strong>85%</strong> capture rate (15% attend elsewhere)</li>
+                    </ul>
+                    
+                    <p>💡 <em>Significant finding not present in 2020 report: Nearly one-third of elementary-age residents and one-quarter of junior high residents attend charter, private, or other district schools. This represents substantial enrollment leakage and suggests increasing competition in the school choice market. The 2020 report did not include capture rate analysis.</em></p>
+                </div>
+            </section>
+
+            <section id="methodology">
+                <h2>Methodology Overview</h2>
+                <p>Both reports use similar residence-based, modified cohort forecast methodologies, though with some variations in implementation and analytical detail:</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>2020 Report (Davis Demographics)</th>
+                            <th>2025 Report (MGT)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Forecast Type</strong></td>
+                            <td>Residence-based, Modified Cohort <span class="citation">DDP 2020, Introduction, p. 1</span></td>
+                            <td>Residence-based, Modified Cohort <span class="citation">MGT 2025, Methodology, pp. 3-5</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geographic Units</strong></td>
+                            <td>Study areas (small geographic areas following logical boundaries) <span class="citation">DDP 2020, Sources of Data, p. 4</span></td>
+                            <td>1,536 study areas defined by logical boundaries such as freeways, streets, railroad tracks, or green space <span class="citation">MGT 2025, Methodology, p. 3</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Key Data Sources</strong></td>
+                            <td>District GIS data (streets, parcels, study areas, schools), student files 2016-2020, birth data, residential development plans <span class="citation">DDP 2020, Sources of Data, pp. 4-5</span></td>
+                            <td>Street centerline/parcels, student files (4 years), Utah Dept. of Health & Human Services birth data, municipal development data from local municipalities <span class="citation">MGT 2025, Methodology, pp. 3-4</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Primary Factors</strong></td>
+                            <td>Incoming kindergarten classes, student yield from new housing, effects of student mobility <span class="citation">DDP 2020, Introduction, p. 1</span></td>
+                            <td>Birth rates, mobility factors, Student Yield Factors (SYF), capture rates <span class="citation">MGT 2025, Forecast Factors, pp. 6-19</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geocoding</strong></td>
+                            <td>Address matching to parcels via street centerline database <span class="citation">DDP 2020, Sources of Data, p. 4</span></td>
+                            <td>Point-based geocoding placing each student at exact parcel/residence location <span class="citation">MGT 2025, Methodology, p. 3</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Forecast Horizon</strong></td>
+                            <td>5 years (2020/21 - 2024/25) <span class="citation">DDP 2020, title page</span></td>
+                            <td>5 years (2025/26 - 2029/30) <span class="citation">MGT 2025, title page</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capture Rate Analysis</strong></td>
+                            <td>Not explicitly included</td>
+                            <td>Detailed capture rate analysis by grade level band (elementary 68%, junior high 76%, high school 85%) <span class="citation">MGT 2025, Capture Rate Analysis, pp. 37-38 & Executive Summary, p. 2</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="source-note">
+                    <strong>Methodological Note:</strong> Both reports emphasize that residence-based forecasting is superior to enrollment-based forecasting for facility planning. MGT states this approach provides "the most accurate estimate of where future school facilities may be needed" because "school facility planning is more accurate when facilities are located where the greatest number of students reside." <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Methodology, p. 4</span>
+                </div>
+            </section>
+
+            <section id="population-vs-enrollment">
+                <h2>🎯 Critical Gap: Population vs. Enrollment as Decision Metrics</h2>
+                
+                <div class="key-findings" style="border-left-color: #dc3545;">
+                    <h3>Why This Distinction Matters for School Closure Decisions</h3>
+                    <p><strong>The reports' emphasis on residence-based (population) forecasting is correct for some decisions but dangerously incomplete for others.</strong> While both MGT and DDP appropriately advocate for residence-based analysis <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Methodology, p. 4</span>, Area 5 data reveals that <strong>population and enrollment can diverge dramatically</strong> due to school choice behavior—a phenomenon both reports acknowledge exists but fail to adequately analyze.</p>
+                </div>
+
+                <h3>Two Critical Metrics, Two Different Questions</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>What It Measures</th>
+                            <th>Best Used For</th>
+                            <th>Limitations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Population-Based<br>(Residence Study approach)</strong></td>
+                            <td>How many school-age children <em>live</em> in each boundary area, regardless of where they attend school</td>
+                            <td>• Long-term facility location planning<br>• New school site selection<br>• Understanding demographic shifts<br>• Assessing neighborhood housing impacts</td>
+                            <td>• Ignores actual school utilization<br>• Doesn't capture school choice patterns<br>• Can show high population but low enrollment at a school<br>• Assumes students will attend assigned schools</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enrollment-Based<br>(Actual attendance)</strong></td>
+                            <td>How many students <em>actually attend</em> each school, regardless of where they live</td>
+                            <td>• Operational capacity planning<br>• Staffing decisions<br>• Program viability assessment<br>• Identifying overcrowding/underutilization<br>• School closure decisions</td>
+                            <td>• Can be artificially inflated by choice programs<br>• Volatile year-to-year<br>• Doesn't show neighborhood need<br>• Can mask underlying population decline</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Area 5 Reality: The Metrics Diverge Dramatically</h3>
+                
+                <div class="methodology-box">
+                    <p><strong>Data from this site's <a href="mobility-matrices.html" style="color: #667eea; font-weight: 600;">mobility matrices analysis</a> reveals the critical limitation of using population data alone for closure decisions:</strong></p>
+                    
+                    <table class="comparison-table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>School</th>
+                                <th>In-Boundary Students</th>
+                                <th>Out-of-Boundary Students</th>
+                                <th>Implication for Closure Analysis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Morningside</strong></td>
+                                <td>34%</td>
+                                <td><span class="stat-highlight negative">66%</span></td>
+                                <td>Enrollment driven by ALC/DLI choice programs, NOT boundary population. Residence study would miss this entirely.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Penn</strong></td>
+                                <td>49%</td>
+                                <td><span class="stat-highlight negative">51%</span></td>
+                                <td>Majority from out-of-boundary. Population forecasts won't predict Penn's enrollment accurately.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Eastwood</strong></td>
+                                <td>53%</td>
+                                <td><span class="stat-highlight">47%</span></td>
+                                <td>Nearly half choice-based. <strong>Closing Eastwood affects students from across Area 5, not just the boundary area.</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Crestview</strong></td>
+                                <td><span class="stat-highlight positive">92%</span></td>
+                                <td>8%</td>
+                                <td>Population and enrollment align well. Residence-based forecasting works here.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rosecrest</strong></td>
+                                <td><span class="stat-highlight positive">79%</span></td>
+                                <td>21%</td>
+                                <td>Strong boundary retention. Population trends reliably predict enrollment.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p style="margin-top: 15px;"><strong>Source:</strong> <a href="mobility-matrices.html" style="color: #667eea;">Area 5 Mobility Matrices</a> (2024-25 data) | <a href="index.html" style="color: #667eea;">Area 5 Analysis Portal</a></p>
+                </div>
+
+                <h3>Why You Need BOTH Metrics: A Holistic Decision Framework</h3>
+                
+                <div class="strengths">
+                    <h4>Example: Evaluating Eastwood Elementary Closure</h4>
+                    
+                    <p><strong>Using ONLY Population Data (Residence Study approach):</strong></p>
+                    <ul>
+                        <li>Eastwood boundary area has declining school-age population ✓</li>
+                        <li>Nearby schools (Oakridge) have capacity to absorb Eastwood boundary children ✓</li>
+                        <li><strong>Conclusion: Close Eastwood ✓</strong></li>
+                    </ul>
+                    
+                    <p style="margin-top: 20px;"><strong>But Adding Enrollment/Mobility Data Reveals:</strong></p>
+                    <ul>
+                        <li>283 students currently attend Eastwood <span class="citation">from enrollment-trends.html</span></li>
+                        <li><strong>47% (133 students) live OUTSIDE Eastwood's boundary</strong> <span class="citation">from mobility-matrices.html</span></li>
+                        <li>These 133 students actively <em>chose</em> Eastwood over their assigned schools</li>
+                        <li>Where will they go if Eastwood closes? Will they:
+                            <ol>
+                                <li>Accept reassignment to Oakridge? (maybe some)</li>
+                                <li>Transfer to another Area 5 school, creating new overcrowding? (likely some)</li>
+                                <li>Leave Granite SD entirely for charter/private schools? (some will)</li>
+                            </ol>
+                        </li>
+                        <li><strong>The Residence Study cannot answer this question</strong> because it doesn't track choice behavior or model school appeal/retention factors</li>
+                    </ul>
+                    
+                    <p style="margin-top: 20px;"><strong>A Holistic Analysis Uses Both:</strong></p>
+                    <ol>
+                        <li><strong>Population data</strong> confirms Eastwood boundary area is declining (supports closure from facility perspective)</li>
+                        <li><strong>Enrollment data</strong> shows 133 choice students will be displaced (requires retention strategy)</li>
+                        <li><strong>21-year enrollment trends</strong> from <a href="enrollment-trends.html" style="color:#28a745; font-weight:600;">this site</a> show Eastwood declined from 486 (2004) to 283 (2024) = -42%</li>
+                        <li><strong>Mobility patterns</strong> show which schools are attracting vs. losing students within Area 5</li>
+                        <li><strong>Result: Informed decision</strong> that accounts for both demographic reality AND school choice dynamics</li>
+                    </ol>
+                </div>
+
+                <h3>What This Site Adds to the Residence Studies</h3>
+                
+                <div class="methodology-box" >
+                    <p>The demographic reports (DDP 2020, MGT 2025) provide essential <strong>residence-based population forecasts</strong>. This independent analysis site complements them with:</p>
+                    
+                    <h4>1. <a href="enrollment-trends.html" style="color: #1e3c72; font-weight: 600;">📈 21-Year Enrollment Trends & Statistical Forecasts</a></h4>
+                    <ul>
+                        <li><strong>What it shows:</strong> Actual enrollment history (2004-2024) and 7 different statistical forecast methods through 2029</li>
+                        <li><strong>Why it matters:</strong> Reveals which schools are actually losing/gaining students vs. what population alone would predict</li>
+                        <li><strong>Key finding:</strong> Area 5 enrollment dropped 24% over 21 years, but with huge variance by school:
+                            <ul>
+                                <li>Eastwood: -42%</li>
+                                <li>Oakridge: -47%</li>
+                                <li>Penn: +43% (grew despite Area 5 decline due to choice appeal)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Gap filled:</strong> Neither Residence Study provides 21-year historical context or multiple forecast methodologies with confidence intervals</li>
+                    </ul>
+
+                    <h4>2. <a href="mobility-matrices.html" style="color: #1e3c72; font-weight: 600;">📊 Student Mobility Matrices</a></h4>
+                    <ul>
+                        <li><strong>What it shows:</strong> Where Area 5's 4,089 students live vs. where they attend school</li>
+                        <li><strong>Why it matters:</strong> Quantifies school choice behavior that Residence Studies acknowledge but don't deeply analyze</li>
+                        <li><strong>Key finding:</strong> Massive in/out boundary flows:
+                            <ul>
+                                <li>Morningside: 66% out-of-boundary (375 choice students)</li>
+                                <li>Penn: 51% out-of-boundary (337 choice students)</li>
+                                <li>Oakridge: Only 242 enrolled despite having capacity for 550</li>
+                            </ul>
+                        </li>
+                        <li><strong>Gap filled:</strong> MGT 2025 calculates 68% elementary capture rate <span class="citation">MGT 2025, p. 2</span> but doesn't show school-by-school choice patterns or where students are flowing</li>
+                    </ul>
+
+                    <h4>3. <a href="morningside-study.html" style="color: #1e3c72; font-weight: 600;">🎓 Morningside ALC Pipeline Analysis</a></h4>
+                    <ul>
+                        <li><strong>What it shows:</strong> How 3rd grade ALC entry depends on traditional program access at Morningside</li>
+                        <li><strong>Why it matters:</strong> Converting Morningside to magnet-only eliminates the primary 2nd→3rd grade ALC pathway for traditional students</li>
+                        <li><strong>Key finding:</strong> Large spike in ALC enrollment at 3rd grade driven by students transitioning from traditional programs</li>
+                        <li><strong>Gap filled:</strong> Neither Residence Study models program-level interactions or district-wide implications of converting individual schools to magnet status</li>
+                    </ul>
+                    
+                    <p style="margin-top: 20px; padding: 15px;  border-left: 4px solid #28a745; border-radius: 5px;">
+                        <strong>✅ Together, these analyses provide the holistic view needed for sound decisions:</strong><br>
+                        • <strong>Residence Studies (MGT/DDP):</strong> Where kids live, demographic trends, long-term facility needs<br>
+                        • <strong>Enrollment Trends:</strong> Historical patterns, statistical forecasts, capacity utilization<br>
+                        • <strong>Mobility Matrices:</strong> School choice flows, boundary retention, program appeal<br>
+                        • <strong>Program Studies:</strong> How changes cascade through the system (ALC pathway example)<br><br>
+                        <em>Using only one lens gives an incomplete—and potentially misleading—picture for closure decisions.</em>
+                    </p>
+                </div>
+
+                <h3>⚠️ The Risk of Population-Only Decision Making</h3>
+                
+                <div class="weaknesses">
+                    <h4>What Can Go Wrong</h4>
+                    <p>If Granite SD relies <em>solely</em> on residence-based forecasting (as MGT and DDP recommend) without integrating enrollment and mobility analysis:</p>
+                    
+                    <ol>
+                        <li><strong>Underestimate exit risk:</strong> Closing a school with 47% choice enrollment (like Eastwood) could trigger more GSD exits than boundary reassignments predict</li>
+                        
+                        <li><strong>Miss cascading effects:</strong> Converting Morningside to magnet eliminates traditional program, displacing families who will then choose other Area 5 schools, creating new overcrowding the Residence Study didn't forecast</li>
+                        
+                        <li><strong>Ignore competitive positioning:</strong> MGT finds 68% elementary capture rate <span class="citation">MGT 2025, p. 2</span> (32% going elsewhere) but doesn't analyze which schools are most vulnerable to charter competition or why families leave. <strong>Without this, closure decisions might eliminate the few schools successfully retaining/attracting students.</strong></li>
+                        
+                        <li><strong>Assume static choice patterns:</strong> Residence Studies project declining population but assume capture rates stay constant. If boundary changes or closures alienate families, capture rates could drop further (e.g., from 68% to 60%), compounding enrollment decline beyond forecasts</li>
+                        
+                        <li><strong>Lose strategic schools:</strong> A school like Penn grew 43% over 21 years <span class="citation">from enrollment-trends.html</span> despite Area 5 population decline, because it attracts choice students. Closing Penn because its boundary area is declining would eliminate one of the district's success stories in retaining families in a competitive market</li>
+                    </ol>
+                    
+                    <p style="margin-top: 20px; padding: 15px; background: #3b331f; border-left: 4px solid #ffc107; border-radius: 5px;">
+                        <strong>💡 Bottom Line:</strong> Population forecasts tell you where to <em>locate</em> facilities. Enrollment patterns tell you which facilities families <em>actually use</em>. School choice behavior tells you which schools are <em>worth keeping</em> because they attract and retain students in a competitive market. <strong>You need all three for sound closure decisions.</strong>
+                    </p>
+                </div>
+            </section>
+
+            <section id="strengths">
+                <h2>📈 Strengths of the Reports</h2>
+                
+                <div class="strengths">
+                    <h3>Strong Points</h3>
+                    <ul>
+                        <li><strong>Residence-Based Approach:</strong> Both reports correctly prioritize where students live rather than where they enroll, enabling better facility planning. MGT explicitly states this provides "the most accurate estimate of where future school facilities may be needed" because the location of students is taken into consideration. <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Methodology, p. 4</span></li>
+                        
+                        <li><strong>Granular Geographic Analysis:</strong> Use of study areas enables detailed tracking of demographic shifts at the neighborhood level. The 2025 report uses 1,536 discrete study areas defined by logical boundaries, enabling micro-level analysis and identification of need for boundary or facility adjustments. <span class="citation">DDP 2020, Sources of Data, p. 4; MGT 2025, Methodology, p. 3</span></li>
+                        
+                        <li><strong>Multiple Data Integration:</strong> Both reports combine birth records, student enrollment history, mobility patterns, and housing development data into a unified forecasting model, creating comprehensive demographic portraits. <span class="citation">DDP 2020, Sources of Data, pp. 4-5; MGT 2025, Methodology, pp. 3-4</span></li>
+                        
+                        <li><strong>Transparent Methodology:</strong> Both reports clearly explain forecasting factors and calculations, with detailed methodology sections describing data sources, forecast methodology, and forecast factors. <span class="citation">DDP 2020, Five Year Forecast Methodology; MGT 2025, Methodology, pp. 3-19</span></li>
+                        
+                        <li><strong>Practical Focus:</strong> Reports are explicitly designed to inform facility planning, boundary adjustments, and resource allocation decisions. Davis Demographics states the purpose is to assist in "identifying when and where student population shifts will occur" and "illustrating facility adjustments that may be necessary." <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Executive Summary, p. 1</span></li>
+                        
+                        <li><strong>Regular Updates Recommended:</strong> Both acknowledge the dynamic nature of demographics and recommend annual review. DDP explicitly advises "an annual review of forecasts" because "this information can change quickly." <span class="citation">DDP 2020, Executive Summary, p. 3; MGT 2025, Executive Summary, p. 1</span></li>
+                        
+                        <li><strong>Comprehensive Coverage:</strong> Address all grade levels (K-12) and provide forecasts for individual attendance areas (elementary, junior high, and high school), not just district-wide totals. <span class="citation">DDP 2020, Table of Contents; MGT 2025, Table of Contents & Section 4, pp. 42-123</span></li>
+                        
+                        <li><strong>Development Monitoring:</strong> Track specific residential projects with detailed information including development name, location, housing type, and total number of units, enabling impact assessment. <span class="citation">DDP 2020, Executive Summary, p. 3; MGT 2025, Executive Summary, p. 2 & Methodology, p. 3</span></li>
+                        
+                        <li><strong>Detailed Documentation:</strong> Extensive appendices with attendance area-specific forecasts for individual schools, providing actionable data for school-level planning. <span class="citation">DDP 2020, Section Four & Appendix A; MGT 2025, Section 4, pp. 42-123</span></li>
+                        
+                        <li><strong>Enhanced Analysis in 2025 Report:</strong> The MGT report adds capture rate analysis, providing crucial insight into school choice competition not present in the 2020 report. This reveals that only 68% of elementary-age residents attend district schools. <span class="citation">MGT 2025, Capture Rate Analysis, pp. 37-38 & Executive Summary, p. 2</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="weaknesses">
+                <h2>⚠️ Weaknesses and Limitations</h2>
+                
+                <div class="weaknesses">
+                    <h3>Critical Flaws</h3>
+                    
+                    <h4>1. Forecast Accuracy Issues</h4>
+                    <ul>
+                        <li><strong>Significant Underestimation:</strong> The 2020 forecast predicted only a 3.7% decline from 61,349 to 57,877 by 2024/25 <span class="citation">DDP 2020, Executive Summary, p. 3</span>, but the 2025 report projects a 12.5% decline over the next five years <span class="citation">MGT 2025, Executive Summary, p. 2</span>—more than 3 times steeper. This suggests the 2020 methodology or assumptions significantly underestimated accelerating trends.</li>
+                        
+                        <li><strong>No Variance Analysis:</strong> Neither report provides confidence intervals, margins of error, sensitivity analyses, or best/worst case scenarios, making it impossible for decision-makers to assess forecast reliability or plan for contingencies</li>
+                        
+                        <li><strong>Missing Post-Pandemic Effects:</strong> The 2020 report was completed in April 2020 <span class="citation">DDP 2020, title page</span>, at the very start of the COVID-19 pandemic, and couldn't account for pandemic impacts on birth rates, migration patterns driven by remote work, or acceleration of school choice options including virtual learning</li>
+                        
+                        <li><strong>No Forecast Validation:</strong> Neither report includes retrospective analysis comparing previous forecasts to actual outcomes, which would establish track record credibility and identify systematic bias in forecasting methods</li>
+                    </ul>
+
+                    <h4>2. Incomplete Causal Analysis</h4>
+                    <ul>
+                        <li><strong>School Choice Competition Underexplored:</strong> The 2025 report reveals capture rates as low as 68% for elementary students <span class="citation">MGT 2025, Executive Summary, p. 2</span>, meaning nearly one-third of resident children attend charter, private, or other schools. Yet neither report analyzes the competitive landscape, locations of competing schools, their program offerings, growth trends, or reasons families choose alternatives</li>
+                        
+                        <li><strong>Economic Factors Missing:</strong> No discussion of housing affordability trends, median income changes, employment patterns, gentrification, or how economic conditions drive family location and school choice decisions. Both Salt Lake County and the district specifically have experienced significant economic shifts not addressed</li>
+                        
+                        <li><strong>Migration Patterns Unexplained:</strong> Both reports document negative mobility with most grade transitions showing losses <span class="citation">DDP 2020, Executive Summary, p. 3; MGT 2025, Executive Summary, p. 2</span>, but don't explain <em>why</em> families are leaving, where they're moving to (different Utah districts, out of state), what demographic segments are most mobile, or what factors drive departure decisions</li>
+                        
+                        <li><strong>Quality/Perception Gap:</strong> No assessment of district reputation, school quality metrics (test scores, graduation rates, college readiness), parent satisfaction surveys, or how perceptions of school quality influence enrollment decisions—critical given the 32% elementary capture rate gap</li>
+                        
+                        <li><strong>Demographic Composition:</strong> Limited analysis of changing racial/ethnic composition, socioeconomic shifts, immigrant populations, age structure of the resident population, or how different demographic groups have varying school attendance patterns</li>
+                    </ul>
+
+                    <h4>3. Methodological Limitations</h4>
+                    <ul>
+                        <li><strong>Historical Dependence:</strong> The modified cohort method assumes past trends continue linearly; it doesn't model potential non-linear changes, tipping points, policy interventions, or market disruptions. MGT acknowledges this is based on "the belief" that past patterns predict future needs. <span class="citation">MGT 2025, Methodology, p. 4</span></li>
+                        
+                        <li><strong>Static Capture Rates:</strong> The 2025 report calculates current capture rates (68% elementary, 76% junior high, 85% high school) <span class="citation">MGT 2025, Capture Rate Analysis, pp. 37-38</span> but doesn't project how they might change with charter school expansion, district policy changes, or demographic shifts</li>
+                        
+                        <li><strong>Housing Type Oversimplification:</strong> Student Yield Factors treat all apartments as yielding 12 students per 100 units, all single-family homes as 48 per 100 units <span class="citation">MGT 2025, Executive Summary, p. 2</span>, ignoring significant variations by price point (luxury vs. affordable), unit size (studio vs. 3-bedroom), or neighborhood desirability</li>
+                        
+                        <li><strong>Limited Time Horizon:</strong> Five-year forecasts <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Methodology, p. 4</span> may be too short for major facility decisions, as school construction typically takes 3-5 years from planning to completion. By the time action is taken, the forecast window has nearly elapsed</li>
+                        
+                        <li><strong>No Sensitivity Analysis:</strong> Reports don't test how forecasts would change with different assumptions about birth rates, mobility rates, capture rates, or development timing/mix. Decision-makers can't assess which factors have the greatest impact or where uncertainty is highest</li>
+                    </ul>
+
+                    <h4>4. Missing Strategic Context</h4>
+                    <ul>
+                        <li><strong>No Action Plan:</strong> Reports identify 12.5% enrollment decline <span class="citation">MGT 2025, Executive Summary, p. 2</span> but don't recommend specific facility closures, consolidations, repurposing strategies, or implementation timelines. Both explicitly state their purpose is to inform decisions <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Executive Summary, p. 1</span> but stop short of making recommendations about what decisions should be made</li>
+                        
+                        <li><strong>Financial Implications Absent:</strong> No cost-benefit analysis of operating under-enrolled buildings, no per-pupil cost projections showing financial efficiency, no assessment of fiscal sustainability with declining enrollment, and no analysis of budget impacts</li>
+                        
+                        <li><strong>Equity Considerations:</strong> No analysis of how enrollment changes affect different demographic groups, whether decline is concentrated in specific neighborhoods (potentially exacerbating segregation), or potential equity impacts of facility closure decisions on access and transportation</li>
+                        
+                        <li><strong>Alternative Scenarios:</strong> No modeling of potential interventions that might slow or reverse decline: targeted marketing campaigns, program enhancements (STEM, arts, language immersion), strategic boundary adjustments, new school models, or partnerships. Reports present decline as inevitable rather than addressable</li>
+                        
+                        <li><strong>Competitive Response Missing:</strong> Given 32% of elementary students attend elsewhere <span class="citation">MGT 2025, Executive Summary, p. 2</span>, no strategy proposed for recapturing market share, differentiating district offerings from charter schools, or improving competitive positioning in the school choice environment</li>
+                    </ul>
+
+                    <h4>5. Data and Presentation Issues</h4>
+                    <ul>
+                        <li><strong>Inconsistent Baselines:</strong> 2020 report uses 2019/20 data <span class="citation">DDP 2020, title page</span> while 2025 report uses 2024/25 data <span class="citation">MGT 2025, title page</span>, with different metrics (total students vs. students per grade), making direct comparison across reports challenging without additional calculation</li>
+                        
+                        <li><strong>Limited Visualizations:</strong> Both reports are heavily text and table-based, consisting of 143-601 pages. More charts, heat maps, trend graphs, geographic visualizations, and demographic pyramids would enhance accessibility and comprehension for non-technical audiences</li>
+                        
+                        <li><strong>Technical Language:</strong> Dense formatting, demographic terminology, and technical jargon may limit usefulness for board members, parents, and community stakeholders who aren't demographic experts but need to understand and act on findings</li>
+                        
+                        <li><strong>Development List Currency:</strong> Both reports acknowledge development plans change rapidly as "the marketplace" shifts <span class="citation">DDP 2020, Executive Summary, p. 3; MGT 2025, Methodology, p. 3</span>, but provide no mechanism for real-time updates between annual comprehensive reports, potentially leading to outdated projections</li>
+                        
+                        <li><strong>Attendance vs. Residence Clarity:</strong> While reports are residence-based, the distinction between assigned school and actual enrollment could be clearer throughout, especially given the 68-85% capture rates revealing significant divergence <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                    </ul>
+
+                    <h4>6. Stakeholder Engagement Gap</h4>
+                    <ul>
+                        <li><strong>No Community Input:</strong> Reports appear purely technical; no evidence of parent surveys, teacher focus groups, community forums, or stakeholder feedback to understand local perceptions, concerns, and priorities. Demographic data exists in a vacuum without community context</li>
+                        
+                        <li><strong>Limited Accessibility:</strong> Technical language and 143-601 page length <span class="citation">report metadata</span> create significant barriers for non-expert stakeholders to understand and engage with findings. No executive summary shorter than 3 pages or visual one-pagers for different audiences</li>
+                        
+                        <li><strong>No Implementation Roadmap:</strong> Missing guidance on how to communicate findings to various audiences (staff, parents, community, media), engage stakeholders in developing solutions, or manage the political and emotional dimensions of facility closures</li>
+                        
+                        <li><strong>Absent Political Context:</strong> No assessment of community readiness for difficult decisions like school closures or boundary changes, identification of potential opposition or support, or strategies for building consensus around necessary actions</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="recommendations">
+                <h2>🎯 Recommendations for Future Studies</h2>
+                
+                <div class="methodology-box">
+                    <h3>Improvements for Enhanced Forecasting</h3>
+                    <ul>
+                        <li><strong>Competitive Analysis:</strong> Conduct comprehensive study of charter school locations, program offerings, growth trends, enrollment capture patterns, and student migration flows to understand the 32% elementary capture rate gap <span class="citation">related to MGT 2025, Executive Summary, p. 2</span> and develop competitive response strategies</li>
+                        
+                        <li><strong>Scenario Planning:</strong> Develop best-case, worst-case, and most-likely scenarios with probability assessments and sensitivity analysis showing impact of varying assumptions about births, mobility, development, and capture rates</li>
+                        
+                        <li><strong>Qualitative Research:</strong> Conduct statistically valid parent surveys and structured focus groups to understand school choice decisions, reasons families leave the district, perception of school quality, and what improvements might increase enrollment</li>
+                        
+                        <li><strong>Economic Modeling:</strong> Integrate housing price trends, median income data, employment patterns, affordability indices, and cost-of-living factors that influence family location and school choice decisions</li>
+                        
+                        <li><strong>Forecast Validation:</strong> Include retrospective analysis comparing previous forecasts to actual outcomes (e.g., compare 2020 forecast to 2025 actual enrollment) to establish forecasting accuracy track record and identify systematic biases requiring methodology adjustments</li>
+                        
+                        <li><strong>Policy Simulation:</strong> Model quantitative impact of potential interventions (new magnet programs, enhanced marketing with $X budget, facility improvements costing $Y, specific boundary adjustments) on enrollment trends to enable data-driven strategy selection</li>
+                        
+                        <li><strong>Real-Time Dashboards:</strong> Create dynamic, web-based tracking systems that update birth data (quarterly), housing permits (monthly), and enrollment trends (real-time) rather than waiting for annual 143-601 page reports, enabling rapid response to emerging trends</li>
+                        
+                        <li><strong>Extended Time Horizon:</strong> Provide optional 10-year projections for major capital investments (acknowledging increased uncertainty), giving longer planning visibility for decisions with 5+ year implementation timelines</li>
+                        
+                        <li><strong>Strategic Recommendations:</strong> Include specific facility consolidation options with cost-benefit analysis, priority rankings based on enrollment density and building condition, phased implementation timelines, and estimated budget impacts</li>
+                        
+                        <li><strong>Enhanced Visualizations:</strong> Use interactive maps, animated trend charts showing changes over time, demographic pyramids by neighborhood, heat maps of enrollment density, and infographics to make complex data accessible to diverse audiences</li>
+                        
+                        <li><strong>Executive Summaries by Audience:</strong> Create tailored 2-3 page summaries for different stakeholders (board members, administrators, parents, media, community leaders) highlighting what matters most to each group and recommended actions</li>
+                        
+                        <li><strong>Equity Analysis:</strong> Examine how enrollment changes affect different neighborhoods, socioeconomic groups, racial/ethnic populations, and special needs students to ensure facility decisions don't exacerbate existing disparities or reduce access</li>
+                        
+                        <li><strong>Quarterly Brief Updates:</strong> Provide concise quarterly updates (5-10 pages) on key leading indicators (births, building permits, enrollment applications, charter school expansion) between comprehensive annual reports</li>
+                        
+                        <li><strong>Community Engagement Plan:</strong> Include specific recommendations for stakeholder communication strategies, public meeting formats, feedback mechanisms, and consensus-building processes to build support for necessary but difficult facility adjustments</li>
+                        
+                        <li><strong>Dynamic Capture Rate Modeling:</strong> Project how capture rates might change over time based on charter school growth rates, district policy changes, demographic shifts, and program enhancements, rather than assuming static 68-85% rates <span class="citation">related to MGT 2025, Capture Rate Analysis, pp. 37-38</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="conclusions">
+                <h2>💡 Conclusions</h2>
+                
+                <div class="key-findings">
+                    <h3>Summary Assessment</h3>
+                    <p>Both reports demonstrate professional demographic forecasting competence and provide valuable baseline data for facility planning. They employ appropriate residence-based methodologies <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Methodology, pp. 4-5</span> and integrate multiple data sources systematically <span class="citation">DDP 2020, Sources of Data, pp. 4-5; MGT 2025, Methodology, pp. 3-4</span>. However, they suffer from three critical weaknesses that limit their strategic value:</p>
+                    
+                    <ol>
+                        <li><strong>Accuracy Problems:</strong> The 2020 forecast significantly underestimated the rate of decline, projecting only -3.7% decrease <span class="citation">DDP 2020, Executive Summary, p. 3</span> while the actual trajectory suggests -12.5% decline <span class="citation">MGT 2025, Executive Summary, p. 2</span>—more than 3 times steeper. This raises serious questions about methodology assumptions, data quality, or failure to anticipate accelerating demographic trends and school choice competition</li>
+                        
+                        <li><strong>Descriptive, Not Prescriptive:</strong> Reports meticulously identify trends and forecast future enrollment but offer minimal strategic guidance on how to respond. They answer "what" (12.5% decline) and "when" (over 5 years) without adequately addressing "why" (root causes beyond births) or "what should we do about it" (specific facility actions, competitive strategies, or intervention options)</li>
+                        
+                        <li><strong>Missing Context:</strong> Lack of competitive analysis (despite 32% elementary capture rate gap suggesting significant charter/private competition), economic factors driving family decisions, qualitative parent insights explaining school choice, and strategic alternatives to passively managing decline limits understanding of root causes and potential solutions</li>
+                    </ol>
+                    
+                    <h3>Key Insight</h3>
+                    <p>Granite School District faces accelerating enrollment decline driven by multiple compounding factors creating a perfect storm:</p>
+                    <ul>
+                        <li><strong>Demographic Headwinds:</strong> Falling birth rates (16-19% decline from 2014-2019 peak) <span class="citation">MGT 2025, Forecast Factors, p. 6</span> producing smaller kindergarten classes</li>
+                        
+                        <li><strong>Outmigration:</strong> Negative mobility with most grade transitions showing net student losses <span class="citation">DDP 2020, Executive Summary, p. 3; MGT 2025, Executive Summary, p. 2</span></li>
+                        
+                        <li><strong>Low-Yield Development:</strong> Apartment-heavy construction (74% of new units) yielding only 12 students per 100 units compared to 48 for single-family homes <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                        
+                        <li><strong>School Choice Competition:</strong> Only 68% of elementary-age residents attend district schools, with 32% choosing alternatives <span class="citation">MGT 2025, Executive Summary, p. 2</span></li>
+                    </ul>
+                    
+                    <p>The district needs not just demographic forecasts documenting decline, but a comprehensive strategic plan addressing these underlying causes and positioning the district competitively in a choice-rich environment. Current reports provide the "what" but not the "how" or "why."</p>
+                    
+                    <h3>Bottom Line</h3>
+                    <p><strong>These reports are necessary but insufficient.</strong> They provide essential demographic data infrastructure and accurately document enrollment trends, but lack the analytical depth, causal understanding, strategic vision, and actionable recommendations needed to guide district leadership through a period of significant transformation. The reports fulfill their stated purpose of informing decisions <span class="citation">DDP 2020, Introduction, p. 1; MGT 2025, Executive Summary, p. 1</span> but don't go far enough to prescribe what those decisions should be.</p>
+                    
+                    <p>Future studies should integrate competitive market analysis (mapping charter school locations and programs), economic modeling (housing affordability, income trends), stakeholder research (parent surveys, focus groups), and explicit strategic recommendations with cost-benefit analyses to move from demographic description to strategic prescription. The district needs both demographic forecasting <em>and</em> strategic planning expertise working in tandem.</p>
+                    
+                    <p>The 12.5% projected decline over five years <span class="citation">MGT 2025, Executive Summary, p. 2</span> represents not just a facilities challenge requiring right-sizing (operational efficiency) but a fundamental market position challenge requiring strategic repositioning (recapturing lost market share from the 32% of families choosing alternatives). Current reports address only the former while ignoring the latter.</p>
+                    
+                    <p><strong>Critical Next Step:</strong> Commission a complementary strategic enrollment management study that answers the "why" questions (Why do 32% of families choose alternatives? Why are families leaving? What would attract them back?) and provides specific, costed action plans for both facility optimization and competitive repositioning.</p>
+                </div>
+            </section>
+
+            <section style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem;">📊 Report Information & Downloads</h3>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <div style="padding: 1.5rem; background: var(--bg-secondary); border-left: 4px solid var(--accent-cyan); border-radius: 8px;">
+                            <h4 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 1rem;">2020 Residence Study</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                                <strong>Author:</strong> Davis Demographics & Planning, Inc.<br>
+                                <strong>Date:</strong> April 6, 2020<br>
+                                <strong>Pages:</strong> 601<br>
+                                <strong>Citation:</strong> DDP 2020
+                            </p>
+                            <a href="demographic_study_reports/GraniteSD_Final Student Population Forecast Report_DD_April 2020.pdf" 
+                               target="_blank"
+                               style="display: inline-block; padding: 0.5rem 1rem; background: var(--accent-cyan); color: white; border-radius: 5px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease;">
+                                📥 Download PDF
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="padding: 1.5rem; background: var(--bg-secondary); border-left: 4px solid var(--accent-purple); border-radius: 8px;">
+                            <h4 style="color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 1rem;">2025 MGT Study</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                                <strong>Author:</strong> MGT Consulting<br>
+                                <strong>Date:</strong> March 11, 2025<br>
+                                <strong>Pages:</strong> 143<br>
+                                <strong>Citation:</strong> MGT 2025
+                            </p>
+                            <a href="demographic_study_reports/MGT SY2425 Report_GraniteSD_FINAL revision 03.13.25.pdf" 
+                               target="_blank"
+                               style="display: inline-block; padding: 0.5rem 1rem; background: var(--accent-purple); color: white; border-radius: 5px; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease;">
+                                📥 Download PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
+                    📚 All claims cited with report source and page numbers
+                </p>
+            </section>
+        </div>
+
+        <p class="mb-0 mt-4 small fst-italic" style="color: var(--text-secondary); padding: 0 40px 40px 40px;">
+            ⚠️ This is an independent analysis. Not affiliated with Granite School District. For additional analysis, see: 
+            <a href="index.html">Area 5 Portal</a> | 
+            <a href="enrollment-trends.html">Enrollment Trends</a> | 
+            <a href="mobility-matrices.html">Mobility Matrices</a> | 
+            <a href="morningside-study.html">Morningside Study</a>
+        </p>
+    </div>
+
+    <script src="utils.js"></script>
+</body>
+</html>

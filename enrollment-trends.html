@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area 5 Population Trends | Granite School District</title>
+    <title>Area 5 Enrollment Trends | Granite School District</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -14,10 +14,12 @@
     <nav class="nav-sidebar" id="navSidebar">
         <h3>Pages</h3>
         <ul>
-            <li><a href="index.html">🏠 Home</a></li>
-            <li><a href="population-trends.html">📈 Population Trends</a></li>
+            <li><a href="index.html" style="color: var(--accent-cyan); font-weight: bold;">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
             <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
-            <li><a href="morningside-study.html" style="color: var(--accent-cyan); font-weight: bold;">🎓 Morningside Study</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            
         </ul>
     </nav>
 
@@ -33,7 +35,7 @@
         <div class="content-section">
             <div class="alert alert-info mb-3 mb-md-4" id="about" style = 'color: #baa;'>
                 <h3 class="h4 mb-3">📊 About These Data</h3>
-                <p><strong>Enrollment history from 2003-04 through 2023-24</strong> shows long-term population trends for each school, with <strong>statistical forecasts through 2029</strong> using multiple forecasting methods.</p>
+                <p><strong>Enrollment history from 2003-04 through 2023-24</strong> shows long-term enrollent trends for each school, with <strong>statistical forecasts through 2029</strong> using multiple forecasting methods.</p>
                 <p style="margin-top: 1rem;">Key features:</p>
                 <ul>
                     <li><strong>21 years of historical data</strong> (solid lines) - Comprehensive enrollment perspective from 2004-2024</li>
@@ -239,7 +241,7 @@
             </div>
             
             <p class="mb-0 mt-4 small fst-italic" style="color: var(--text-secondary);">
-                ⚠️ This is an independent analysis. Not affiliated with Granite School District.
+                ⚠️ This is an independent analysis. Not affiliated with Granite School District. The goal of this analysis is to improve accessilibty to the PAC Area 5 2025 Boundary Study data. If you find inaccuracies in the data or any other mistakes, or would like to contribute directly, please reach out to <a href='https://github.com/granite-pa-25-resources/home/issues' target='_blank'>https://github.com/granite-pa-25-resources/home/issues</a> and submit a bug report. . 
             </p>
         </div>
     </footer>
@@ -877,7 +879,10 @@
                     },
                     legendgroup: school,
                     showlegend: true,
-                    visible: visibleValue
+                    visible: visibleValue,
+                    hovertemplate: currentView === 'absolute'
+                        ? `${school}: %{y:.0f} students<br>%{x}<extra></extra>`
+                        : `${school}: %{y:.1f}% capacity<br>%{x}<extra></extra>`
                 });
 
                 // Fitted/Trend line (historical period) - shows model fit
@@ -896,8 +901,8 @@
                     showlegend: false,
                     visible: visibleValue,
                     hovertemplate: currentView === 'absolute'
-                        ? 'Fitted: %{y:.0f}<br>%{x}<extra></extra>'
-                        : 'Fitted: %{y:.1f}%<br>%{x}<extra></extra>'
+                        ? `${school} fitted: %{y:.0f}<br>%{x}<extra></extra>`
+                        : `${school} fitted: %{y:.1f}% capacity<br>%{x}<extra></extra>`
                 });
 
                 // Forecast line
@@ -916,8 +921,8 @@
                     showlegend: false,
                     visible: visibleValue,
                     hovertemplate: currentView === 'absolute'
-                        ? '%{y:.0f} students<br>%{x}<br>(95% CI)<extra></extra>'
-                        : '%{y:.1f}% capacity<br>%{x}<br>(95% CI)<extra></extra>'
+                        ? `${school}: %{y:.0f} students<br>%{x}<extra></extra>`
+                        : `${school}: %{y:.1f}% capacity<br>%{x}<extra></extra>`
                 });
 
                 // Confidence interval (upper bound)
@@ -929,8 +934,8 @@
                     showlegend: false,
                     visible: visibleValue,
                     hovertemplate: currentView === 'absolute'
-                        ? `Upper 95% CI (${school}): %{y:.0f}<br>%{x}<extra></extra>`
-                        : `Upper 95% CI (${school}): %{y:.1f}%<br>%{x}<extra></extra>`,
+                        ? `${school}: Upper 95% CI: %{y:.0f}<br>%{x}<extra></extra>`
+                        : `${school}: Upper 95% CI: %{y:.1f}%<br>%{x}<extra></extra>`,
                     legendgroup: school,
                     name: `${school} CI Upper`
                 });
@@ -946,8 +951,8 @@
                     fill: 'tonexty',
                     fillcolor: hexToRgba(schoolColors[school], 0.15),
                     hovertemplate: currentView === 'absolute'
-                        ? 'Lower 95% CI (${school}): %{y:.0f}<br>%{x}<extra></extra>'
-                        : 'Lower 95% CI (${school}): %{y:.1f}%<br>%{x}<extra></extra>',
+                        ? `${school}: Lower 95% CI: %{y:.0f}<br>%{x}<extra></extra>`
+                        : `${school}: Lower 95% CI: %{y:.1f}%<br>%{x}<extra></extra>`,
                     legendgroup: school,
                     name: `${school} CI Lower`
                 });

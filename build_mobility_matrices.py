@@ -24,7 +24,7 @@ matrix1_data = {}
 # Cottonwood Elementary - students attending Cottonwood
 matrix1_data[('COTTONWOOD', 'Cottonwood')] = 233
 matrix1_data[('CRESTVIEW', 'Cottonwood')] = 1
-matrix1_data[('DRIGGS', 'Cottonwood')] = 10
+matrix1_data[('DRIGGS', 'Cottonwood')] = 13
 matrix1_data[('MORNINGSIDE', 'Cottonwood')] = 2
 matrix1_data[('MOSS', 'Cottonwood')] = 5
 matrix1_data[('OAKRIDGE', 'Cottonwood')] = 2
@@ -64,7 +64,7 @@ matrix1_data[('LINCOLN', 'Driggs')] = 10
 matrix1_data[('MORNINGSIDE', 'Driggs')] = 33
 matrix1_data[('MOSS', 'Driggs')] = 10
 matrix1_data[('OAKWOOD', 'Driggs')] = 9
-matrix1_data[('Out of District', 'Driggs')] = 8
+matrix1_data[('Out of District', 'Driggs')] = 9
 matrix1_data[('PENN', 'Driggs')] = 4
 matrix1_data[('PLYMOUTH', 'Driggs')] = 1
 matrix1_data[('ROSECREST', 'Driggs')] = 1
@@ -235,56 +235,54 @@ matrix1_data[('WOODSTOCK', 'Upland Terrace')] = 5
 # OTHER SCHOOLS - Where students FROM Area 5 boundaries GO TO other schools
 # ==============================================================================
 
-# Lincoln Elementary - students from Area 5 boundaries attending Lincoln
-# (Data from the "right" tables showing where boundary students GO)
-matrix1_data[('COTTONWOOD', 'Lincoln')] = 1
-matrix1_data[('DRIGGS', 'Lincoln')] = 3
-matrix1_data[('MORNINGSIDE', 'Lincoln')] = 2
-matrix1_data[('MOSS', 'Lincoln')] = 13
-matrix1_data[('OAKRIDGE', 'Lincoln')] = 1
-matrix1_data[('OAKWOOD', 'Lincoln')] = 1
-matrix1_data[('PENN', 'Lincoln')] = 6
-matrix1_data[('ROSECREST', 'Lincoln')] = 2
-matrix1_data[('UPLAND TERRACE', 'Lincoln')] = 2
+# COTTONWOOD boundary - students attending other schools (not in Area 5)
+matrix1_data[('COTTONWOOD', 'Alternative 3-A Elementary')] = 3
+matrix1_data[('COTTONWOOD', 'Hartvigsen School')] = 2
+matrix1_data[('COTTONWOOD', 'Woodstock Elementary')] = 1
 
-# Moss Elementary - students from Area 5 boundaries attending Moss
-matrix1_data[('COTTONWOOD', 'Moss')] = 1
-matrix1_data[('CRESTVIEW', 'Moss')] = 1
-matrix1_data[('DRIGGS', 'Moss')] = 1
-matrix1_data[('EASTWOOD', 'Moss')] = 1
-matrix1_data[('MORNINGSIDE', 'Moss')] = 2
-matrix1_data[('OAKRIDGE', 'Moss')] = 3
-matrix1_data[('OAKWOOD', 'Moss')] = 4
-matrix1_data[('PENN', 'Moss')] = 22
-matrix1_data[('ROSECREST', 'Moss')] = 1
-matrix1_data[('UPLAND TERRACE', 'Moss')] = 2
+# CRESTVIEW boundary - students attending other schools (not in Area 5)
+matrix1_data[('CRESTVIEW', 'Alternative 3-A Elementary')] = 15
+matrix1_data[('CRESTVIEW', 'Granger Elementary')] = 1
+matrix1_data[('CRESTVIEW', 'Vista Elementary')] = 2
+matrix1_data[('CRESTVIEW', 'Woodstock Elementary')] = 5
 
-# Woodstock Elementary - students from Area 5 boundaries attending Woodstock
-matrix1_data[('COTTONWOOD', 'Woodstock')] = 1
-matrix1_data[('CRESTVIEW', 'Woodstock')] = 1
-matrix1_data[('DRIGGS', 'Woodstock')] = 1
-matrix1_data[('MORNINGSIDE', 'Woodstock')] = 5
-matrix1_data[('OAKRIDGE', 'Woodstock')] = 1
-matrix1_data[('OAKWOOD', 'Woodstock')] = 44
-matrix1_data[('PENN', 'Woodstock')] = 1
-matrix1_data[('UPLAND TERRACE', 'Woodstock')] = 1
+# DRIGGS boundary - students attending other schools (not in Area 5)
+matrix1_data[('DRIGGS', 'Alternative 3-A Elementary')] = 8
+matrix1_data[('DRIGGS', 'Yess Salt Lake County Youth Services')] = 1
 
-# Alternative 3-A Elementary - students from Area 5 boundaries
-matrix1_data[('MORNINGSIDE', 'Alternative 3-A Elementary')] = 2
-matrix1_data[('OAKWOOD', 'Alternative 3-A Elementary')] = 13
+# EASTWOOD boundary - students attending other schools (not in Area 5)
+matrix1_data[('EASTWOOD', 'Alternative 3-A Elementary')] = 1
 
+# MORNINGSIDE boundary - students attending other schools (not in Area 5)
+matrix1_data[('MORNINGSIDE', 'Alternative 3-A Elementary')] = 4
+matrix1_data[('MORNINGSIDE', 'Woodstock Elementary')] = 1
 
-# Academy Park Elementary - students from Area 5 boundaries
+# OAKRIDGE boundary - students attending other schools (not in Area 5)
+matrix1_data[('OAKRIDGE', 'Alternative 3-A Elementary')] = 4
+matrix1_data[('OAKRIDGE', 'Woodstock Elementary')] = 3
+
+# OAKWOOD boundary - students attending other schools (not in Area 5)
 matrix1_data[('OAKWOOD', 'Academy Park Elementary')] = 1
-
-# Arcadia Elementary - students from Area 5 boundaries
+matrix1_data[('OAKWOOD', 'Alternative 3-A Elementary')] = 13
 matrix1_data[('OAKWOOD', 'Arcadia Elementary')] = 1
-
-# Granger Elementary - students from Area 5 boundaries
 matrix1_data[('OAKWOOD', 'Granger Elementary')] = 1
-
-# Hartvigsen School - students from Area 5 boundaries
 matrix1_data[('OAKWOOD', 'Hartvigsen School')] = 1
+matrix1_data[('OAKWOOD', 'Woodstock Elementary')] = 44
+
+# PENN boundary - students attending other schools (not in Area 5)
+matrix1_data[('PENN', 'Alternative 3-A Elementary')] = 3
+matrix1_data[('PENN', 'Woodstock Elementary')] = 3
+
+# ROSECREST boundary - students attending other schools (not in Area 5)
+matrix1_data[('ROSECREST', 'Alternative 3-A Elementary')] = 8
+matrix1_data[('ROSECREST', 'Neil Armstrong Academy')] = 1
+matrix1_data[('ROSECREST', 'Woodrow Wilson Elementary')] = 1
+matrix1_data[('ROSECREST', 'Woodstock Elementary')] = 1
+
+# UPLAND TERRACE boundary - students attending other schools (not in Area 5)
+matrix1_data[('UPLAND TERRACE', 'Alternative 3-A Elementary')] = 6
+matrix1_data[('UPLAND TERRACE', 'Calvin S Smith Elementary')] = 1
+matrix1_data[('UPLAND TERRACE', 'Woodstock Elementary')] = 4
 
 print("Matrix 1 data extracted - ALL schools (Area 5 and others)")
 print(f"Total pairs in Matrix 1: {len(matrix1_data)}")
