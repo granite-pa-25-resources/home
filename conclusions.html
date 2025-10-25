@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Conclusions & Recommendations | Area 5 Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .recommendation-box {
+            background: var(--bg-secondary);
+            border-left: 5px solid var(--accent-cyan);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .recommendation-box.priority-high {
+            border-left-color: var(--accent-green);
+        }
+        
+        .recommendation-box.priority-critical {
+            border-left-color: var(--accent-red);
+        }
+        
+        .recommendation-box.priority-medium {
+            border-left-color: var(--accent-yellow);
+        }
+        
+        .principle {
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 5px solid var(--accent-cyan);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .data-point {
+            display: inline-block;
+            background: var(--accent-cyan);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .data-point.negative {
+            background: var(--accent-red);
+        }
+        
+        .data-point.positive {
+            background: var(--accent-green);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .school-profile {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+        }
+        
+        .school-profile.protect {
+            border-color: var(--accent-green);
+        }
+        
+        .school-profile.evaluate {
+            border-color: var(--accent-yellow);
+        }
+        
+        .school-profile.vulnerable {
+            border-color: var(--accent-red);
+        }
+        
+        .metric-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin: 2px;
+        }
+        
+        .metric-badge.strong {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .metric-badge.weak {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .metric-badge.moderate {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-yellow);
+        }
+    </style>
+</head>
+<body>
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul>
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
+            <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            <li><a href="conclusions.html" style="color: var(--accent-cyan); font-weight: bold;">💡 Conclusions</a></li>
+        </ul>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#executive">Executive Summary</a></li>
+            <li><a href="#principles">Guiding Principles</a></li>
+            <li><a href="#myth">The In-Boundary Myth</a></li>
+            <li><a href="#programs">Power of Programs</a></li>
+            <li><a href="#school-analysis">School-by-School Analysis</a></li>
+            <li><a href="#recommendations">Strategic Recommendations</a></li>
+            <li><a href="#actions">Immediate Actions</a></li>
+        </ul>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>💡 Strategic Conclusions & Recommendations</h1>
+            <p class="subtitle">Data-Driven Path Forward for Area 5 Elementary Schools</p>
+        </header>
+
+        <div class="content">
+            <section id="executive">
+                <h2>Executive Summary</h2>
+                
+                <div class="alert alert-warning" style="margin-bottom: 2rem; color: var(--text-primary);">
+                    <strong>⚠️ Critical Finding:</strong><br>
+                    Traditional metrics for school closure decisions—in-boundary population and building capacity—are <strong>insufficient and potentially misleading</strong> in an environment of widespread school choice. Area 5 data reveals that <strong>the schools most successful at attracting and retaining students are precisely those with diverse programming</strong>, not those with the highest in-boundary populations. Closing schools based solely on residence-based forecasts risks eliminating the district's competitive advantages.
+                </div>
+
+                <div class="principle">
+                    <h3>The Core Challenge</h3>
+                    <p>Area 5 faces a <strong>24% enrollment decline over 21 years</strong> (2004-2024), driven by:</p>
+                    <ul>
+                        <li><strong>Demographic headwinds:</strong> Birth rates down 14-19%, smaller incoming cohorts</li>
+                        <li><strong>District capture rate erosion:</strong> Only 68% of elementary-age residents attend Granite SD schools (32% choosing alternatives)</li>
+                        <li><strong>Negative mobility:</strong> More families leaving than entering the district</li>
+                        <li><strong>Low-yield housing development:</strong> 74% apartments yielding only 12 students per 100 units vs. 48 for single-family homes</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>However, enrollment decline is NOT uniform:</strong></p>
+                    <ul>
+                        <li><span class="data-point negative">Oakridge: -47%</span> over 21 years</li>
+                        <li><span class="data-point negative">Eastwood: -42%</span> over 21 years</li>
+                        <li><span class="data-point positive">Penn: +43%</span> over 21 years (grew despite area decline)</li>
+                        <li><span class="data-point">Morningside:</span> 66% of students from outside boundary (regional magnet effect)</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1.5rem; font-size: 1.1rem; font-weight: 600; color: var(--accent-cyan);">
+                        The difference? <strong>Diverse programming.</strong> Schools offering specialized programs (DLI, ALC) attract students regardless of boundary population trends.
+                    </p>
+                </div>
+            </section>
+
+            <section id="principles">
+                <h2>Guiding Principles for School Consolidation</h2>
+                
+                <div class="recommendation-box priority-critical">
+                    <h3>Principle 1: Protect Program Diversity as a Strategic Asset</h3>
+                    <p><strong>Rationale:</strong> In a competitive school choice environment where 32% of elementary families choose alternatives, specialized programs are the district's primary retention and attraction mechanism.</p>
+                    
+                    <p><strong>Evidence from Area 5:</strong></p>
+                    <ul>
+                        <li><strong>Penn Elementary (DLI):</strong> Grew 43% (466→665 students) from 2004-2024 despite Area 5 declining 24%. Attracts 51% from outside boundary (337 students).</li>
+                        <li><strong>Morningside (ALC + DLI + Traditional):</strong> Attracts 66% from outside boundary (372 students). Functions as regional magnet with three distinct program pathways.</li>
+                        <li><strong>Oakwood (DLI):</strong> DLI program draws students despite overall school underutilization (533 enrolled vs. 700 capacity).</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <strong>✅ Decision Rule:</strong> Never close the only school offering a specialized program in a geographic area. Consolidations should <em>concentrate</em> program diversity, not eliminate it.
+                    </p>
+                </div>
+
+                <div class="recommendation-box priority-critical">
+                    <h3>Principle 2: Enrollment Trends Trump Boundary Population</h3>
+                    <p><strong>The Problem with Residence-Based Forecasting Alone:</strong> MGT and DDP demographic studies forecast where students <em>live</em>, not where they <em>attend</em>. With 32% of families opting out and massive cross-boundary flows, these metrics diverge dramatically.</p>
+                    
+                    <div class="alert alert-info" style="margin-top: 1rem;">
+                        <h4>Case Study: The Boundary Population Paradox</h4>
+                        <p><strong>Scenario:</strong> Eastwood's boundary area has declining population. Residence study recommends closure.</p>
+                        <p><strong>What's missed:</strong></p>
+                        <ul>
+                            <li>283 students currently attend Eastwood</li>
+                            <li><strong>47% (133 students) live OUTSIDE Eastwood's boundary</strong></li>
+                            <li>These families actively <em>chose</em> Eastwood over their assigned schools</li>
+                            <li>Closing Eastwood displaces 133 choice students—where will they go?
+                                <ul>
+                                    <li>Accept reassignment? (Some will)</li>
+                                    <li>Transfer to another Area 5 school? (Creates new overcrowding)</li>
+                                    <li>Leave Granite SD for charter/private? (District capture rate drops further)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600; color: var(--accent-red);">
+                            ⚠️ A residence-based model cannot predict this cascading choice behavior. Enrollment trends and mobility patterns must inform closure decisions.
+                        </p>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <strong>✅ Decision Rule:</strong> Prioritize schools with <em>growing</em> or <em>stable</em> enrollment trends and high out-of-boundary attraction (>30%). These demonstrate competitive strength regardless of boundary demographics.
+                    </p>
+                </div>
+
+                <div class="recommendation-box priority-high">
+                    <h3>Principle 3: Program Pathways Drive Long-Term Retention</h3>
+                    <p><strong>Key Finding:</strong> The Morningside ALC study reveals that <strong>traditional programs serve as feeders for specialized programs</strong>, creating retention ecosystems.</p>
+                    
+                    <p><strong>Morningside's Multi-Program Model:</strong></p>
+                    <ul>
+                        <li><strong>Kindergarten:</strong> 69 traditional students (ALC/DLI don't start until 1st grade)</li>
+                        <li><strong>2nd Grade ALC Testing:</strong> Students in traditional program test for ALC eligibility</li>
+                        <li><strong>3rd Grade ALC Influx:</strong> Significant increase in ALC enrollment as students transition from traditional</li>
+                        <li><strong>Result:</strong> 567 total students across three programs (26% ALC, 46% DLI, 28% Traditional)</li>
+                    </ul>
+                    
+                    <div class="alert alert-danger" style="margin-top: 1rem;color:#DDD">
+                        <h4>⚠️ Risk of Converting Morningside to Magnet-Only</h4>
+                        <p>Eliminating the traditional program would:</p>
+                        <ul>
+                            <li><strong>Break the ALC pipeline:</strong> Families need local access to traditional K-2 before testing into 3rd grade ALC</li>
+                            <li><strong>Displace current traditional students:</strong> 158 students (28% of enrollment) uprooted from  neighborhood school</li>
+                            <li><strong>Reduce total enrollment:</strong> Morningside would shrink from 567 to ~409 students (ALC + DLI only)</li>
+                            <li><strong>Create cascading displacement:</strong> 158 students relocate to other Area 5 schools or leave district entirely</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <strong>✅ Decision Rule:</strong> Preserve multi-program schools that create "ecosystems" allowing families to access multiple pathways at one location. These maximize retention and minimize displacement.
+                    </p>
+                </div>
+            </section>
+
+            <section id="myth">
+                <h2>Debunking the In-Boundary Enrollment Myth</h2>
+                
+                <div class="principle" style="border-left-color: var(--accent-red);">
+                    <h3>❌ The Flawed Assumption</h3>
+                    <p style="font-size: 1.1rem; font-weight: 600;">
+                        "Schools with high in-boundary enrollment rates are healthier and more sustainable than schools drawing from outside their boundaries."
+                    </p>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Why This Is Wrong:</strong></p>
+                    <p>In-boundary enrollment percentage measures <em>boundary retention</em>, not <em>competitive strength</em> or <em>enrollment resilience</em>. In a declining demographic environment, high in-boundary rates can actually indicate <strong>lack of program appeal</strong>—students attend because they have no better alternative, not because the school is their preferred choice.</p>
+                </div>
+
+                <h3>The Data Proves It: In-Boundary Rate vs. Enrollment Performance</h3>
+                
+                <table class="comparison-table" style="margin: 2rem 0;">
+                    <thead>
+                        <tr>
+                            <th>School</th>
+                            <th>In-Boundary %</th>
+                            <th>21-Year Enrollment Change</th>
+                            <th>2024 Enrollment</th>
+                            <th>Programs Offered</th>
+                            <th>Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(239, 68, 68, 0.1);">
+                            <td><strong>Oakridge</strong></td>
+                            <td><span class="data-point">83%</span> (2nd highest)</td>
+                            <td><span class="data-point negative">-47%</span> (worst decline)</td>
+                            <td>299 students</td>
+                            <td>Traditional only</td>
+                            <td style="color: var(--accent-red); font-weight: 600;">High boundary retention ≠ enrollment health</td>
+                        </tr>
+                        <tr style="background: rgba(16, 185, 129, 0.1);">
+                            <td><strong>Penn</strong></td>
+                            <td><span class="data-point">45%</span> (low)</td>
+                            <td><span class="data-point positive">+43%</span> (only growth)</td>
+                            <td>665 students</td>
+                            <td>DLI + Traditional</td>
+                            <td style="color: var(--accent-green); font-weight: 600;">Low boundary % + program appeal = growth</td>
+                        </tr>
+                        <tr style="background: rgba(16, 185, 129, 0.1);">
+                            <td><strong>Morningside</strong></td>
+                            <td><span class="data-point">34%</span> (lowest)</td>
+                            <td><span class="data-point positive">+39%</span></td>
+                            <td>585 students (2nd largest)</td>
+                            <td>ALC + DLI + Traditional</td>
+                            <td style="color: var(--accent-green); font-weight: 600;">Lowest boundary % = regional magnet strength</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.1);">
+                            <td><strong>Eastwood</strong></td>
+                            <td><span class="data-point">47%</span></td>
+                            <td><span class="data-point negative">-42%</span></td>
+                            <td>283 students</td>
+                            <td>Traditional only</td>
+                            <td style="color: var(--accent-red); font-weight: 600;">Moderate boundary % can't offset lack of programs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cottonwood</strong></td>
+                            <td><span class="data-point">84%</span> (highest)</td>
+                            <td><span class="data-point negative">-34%</span></td>
+                            <td>343 students</td>
+                            <td>Traditional only</td>
+                            <td style="color: var(--accent-yellow);">Highest retention, still declining significantly</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="key-findings">
+                    <h3>🔍 What the Data Reveals</h3>
+                    
+                    <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                            <h4 style="color: var(--accent-green);">✅ Low In-Boundary % = Competitive Strength</h4>
+                            <p><strong>Penn (45% in-boundary) and Morningside (34% in-boundary)</strong> are the <em>healthiest</em> schools in Area 5:</p>
+                            <ul>
+                                <li>Penn is the <strong>only school with 21-year enrollment growth (+43%)</strong></li>
+                                <li>Morningside is the <strong>2nd largest school (585 students)</strong> and grew 39%</li>
+                                <li>Both draw majority of students from <em>outside</em> boundaries because of program appeal</li>
+                                <li><strong>They prove families will travel for quality programs</strong></li>
+                            </ul>
+                        </div>
+                        
+                        <div style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                            <h4 style="color: var(--accent-red);">❌ High In-Boundary % ≠ School Health</h4>
+                            <p><strong>Oakridge (83% in-boundary) and Cottonwood (84% in-boundary)</strong> have the <em>highest</em> boundary retention but:</p>
+                            <ul>
+                                <li>Oakridge suffered the <strong>worst enrollment decline in Area 5 (-47%)</strong></li>
+                                <li>Cottonwood declined <strong>-34%</strong> despite highest in-boundary rate</li>
+                                <li>High in-boundary % reflects <strong>lack of alternative options</strong>, not preference</li>
+                                <li>Neither offers specialized programs to attract students from elsewhere</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="padding: 1rem; background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent-cyan); border-radius: 5px;">
+                            <h4 style="color: var(--accent-cyan);">💡 The Real Predictor: Program Diversity + Enrollment Trends</h4>
+                            <p><strong>Schools to protect:</strong></p>
+                            <ul>
+                                <li>✅ Penn: DLI program + 21-year growth trend + largest enrollment (665)</li>
+                                <li>✅ Morningside: Triple-program model + 2nd largest enrollment (585) + 66% regional draw</li>
+                                <li>✅ Oakwood: DLI program + recent growth surge (312→543 in last 2 years)</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1rem;"><strong>Schools to evaluate:</strong></p>
+                            <ul>
+                                <li>⚠️ Oakridge: -47% decline + no programs + only 299 students</li>
+                                <li>⚠️ Eastwood: -42% decline + no programs + only 283 students</li>
+                                <li>⚠️ Rosecrest: -44% decline + no programs + only 295 students</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning" style="margin-top: 2rem;">
+                    <h3>⚠️ Policy Implication</h3>
+                    <p style="font-size: 1.05rem;">
+                        <strong>Stop using in-boundary enrollment percentage as a health metric.</strong> It is inversely correlated with competitive strength in Area 5. Instead, measure:
+                    </p>
+                    <ol>
+                        <li><strong>Absolute enrollment trends:</strong> Is the school growing, stable, or declining over 10+ years?</li>
+                        <li><strong>Total enrollment:</strong> Can the school sustain viable class sizes and program offerings?</li>
+                        <li><strong>Program diversity:</strong> Does it offer specialized programs that differentiate it from charter/private competition?</li>
+                        <li><strong>Out-of-boundary attraction:</strong> Do families actively choose this school over alternatives?</li>
+                        <li><strong>Capacity utilization:</strong> Is enrollment aligned with building size (not too empty, not overcrowded)?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="programs">
+                <h2>The Power of Diverse Programming</h2>
+                
+                <div class="principle">
+                    <h3>Why Specialized Programs Matter in a Declining Market</h3>
+                    <p>With <strong>32% of elementary families choosing alternatives</strong> to Granite SD (charter, private, other districts), the district faces intense competition. Traditional neighborhood schools alone cannot compete with:</p>
+                    <ul>
+                        <li>Charter schools offering specialized curricula (STEM, arts, classical education)</li>
+                        <li>Private schools with small class sizes and specialized programs</li>
+                        <li>Virtual schools providing flexible schedules</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Granite SD's competitive advantages:</strong></p>
+                    <ul>
+                        <li>✅ <strong>Dual Language Immersion (DLI):</strong> Highly valued program requiring sustained multi-year commitment (families unlikely to switch mid-program)</li>
+                        <li>✅ <strong>Advanced Learning Centers (ALC):</strong> Gifted/talented programs with rigorous admission, appeals to high-achieving families</li>
+                        <li>✅ <strong>Co-located programs:</strong> Multiple pathways at one school reduce family splitting and maximize retention</li>
+                        <li>✅ <strong>Established track records:</strong> Penn and Morningside have proven multi-year success attracting/retaining students</li>
+                    </ul>
+                </div>
+
+                <h3>Program Performance: The Evidence</h3>
+                
+                <div class="comparison-grid">
+                    <div class="school-profile protect">
+                        <h4 style="color: var(--accent-green); border-bottom: 2px solid var(--accent-green); padding-bottom: 0.5rem;">✅ PROTECT: Penn Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> DLI (73% of enrollment) + Traditional</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge strong">Only school with 21-year growth</div>
+                            <div class="metric-badge strong">+43% enrollment increase</div>
+                            <div class="metric-badge strong">Largest school: 665 students</div>
+                            <div class="metric-badge strong">51% from outside boundary</div>
+                        </div>
+                        
+                        <p><strong>Why it works:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>DLI program creates multi-year family commitment</li>
+                            <li>Reputation as high-quality DLI school draws from across Area 5</li>
+                            <li>Traditional track provides local neighborhood access</li>
+                            <li>Enrollment grew <em>despite</em> Area 5 declining 24%</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(16, 185, 129, 0.15); border-radius: 5px; font-weight: 600;">
+                            🎯 <strong>Strategic Value:</strong> Demonstrates that specialized programs can attract students in a declining market. Model for strengthening other schools.
+                        </p>
+                    </div>
+
+                    <div class="school-profile protect">
+                        <h4 style="color: var(--accent-green); border-bottom: 2px solid var(--accent-green); padding-bottom: 0.5rem;">✅ PROTECT: Morningside Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> ALC (26%) + DLI (46%) + Traditional (28%)</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge strong">Triple-program model</div>
+                            <div class="metric-badge strong">66% from outside boundary</div>
+                            <div class="metric-badge strong">2nd largest: 585 students</div>
+                            <div class="metric-badge strong">Regional magnet effect</div>
+                        </div>
+                        
+                        <p><strong>Why it works:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Only school in Area 5 offering ALC program</li>
+                            <li>DLI program provides second specialized option</li>
+                            <li>Traditional program serves as ALC feeder (3rd grade testing pathway)</li>
+                            <li>Families with diverse needs can find appropriate program</li>
+                            <li>Siblings can attend same school in different programs</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(16, 185, 129, 0.15); border-radius: 5px; font-weight: 600;">
+                            🎯 <strong>Strategic Value:</strong> Unique "program hub" model maximizes family retention and minimizes splitting. Eliminating any program component weakens the entire ecosystem.
+                        </p>
+                    </div>
+
+                    <div class="school-profile protect">
+                        <h4 style="color: var(--accent-green); border-bottom: 2px solid var(--accent-green); padding-bottom: 0.5rem;">✅ PROTECT: Oakwood Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> DLI (30%) + Traditional</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge strong">Recent surge: 312→543 (2022-2024)</div>
+                            <div class="metric-badge strong">+74% growth in 2 years</div>
+                            <div class="metric-badge moderate">3rd largest: 533 students</div>
+                            <div class="metric-badge moderate">Under capacity (533/700)</div>
+                        </div>
+                        
+                        <p><strong>Why it matters:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Dramatic recent enrollment recovery suggests program appeal</li>
+                            <li>DLI program differentiates from traditional-only schools</li>
+                            <li>Has capacity to absorb students from potential closures</li>
+                            <li>Geographic location serves western Area 5</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(16, 185, 129, 0.15); border-radius: 5px; font-weight: 600;">
+                            🎯 <strong>Strategic Value:</strong> Demonstrates enrollment recovery is possible with program differentiation. Has capacity for consolidation receiving.
+                        </p>
+                    </div>
+
+                    <div class="school-profile vulnerable">
+                        <h4 style="color: var(--accent-red); border-bottom: 2px solid var(--accent-red); padding-bottom: 0.5rem;">⚠️ VULNERABLE: Oakridge Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> Traditional only</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge weak">Worst decline: -47%</div>
+                            <div class="metric-badge weak">Smallest: 299 students</div>
+                            <div class="metric-badge weak">No specialized programs</div>
+                            <div class="metric-badge moderate">High in-boundary: 83%</div>
+                        </div>
+                        
+                        <p><strong>Why it's vulnerable:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Steepest enrollment decline in Area 5 over 21 years</li>
+                            <li>No program differentiation from charter competition</li>
+                            <li>High in-boundary rate shows lack of outside appeal</li>
+                            <li>560→299 students (2004-2024) with no reversal trend</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(239, 68, 68, 0.15); border-radius: 5px; font-weight: 600;">
+                            ⚠️ <strong>Recommendation:</strong> Primary candidate for closure or program investment. Without differentiation, continued decline likely.
+                        </p>
+                    </div>
+
+                    <div class="school-profile vulnerable">
+                        <h4 style="color: var(--accent-red); border-bottom: 2px solid var(--accent-red); padding-bottom: 0.5rem;">⚠️ VULNERABLE: Eastwood Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> Traditional only</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge weak">Decline: -42%</div>
+                            <div class="metric-badge weak">Small: 283 students</div>
+                            <div class="metric-badge weak">No specialized programs</div>
+                            <div class="metric-badge moderate">Some choice appeal: 47% in-boundary</div>
+                        </div>
+                        
+                        <p><strong>Why it's vulnerable:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Second-worst decline: 486→283 students (2004-2024)</li>
+                            <li>No program differentiation to attract students</li>
+                            <li>133 out-of-boundary students could leave if school closes</li>
+                            <li>Proximity to Morningside (with programs) may pull students</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(239, 68, 68, 0.15); border-radius: 5px; font-weight: 600;">
+                            ⚠️ <strong>Recommendation:</strong> Candidate for closure, but must plan for 133 choice students who may leave district entirely if displaced.
+                        </p>
+                    </div>
+
+                    <div class="school-profile evaluate">
+                        <h4 style="color: var(--accent-yellow); border-bottom: 2px solid var(--accent-yellow); padding-bottom: 0.5rem;">📊 EVALUATE: Crestview Elementary</h4>
+                        <p style="margin-top: 1rem;"><strong>Programs:</strong> Traditional only</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <div class="metric-badge moderate">Decline: -22%</div>
+                            <div class="metric-badge strong">Solid size: 489 students</div>
+                            <div class="metric-badge strong">Highest in-boundary: 92%</div>
+                            <div class="metric-badge weak">No specialized programs</div>
+                        </div>
+                        
+                        <p><strong>Mixed indicators:</strong></p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Moderate decline, better than area average</li>
+                            <li>Strong boundary retention (92% in-boundary)</li>
+                            <li>Solid enrollment (489 students) sustains programs</li>
+                            <li>But no program differentiation to attract outside students</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1rem; padding: 10px; background: rgba(251, 191, 36, 0.15); border-radius: 5px; font-weight: 600;">
+                            💡 <strong>Recommendation:</strong> Stable for now, but vulnerable long-term without program investment. Consider adding DLI or ALC.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="school-analysis">
+                <h2>Complete School-by-School Strategic Assessment</h2>
+                
+                <table class="comparison-table" style="font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th>School</th>
+                            <th>2024 Enrollment</th>
+                            <th>21-Yr Change</th>
+                            <th>Programs</th>
+                            <th>Out-of-Boundary</th>
+                            <th>Capacity</th>
+                            <th>Strategic Assessment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                            <td><strong style="color: #ec4899;">Penn</strong></td>
+                            <td><strong>665</strong> (1st)</td>
+                            <td><span class="data-point positive">+43%</span></td>
+                            <td>DLI + Trad</td>
+                            <td><strong>51%</strong> (337)</td>
+                            <td>111% (665/600)</td>
+                            <td><strong style="color: var(--accent-green);">✅ PROTECT:</strong> Only growth school. DLI regional draw. Critical to district competitive positioning.</td>
+                        </tr>
+                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                            <td><strong style="color: #06b6d4;">Morningside</strong></td>
+                            <td><strong>585</strong> (2nd)</td>
+                            <td><span class="data-point positive">+39%</span></td>
+                            <td>ALC + DLI + Trad</td>
+                            <td><strong>66%</strong> (372)</td>
+                            <td>98% (585/600)</td>
+                            <td><strong style="color: var(--accent-green);">✅ PROTECT:</strong> Only ALC in Area 5. Multi-program hub. Do NOT convert to magnet-only.</td>
+                        </tr>
+                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                            <td><strong style="color: #6366f1;">Oakwood</strong></td>
+                            <td><strong>543</strong> (3rd)</td>
+                            <td><span class="data-point positive">+25%</span></td>
+                            <td>DLI + Trad</td>
+                            <td>34% (181)</td>
+                            <td>78% (543/700)</td>
+                            <td><strong style="color: var(--accent-green);">✅ PROTECT:</strong> Recent surge (+74% 2022-24). DLI program. Capacity for consolidation receiving.</td>
+                        </tr>
+                        <tr style="background: rgba(251, 191, 36, 0.05);">
+                            <td><strong style="color: #f97316;">Crestview</strong></td>
+                            <td>489</td>
+                            <td><span class="data-point negative">-22%</span></td>
+                            <td>Traditional</td>
+                            <td>8% (42)</td>
+                            <td>89% (489/550)</td>
+                            <td><strong style="color: var(--accent-yellow);">📊 STABLE:</strong> Moderate decline. High in-boundary. Consider adding DLI for differentiation.</td>
+                        </tr>
+                        <tr style="background: rgba(251, 191, 36, 0.05);">
+                            <td><strong style="color: #84cc16;">Upland Terrace</strong></td>
+                            <td>476</td>
+                            <td><span class="data-point negative">-13%</span></td>
+                            <td>Traditional</td>
+                            <td>20% (95)</td>
+                            <td>73% (476/650)</td>
+                            <td><strong style="color: var(--accent-yellow);">📊 STABLE:</strong> Best traditional-only performance. Under capacity but sustainable enrollment.</td>
+                        </tr>
+                        <tr style="background: rgba(251, 191, 36, 0.05);">
+                            <td><strong style="color: #fbbf24;">Driggs</strong></td>
+                            <td>445</td>
+                            <td><span class="data-point negative">-29%</span></td>
+                            <td>Traditional</td>
+                            <td>21% (93)</td>
+                            <td>68% (445/650)</td>
+                            <td><strong style="color: var(--accent-yellow);">📊 MONITOR:</strong> Below-average decline. Underutilized capacity. Geographic importance.</td>
+                        </tr>
+                        <tr style="background: rgba(251, 191, 36, 0.05);">
+                            <td><strong style="color: #ef4444;">Cottonwood</strong></td>
+                            <td>343</td>
+                            <td><span class="data-point negative">-34%</span></td>
+                            <td>Traditional</td>
+                            <td>16% (57)</td>
+                            <td>69% (343/500)</td>
+                            <td><strong style="color: var(--accent-yellow);">📊 MONITOR:</strong> Highest in-boundary (84%) but still declining. Underutilized.</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.08);">
+                            <td><strong style="color: #14b8a6;">Rosecrest</strong></td>
+                            <td>295</td>
+                            <td><span class="data-point negative">-44%</span></td>
+                            <td>Traditional</td>
+                            <td>21% (61)</td>
+                            <td>66% (295/450)</td>
+                            <td><strong style="color: var(--accent-red);">⚠️ AT RISK:</strong> Large decline. Small enrollment. No differentiation. Closure candidate.</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.08);">
+                            <td><strong style="color: #8b5cf6;">Oakridge</strong></td>
+                            <td>299</td>
+                            <td><span class="data-point negative">-47%</span></td>
+                            <td>Traditional</td>
+                            <td>17% (52)</td>
+                            <td>54% (299/550)</td>
+                            <td><strong style="color: var(--accent-red);">⚠️ AT RISK:</strong> Worst decline. Smallest enrollment. Primary closure candidate.</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.08);">
+                            <td><strong style="color: #10b981;">Eastwood</strong></td>
+                            <td>283</td>
+                            <td><span class="data-point negative">-42%</span></td>
+                            <td>Traditional</td>
+                            <td><strong>47%</strong> (133)</td>
+                            <td>63% (283/450)</td>
+                            <td><strong style="color: var(--accent-red);">⚠️ AT RISK:</strong> Large decline. High choice students at risk if closed. Closure candidate with caution.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert alert-info" style="margin-top: 2rem;">
+                    <h3>📊 Key Patterns</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <h4 style="color: var(--accent-green);">✅ Schools with Programs (3 schools)</h4>
+                            <ul>
+                                <li><strong>Average enrollment:</strong> 598 students</li>
+                                <li><strong>Average 21-year change:</strong> +36% growth</li>
+                                <li><strong>All above 580 students</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-red);">❌ Traditional-Only Schools (7 schools)</h4>
+                            <ul>
+                                <li><strong>Average enrollment:</strong> 376 students</li>
+                                <li><strong>Average 21-year change:</strong> -32% decline</li>
+                                <li><strong>All below 490 students</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1.5rem; font-size: 1.1rem; font-weight: 600; color: var(--accent-cyan);">
+                        The correlation is unmistakable: <strong>Specialized programs = enrollment resilience</strong>
+                    </p>
+                </div>
+            </section>
+
+            <section id="recommendations">
+                <h2>Strategic Recommendations</h2>
+
+                <div class="recommendation-box priority-critical">
+                    <h3>🎯 Recommendation 1: Adopt a "Program Concentration" Strategy</h3>
+                    
+                    <p><strong>Current Problem:</strong> Area 5 has 10 schools, but only 3 offer specialized programs. This dilutes program strength and forces families to choose between proximity and program quality.</p>
+                    
+                    <p><strong>Proposed Solution:</strong></p>
+                    <ol>
+                        <li><strong>Close 2-3 traditional-only schools with worst decline/smallest enrollment</strong>
+                            <ul>
+                                <li>Primary candidates: Oakridge (-47%, 299 students), Rosecrest (-44%, 295 students)</li>
+                                <li>Tertiary candidate: Eastwood (-42%, 283 students) - handle carefully due to 47% choice students</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Redirect resources to strengthen program schools</strong>
+                            <ul>
+                                <li>Expand Penn DLI capacity (currently at 111% - consider portable classrooms or renovation)</li>
+                                <li>Maintain Morningside triple-program model (do NOT convert to magnet-only)</li>
+                                <li>Support Oakwood DLI growth trajectory</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Add programs to 1-2 strategic traditional schools</strong>
+                            <ul>
+                                <li>Option A: Add DLI to Crestview (strong in-boundary retention, solid enrollment, could serve east Area 5)</li>
+                                <li>Option B: Add DLI to Upland Terrace (best traditional-only performance, geographic coverage)</li>
+                                <li>Creates redundancy if program schools face capacity issues</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <div style="margin-top: 1.5rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <h4 style="color: var(--accent-green);">✅ Expected Outcomes:</h4>
+                        <ul>
+                            <li><strong>Stronger program schools:</strong> More resources per program = higher quality = better retention</li>
+                            <li><strong>Better capacity utilization:</strong> Consolidate into fewer, fuller buildings (operating cost savings)</li>
+                            <li><strong>Improved competitive positioning:</strong> 5-6 program-diverse schools vs. 10 mostly-traditional schools</li>
+                            <li><strong>Geographic coverage maintained:</strong> Programs available across Area 5, not concentrated in one corner</li>
+                            <li><strong>Family choice preserved:</strong> Multiple program pathways still accessible within reasonable distance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-box priority-critical">
+                    <h3>🚫 Recommendation 2: DO NOT Convert Morningside to Magnet-Only</h3>
+                    
+                    <p><strong>Proposed Plan (to reject):</strong> Some have suggested converting Morningside to ALC + DLI only, eliminating the traditional program.</p>
+                    
+                    <p><strong>Why This Is a Mistake:</strong></p>
+                    <ol>
+                        <li><strong>Breaks the ALC pipeline:</strong> Traditional K-2 students test into ALC at 3rd grade. Without local traditional access, families must:
+                            <ul>
+                                <li>Attend different school K-2, then transfer to Morningside ALC in 3rd (disruptive)</li>
+                                <li>Hope for ALC admission in kindergarten (limited slots, earlier testing less reliable)</li>
+                                <li>Attend traditional elsewhere and transfer later (many won't - too much hassle)</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Displaces 158 current traditional students:</strong>
+                            <ul>
+                                <li>Where do they go? Other Area 5 schools or leave district entirely</li>
+                                <li>Creates cascading enrollment pressure elsewhere</li>
+                                <li>May push some families to charter/private options</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Reduces total Morningside enrollment:</strong>
+                            <ul>
+                                <li>Current: 567 students (ALC 148 + DLI 261 + Traditional 158)</li>
+                                <li>After conversion: ~409 students (ALC + DLI only)</li>
+                                <li>-28% enrollment drop from current levels</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Eliminates family flexibility:</strong>
+                            <ul>
+                                <li>Families with children of different abilities/learning styles can access all three programs at one location</li>
+                                <li>Siblings can attend same school in different programs (logistical benefit for parents)</li>
+                                <li>Students can switch programs if needs change (flexibility reduces departure risk)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <div style="margin-top: 1.5rem; padding: 15px; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                        <h4 style="color: var(--accent-red);">❌ Predicted Outcome if Morningside Goes Magnet-Only:</h4>
+                        <ul>
+                            <li>158 traditional students displaced (many will leave the district entirely)</li>
+                            <li>ALC pipeline weakens (fewer local students testing in at 3rd grade)</li>
+                            <li>Morningside enrollment drops to 350-400 students within 3 years</li>
+                            <li>District capture rate drops further as displaced families choose charters</li>
+                            <li>Loss of "program hub" model that currently serves 567 students effectively</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <h4 style="color: var(--accent-green);">✅ Recommended Alternative:</h4>
+                        <p><strong>Maintain Morningside's triple-program model.</strong> It is the <strong>most successful enrollment retention strategy</strong> in Area 5. If space is needed:</p>
+                        <ul>
+                            <li>Expand physical capacity (portables, renovation)</li>
+                            <li>Adjust program balance (increase ALC/DLI slightly if demand exists)</li>
+                            <li>But do NOT eliminate traditional program - it's the foundation of the ecosystem</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-box priority-high">
+                    <h3>📍 Recommendation 3: Prioritize Closures by Enrollment Trends, Not Boundary Population</h3>
+                    
+                    
+                            
+                            
+                                   
+                    
+                    <div style="margin-top: 1.5rem; padding: 15px; background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent-cyan); border-radius: 5px;">
+                        <h4 style="color: var(--accent-cyan);">💡 Use the Following Decision Criteria Used:</h4>
+                        <ol>
+                            <li><strong>21-year enrollment trend</strong>  - Long-term trajectory matters most</li>
+                            <li><strong>Current enrollment size</strong>  - Viability of programs and operations</li>
+                            <li><strong>Program diversity</strong>  - Competitive differentiation value</li>
+                            <li><strong>Capacity utilization</strong>  - Operating cost efficiency</li>
+                            <li><strong>Geographic considerations</strong>   - Coverage and travel distance</li>
+                        </ol>
+                        <p style="margin-top: 1rem; font-weight: 600;">
+                            Note: Do NOT use in-boundary percentage as a criterion because the data prove it's inversely correlated with school health in Area 5.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="recommendation-box priority-high">
+                    <h3>🎓 Recommendation 4: Invest in Program Expansion, Not Just Facilities Consolidation</h3>
+                    
+                    <p><strong>The Problem:</strong> Closing schools saves operating costs but doesn't address the root cause: <strong>32% of families choosing non-Granite options.</strong> Without improving competitive positioning, district capture rate will continue declining.</p>
+                    
+                    <p><strong>Strategic Investment Priorities:</strong></p>
+                    
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: var(--accent-green);">1. Expand DLI Capacity</h4>
+                        <ul>
+                            <li><strong>Current capacity constraint:</strong> Penn at 111% (665/600), turning away students</li>
+                            <li><strong>Investment:</strong> Add 2-3 portable classrooms at Penn ($200-300k)
+                                <ul>
+                                    <li>Enable enrollment growth to 750-800 students</li>
+                                    <li>Capture students who might otherwise go to charter schools</li>
+                                    <li>ROI: Each retained student = ~$8,000/year state funding</li>
+                                </ul>
+                            </li>
+                            <li><strong>Alternative:</strong> Start DLI program at Crestview or Upland Terrace to serve east Area 5</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--accent-green); margin-top: 1rem;">2. Strengthen ALC Program at Morningside</h4>
+                        <ul>
+                            <li><strong>Current strength:</strong> Only ALC in Area 5, drawing 66% from outside boundary</li>
+                            <li><strong>Investment:</strong> Enhanced ALC curriculum resources, teacher training, marketing ($50-75k/year)
+                                <ul>
+                                    <li>Position as premium gifted program competing with private schools</li>
+                                    <li>Expand ALC slots if demand exists (currently 148 students, 26% of school)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Critical:</strong> Maintain traditional program as ALC feeder pipeline</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--accent-green); margin-top: 1rem;">3. Add Specialized Programs to Strategic Schools</h4>
+                        <ul>
+                            <li><strong>Candidate schools:</strong>
+                                <ul>
+                                    <li><strong>Crestview:</strong> Solid enrollment (489), high retention (92%), could support DLI addition</li>
+                                    <li><strong>Upland Terrace:</strong> Best traditional-only performance, western geographic coverage</li>
+                                    <li><strong>Driggs:</strong> Has capacity (445/650 = 68%), centrally located</li>
+                                </ul>
+                            </li>
+                            <li><strong>Investment:</strong> DLI startup costs 
+                                <ul>
+                                    <li>Start with K-1, add grade each year (phase-in over 6 years)</li>
+                                    <li>Creates multi-year family commitment reducing departure risk</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h4 style="color: var(--accent-cyan); margin-top: 1rem;">4. Improve Marketing and Communication</h4>
+                        <ul>
+                            <li><strong>Current problem:</strong> Many families unaware of district program options (DLI, ALC)</li>
+                            <li><strong>Investment:</strong> Professional marketing campaign 
+                                <ul>
+                                    <li>Targeted social media ads highlighting DLI and ALC successes</li>
+                                    <li>School tour events for prospective families</li>
+                                    <li>Website redesign showcasing program pathways</li>
+                                    <li>Partnership with preschools and daycares for kindergarten recruitment</li>
+                                </ul>
+                            </li>
+                            <li><strong>Goal:</strong> Increase district capture rate from 68% to 75% (recapture 250+ students districtwide)</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px;">
+                        <h4 style="color: var(--accent-green);">✅ Expected ROI:</h4>
+                        <p><strong>Total Investment:</strong> ~$500-750k (one-time) + $150-200k/year (ongoing)</p>
+                        <p><strong>Expected Return:</strong></p>
+                        <ul>
+                            <li>Retain 100-150 students who would otherwise leave for charters = $800k-$1.2M/year ongoing revenue</li>
+                            <li>Attract 50-75 new students from outside district/returning families = $400-600k/year revenue</li>
+                            <li>Improved capacity utilization from closures = $500k-$1M/year operating cost savings</li>
+                            <li><strong>Net benefit: $1.7-2.8M/year after Year 3</strong></li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600;">
+                            Investment in programs pays for itself within 2-3 years while strengthening competitive position long-term.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            
+
+            <section style="margin-top: 3rem; padding: 2rem; background: var(--bg-secondary); border-radius: 8px;">
+                <h2>Final Conclusions</h2>
+                
+                <div class="principle">
+                    <h3>The Path Forward</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.8;">
+                        Area 5's enrollment challenges are real and significant: <strong>24% decline over 21 years</strong>, driven by demographic shifts and school choice competition. However, the data reveals a clear solution path: <strong>concentrate resources in fewer, program-diverse schools rather than operating many under-enrolled, traditional-only schools.</strong>
+                    </p>
+                    
+                    <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
+                        The evidence is unambiguous:
+                    </p>
+                    <ul style="font-size: 1.05rem; line-height: 1.8;">
+                        <li><strong>Schools with programs (Penn, Morningside, Oakwood) averaged +36% growth</strong> while traditional-only schools averaged -32% decline</li>
+                        <li><strong>In-boundary percentage is inversely correlated with enrollment health</strong>—the strongest schools (Penn 45%, Morningside 34%) have the lowest in-boundary rates because they attract students based on program appeal, not geographic proximity alone</li>
+                        <li><strong>Traditional residence-based forecasting alone is insufficient</strong> for closure decisions in a school choice environment where 32% of families opt out</li>
+                    </ul>
+                    
+                    <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1.5rem; padding: 15px; background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); border-radius: 5px; font-weight: 600;">
+                        
+                    </ol>
+                    
+                    <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1.5rem; font-style: italic; color: var(--text-secondary);".
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <footer style="margin-top: 3rem; padding: 2rem; background: var(--bg-tertiary); border-top: 2px solid var(--border-color);">
+            <p class="mb-3"><strong>Related Analysis:</strong></p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem;">📊 <a href="enrollment-trends.html">21-Year Enrollment Trends & Statistical Forecasts</a></li>
+                <li style="margin-bottom: 0.5rem;">📈 <a href="mobility-matrices.html">Student Mobility Matrices (Where Students Actually Attend)</a></li>
+                <li style="margin-bottom: 0.5rem;">🎓 <a href="morningside-study.html">Morningside ALC Program Pipeline Analysis</a></li>
+                <li style="margin-bottom: 0.5rem;">📑 <a href="population-studies-summary.html">Demographic Studies Critical Review</a></li>
+                <li style="margin-bottom: 0.5rem;">🏠 <a href="index.html">Area 5 Analysis Portal Home</a></li>
+            </ul>
+            
+            <p class="mb-0 mt-4 small fst-italic" style="color: var(--text-secondary);">
+                ⚠️ This is an independent analysis, not affiliated with Granite School District. The goal of this analysis is to improve accessibility to the PAC Area 5 2025 Boundary Study data and provide data-driven recommendations. If you find inaccuracies in the data or any other mistakes, or would like to contribute directly, please reach out to <a href='https://github.com/granite-pa-25-resources/home/issues' target='_blank'>https://github.com/granite-pa-25-resources/home/issues</a> and submit a bug report.
+            </p>
+        </footer>
+    </div>
+
+    <script src="utils.js"></script>
+</body>
+</html>
+
