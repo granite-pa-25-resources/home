@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data-Driven Decision Making | Area 5 Study</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <nav class="nav-sidebar" id="navSidebar">
+        <h3>Pages</h3>
+        <ul>
+            <li><a href="index.html" style="color: var(--accent-cyan); font-weight: bold;">🏠 Home</a></li>
+            <li><a href="population-studies-summary.html">📑 Population Studies</a></li>
+            <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
+            <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
+            <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            <li><a href="data-driven-decisions.html">📐 Data-Driven Decisions</a></li>
+            <li><a href="conclusions.html">💡 Conclusions</a></li>
+        </ul>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <header>
+        <h1>📐 Data-Driven Decision Making</h1>
+        <p>Testing the Validity of In-Boundary Enrollment as a School Health Metric</p>
+        <p style="font-size: 0.9em; margin-top: 0.5rem;">Statistical Analysis of Enrollment Patterns in Area 5</p>
+    </header>
+
+    <div class="container-fluid px-2 px-md-4">
+        <div class="content-section">
+            <div class="alert alert-warning mb-4" id="executive-summary">
+                <h3 class="h4 mb-3">🎯 Executive Summary</h3>
+                <p style="font-size: 1.05rem; margin-bottom: 1rem;">
+                    The Population Advisory Committee has emphasized <strong>in-boundary enrollment rate</strong> (% of
+                    boundary residents attending their boundary school) as a key metric for school health. This analysis
+                    tests whether that metric actually predicts school performance.
+                </p>
+                <div
+                    style="background: rgba(239, 68, 68, 0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-red);">
+                    <p style="margin: 0; font-weight: 600; font-size: 1.1rem; color: #ef4444;">
+                        ❌ Finding: In-boundary enrollment rate shows <strong>NO meaningful correlation</strong> with
+                        actual enrollment performance, projected growth, or enrollment trends.
+                    </p>
+                </div>
+                <p style="margin-top: 1rem;">
+                    Use the interactive scatter plots below to explore correlations yourself. Click and drag to zoom,
+                    double-click to reset.
+                </p>
+            <div class="alert alert-secondary mb-3" style="background: var(--bg-tertiary); color: var(--text-secondary); border-left: 4px solid var(--accent-cyan);">
+                <strong>🧭 Data Caveat:</strong> 
+                The <strong>in-boundary enrollment rates</strong> on the <b>x-axis</b> are calculated from the <a href="mobility-matrices.html" style="color: var(--accent-cyan); text-decoration: underline;">Mobility Matrices</a> page, using <b>2024-2025</b> student mobility data.<br>
+                The <strong>enrollment and trend metrics</strong> on the <b>y-axis</b> are drawn from the <a href="enrollment-trends.html" style="color: var(--accent-cyan); text-decoration: underline;">Enrollment Trends</a> page, covering historical data from <b>2004</b> through <b>2024</b> (ending one school year earlier).<br>
+                <span style="font-size: 0.95em;">Please note that while these years do not perfectly align, this design allows us to assess whether current in-boundary rates are predictive of past and future enrollment outcomes.</span>
+            </div>
+            </div>
+
+            <!-- Metric Selection -->
+            <div class="mb-4 p-3"
+                style="background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color);">
+                <label for="metricSelect"
+                    style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
+                    📊 Select Performance Metric to Plot Against In-Boundary Enrollment Rate:
+                </label>
+                <select id="metricSelect" onchange="updateChart()" style="width: 100%; max-width: 600px; padding: 0.75rem 1rem; background: var(--bg-secondary); color: var(--text-primary);
+                               border: 2px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; cursor: pointer;
+                               transition: all 0.3s ease; font-family: inherit;">
+                    <option value="enrollmentChange">Total Enrollment Change between 2004 and 2024 (%)</option>
+                    <option value="enrollment2024">Total Enrollment 2023-24(students)</option>
+
+                    <option value="linearSlope">Linear Trend Slope (students/year)</option>
+                    <option value="capacityPct2024">2023-24 Capacity Utilization (%)</option>
+                    <option value="forecast2029">2029 Projected Enrollment (with 95% CI)</option>
+                    <option value="forecastChange">Projected Change between 2024 and 2029 (% with 95% CI)</option>
+                    <option value="capacityPct2029">2029 Projected Capacity Utilization (% with 95% CI)</option>
+                </select>
+            </div>
+
+            <!-- Scatter Plot -->
+            <div class="chart-container mb-4">
+                <div id="scatterPlot"></div>
+            </div>
+
+            <!-- Statistics Panel -->
+            <div class="alert alert-info mb-4" id="statsPanel">
+                <h3 class="h5 mb-3">📈 Statistical Measures</h3>
+                <div id="statsContent"></div>
+            </div>
+
+            <!-- Interpretation Guide -->
+            <div class="alert mb-4" style="background: var(--bg-tertiary);">
+                <h3 class="h5 mb-3">📖 How to Interpret These Statistics</h3>
+                <ul style="color: var(--text-secondary);">
+                    <li><strong>R (Correlation coefficient):</strong> Ranges from -1 to +1. Values near 0 indicate no
+                        linear relationship. |R| > 0.7 is considered strong correlation.</li>
+                    <li><strong>R² (R-squared):</strong> Proportion of variance explained. R² < 0.3 means the metric
+                            explains less than 30% of variance—too weak to be useful for decisions.</li>
+                    <li><strong>RMSE (Root Mean Square Error):</strong> Average prediction error in the same units as
+                        the metric. Lower is better.</li>
+                    <li><strong>MAE (Mean Absolute Error):</strong> Average absolute prediction error. More robust to
+                        outliers than RMSE.</li>
+                    <li><strong>Linear fit line:</strong> If in-boundary rate were predictive, points would cluster
+                        tightly around the line. Scattered points = poor predictive power.</li>
+                </ul>
+            </div>
+
+            <!-- Key Findings -->
+            <div class="alert alert-warning mb-4">
+                <h3 class="h4 mb-3">🔍 Key Findings Across All Metrics</h3>
+
+                <div style="display: grid; gap: 1.5rem;">
+                    <div
+                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                        <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Enrollment
+                            Change</h4>
+                        <p>Schools with <strong>high in-boundary rates</strong> (Cottonwood 83.5%, Crestview 80.2%, Penn 78.9%)
+                            show <strong>mixed outcomes</strong>—Cottonwood declined -34%, while Penn grew +43%.</p>
+                        <p style="margin-bottom: 0;">Schools with <strong>low in-boundary rates</strong> (Morningside 61.2%, Oakwood 70.0%)
+                            showed <strong>strong growth</strong> (+39%, +25%). Meanwhile, Oakridge (76.4% in-boundary) had the
+                            <strong>worst decline (-47%)</strong>. <strong>No clear pattern—the metric is not predictive!</strong></p>
+                    </div>
+
+                    <div
+                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                        <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Current
+                            Enrollment</h4>
+                        <p>Largest schools (Penn 665, Morningside 585, Oakwood 543) have <strong>mixed in-boundary rates</strong>
+                            (78.9%, 61.2%, 70.0%)—ranging from lowest to moderate.</p>
+                        <p style="margin-bottom: 0;">Smallest schools (Eastwood 283, Rosecrest 295, Oakridge 299) have
+                            <strong>in-boundary rates ranging 71.8% to 76.4%</strong>—no consistent pattern with school size.</p>
+                    </div>
+
+                    <div
+                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                        <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Future
+                            Projections</h4>
+                        <p>Linear forecasts show schools with <strong>high in-boundary rates project declining
+                                enrollment</strong>, while schools with low in-boundary rates project growth.</p>
+                        <p style="margin-bottom: 0;">High in-boundary rates do NOT predict stable or growing future
+                            enrollment—they predict <strong>decline</strong>.</p>
+                    </div>
+
+                    <div
+                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
+                        <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Capacity
+                            Utilization</h4>
+                        <p>Schools with higher in-boundary rates tend to have <strong>lower capacity
+                                utilization</strong> (underenrolled buildings).</p>
+                        <p style="margin-bottom: 0;">Schools drawing from across Area 5 (low in-boundary %) have
+                            <strong>better building utilization</strong>. This contradicts the assumption that boundary
+                            retention improves efficiency.</p>
+                    </div>
+
+                    <div
+                        style="padding: 1rem; background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent-cyan); border-radius: 5px;">
+                        <h4 style="color: var(--accent-cyan); font-size: 1.1rem;">💡 Bottom Line</h4>
+                        <p style="margin-bottom: 0;"><strong>Every performance metric shows either NO correlation or
+                                NEGATIVE correlation with in-boundary enrollment rate.</strong> This means the PAC's
+                            preferred metric is actively misleading. Schools that draw students from across Area 5
+                            (program appeal) consistently outperform schools with high boundary retention.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policy Recommendations -->
+            <div class="alert alert-success mb-4">
+                <h3 class="h4 mb-3">💡 Policy Recommendations</h3>
+                <ol style="font-size: 1.05rem; line-height: 1.8;">
+                    <li><strong>Stop using in-boundary enrollment rate as a health metric.</strong> The data show it has
+                        no predictive value for enrollment performance, growth, or sustainability.</li>
+                    <li><strong>Focus on absolute enrollment trends.</strong> Is the school growing, stable, or
+                        declining over 10+ years? This is what actually matters.</li>
+                    <li><strong>Measure program appeal, not boundary retention.</strong> Schools that attract students
+                        from across Area 5 demonstrate competitive strength.</li>
+                    <li><strong>Use multiple metrics together:</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Total enrollment (current size)</li>
+                            <li>21-year enrollment trend (historical trajectory)</li>
+                            <li>Linear slope (rate of change)</li>
+                            <li>Program diversity (DLI, ALC, specialty tracks)</li>
+                            <li>Capacity utilization (% of building capacity)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Recognize that in-boundary rates don't predict school health.</strong> Penn (78.9% in-boundary)
+                        and Morningside (61.2% in-boundary) are the healthiest schools, with Penn being the ONLY growing school
+                        despite having a high in-boundary rate. The relationship is complex and context-dependent, not a simple
+                        correlation that can guide closure decisions.</li>
+                </ol>
+            </div>
+
+            <!-- Methodology -->
+            <div class="alert mb-4" style="background: var(--bg-tertiary);">
+                <h3 class="h5 mb-3">📊 Methodology</h3>
+                <p><strong>Data Sources:</strong></p>
+                <ul>
+                    <li><strong>In-boundary enrollment rates:</strong> Calculated from mobility matrices (2024-25 data)
+                    </li>
+                    <li><strong>Enrollment data:</strong> Granite School District enrollment records (2004-2024)</li>
+                    <li><strong>Projections:</strong> Linear regression forecasts using 21 years of historical data</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Statistical Methods:</strong></p>
+                <ul>
+                    <li>Pearson correlation coefficient (R) for linear relationships</li>
+                    <li>R-squared for explained variance</li>
+                    <li>RMSE and MAE for prediction error quantification</li>
+                    <li>Ordinary least squares (OLS) linear regression for trend fitting</li>
+                </ul>
+            </div>
+
+            <footer class="py-4 px-3">
+                <p class="mb-0 small fst-italic" style="color: var(--text-secondary);">
+                    ⚠️ This is an independent analysis, not affiliated with Granite School District. For questions or
+                    corrections, visit <a href='https://github.com/granite-pa-25-resources/home/issues'
+                        target='_blank'>GitHub Issues</a>.
+                </p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // School colors (specific to this page)
+        const chartSchoolColors = {
+            'Cottonwood': '#ef4444',
+            'Crestview': '#f97316',
+            'Driggs': '#fbbf24',
+            'Eastwood': '#10b981',
+            'Morningside': '#06b6d4',
+            'Oakridge': '#8b5cf6',
+            'Penn': '#ec4899',
+            'Rosecrest': '#14b8a6',
+            'Upland Terrace': '#84cc16',
+            'Oakwood': '#6366f1'
+        };
+
+        // Building capacities (minimum values)
+        const capacities = {
+            'Cottonwood': 500,
+            'Crestview': 550,
+            'Driggs': 650,
+            'Eastwood': 450,
+            'Morningside': 600,
+            'Oakridge': 550,
+            'Oakwood': 700,
+            'Penn': 600,
+            'Rosecrest': 450,
+            'Upland Terrace': 650
+        };
+
+        // School data
+        // In-boundary % = students from boundary attending that school / total students living in boundary
+        const schoolData = {
+            'Cottonwood': {
+                inBoundaryPct: 83.5,  // 233/279 - boundary retention rate
+                enrollment2024: 343,
+                enrollment2004: 520,
+                enrollmentChange: -34.0,
+                linearSlope: -8.9,
+                forecast2029: 299,
+                forecast2029CI: 89,  // 95% CI half-width
+                programs: 'Traditional'
+            },
+            'Crestview': {
+                inBoundaryPct: 80.2,  // 430/536
+                enrollment2024: 489,
+                enrollment2004: 623,
+                enrollmentChange: -21.5,
+                linearSlope: -6.3,
+                forecast2029: 457,
+                forecast2029CI: 82,
+                programs: 'Traditional'
+            },
+            'Driggs': {
+                inBoundaryPct: 78.0,  // 341/437
+                enrollment2024: 445,
+                enrollment2004: 628,
+                enrollmentChange: -29.1,
+                linearSlope: -9.1,
+                forecast2029: 400,
+                forecast2029CI: 95,
+                programs: 'Traditional'
+            },
+            'Eastwood': {
+                inBoundaryPct: 73.1,  // 125/171
+                enrollment2024: 283,
+                enrollment2004: 486,
+                enrollmentChange: -41.8,
+                linearSlope: -10.0,
+                forecast2029: 233,
+                forecast2029CI: 78,
+                programs: 'Traditional'
+            },
+            'Morningside': {
+                inBoundaryPct: 61.2,  // 189/309
+                enrollment2024: 585,
+                enrollment2004: 422,
+                enrollmentChange: 38.6,
+                linearSlope: 7.7,
+                forecast2029: 624,
+                forecast2029CI: 112,
+                programs: 'ALC+DLI+Trad'
+            },
+            'Oakridge': {
+                inBoundaryPct: 76.4,  // 181/237
+                enrollment2024: 299,
+                enrollment2004: 560,
+                enrollmentChange: -46.6,
+                linearSlope: -13.1,
+                forecast2029: 233,
+                forecast2029CI: 98,
+                programs: 'Traditional'
+            },
+            'Oakwood': {
+                inBoundaryPct: 70.0,  // 329/470
+                enrollment2024: 543,
+                enrollment2004: 436,
+                enrollmentChange: 24.5,
+                linearSlope: 5.1,
+                forecast2029: 569,
+                forecast2029CI: 105,
+                programs: 'DLI+Trad'
+            },
+            'Penn': {
+                inBoundaryPct: 78.9,  // 273/346
+                enrollment2024: 665,
+                enrollment2004: 466,
+                enrollmentChange: 42.7,
+                linearSlope: 9.9,
+                forecast2029: 714,
+                forecast2029CI: 118,
+                programs: 'DLI+Trad'
+            },
+            'Rosecrest': {
+                inBoundaryPct: 71.8,  // 237/330
+                enrollment2024: 295,
+                enrollment2004: 525,
+                enrollmentChange: -43.8,
+                linearSlope: -11.5,
+                forecast2029: 238,
+                forecast2029CI: 92,
+                programs: 'Traditional'
+            },
+            'Upland Terrace': {
+                inBoundaryPct: 79.3,  // 322/406
+                enrollment2024: 476,
+                enrollment2004: 550,
+                enrollmentChange: -13.5,
+                linearSlope: -3.7,
+                forecast2029: 457,
+                forecast2029CI: 68,
+                programs: 'Traditional'
+            }
+        };
+
+        // Calculate derived metrics
+        Object.keys(schoolData).forEach(school => {
+            const data = schoolData[school];
+            const capacity = capacities[school];
+
+            // Projected change
+            data.forecastChange = ((data.forecast2029 - data.enrollment2024) / data.enrollment2024) * 100;
+            data.forecastChangeCI = (data.forecast2029CI / data.enrollment2024) * 100;
+
+            // Current capacity %
+            data.capacityPct2024 = (data.enrollment2024 / capacity) * 100;
+
+            // Projected 2029 capacity %
+            data.capacityPct2029 = (data.forecast2029 / capacity) * 100;
+            data.capacityPct2029CI = (data.forecast2029CI / capacity) * 100;
+        });
+
+        // Metric configurations
+        const metrics = {
+            'enrollment2024': {
+                label: '2024 Total Enrollment',
+                yAxisTitle: 'Total Enrollment (students)',
+                unit: ' students',
+                hasCI: false,
+                description: 'Current school size - does high in-boundary rate predict larger enrollment?'
+            },
+            'enrollmentChange': {
+                label: '21-Year Enrollment Change',
+                yAxisTitle: 'Enrollment Change 2004-2024 (%)',
+                unit: '%',
+                hasCI: false,
+                description: 'Historical performance - do high in-boundary schools grow or stay stable?'
+            },
+            'linearSlope': {
+                label: 'Linear Trend Slope',
+                yAxisTitle: 'Enrollment Change Rate (students/year)',
+                unit: ' students/year',
+                hasCI: false,
+                description: 'Rate of enrollment change - do high in-boundary schools have positive trends?'
+            },
+            'forecast2029': {
+                label: '2029 Projected Enrollment',
+                yAxisTitle: 'Projected 2029 Enrollment (students)',
+                unit: ' students',
+                hasCI: true,
+                ciField: 'forecast2029CI',
+                description: 'Future outlook - do high in-boundary schools project stability?'
+            },
+            'forecastChange': {
+                label: 'Projected Change 2024-2029',
+                yAxisTitle: 'Projected Change 2024-2029 (%)',
+                unit: '%',
+                hasCI: true,
+                ciField: 'forecastChangeCI',
+                description: 'Near-term forecast - do high in-boundary schools project growth?'
+            },
+            'capacityPct2024': {
+                label: '2024 Capacity Utilization',
+                yAxisTitle: '% of Minimum Building Capacity (2024)',
+                unit: '%',
+                hasCI: false,
+                description: 'Current capacity usage - do high in-boundary schools use buildings more efficiently?'
+            },
+            'capacityPct2029': {
+                label: '2029 Projected Capacity Utilization',
+                yAxisTitle: '% of Minimum Building Capacity (2029)',
+                unit: '%',
+                hasCI: true,
+                ciField: 'capacityPct2029CI',
+                description: 'Projected capacity usage - do high in-boundary schools project better building utilization?'
+            }
+        };
+
+        function calculateStatistics(xData, yData) {
+            const n = xData.length;
+
+            // Calculate means
+            const xMean = xData.reduce((a, b) => a + b, 0) / n;
+            const yMean = yData.reduce((a, b) => a + b, 0) / n;
+
+            // Calculate linear regression
+            let numerator = 0;
+            let denominator = 0;
+            for (let i = 0; i < n; i++) {
+                numerator += (xData[i] - xMean) * (yData[i] - yMean);
+                denominator += (xData[i] - xMean) ** 2;
+            }
+            const slope = denominator === 0 ? 0 : numerator / denominator;
+            const intercept = yMean - slope * xMean;
+
+            // Calculate R and R²
+            const yPredicted = xData.map(x => slope * x + intercept);
+            const ssTotal = yData.reduce((sum, y) => sum + (y - yMean) ** 2, 0);
+            const ssResidual = yData.reduce((sum, y, i) => sum + (y - yPredicted[i]) ** 2, 0);
+            const rSquared = ssTotal === 0 ? 0 : 1 - (ssResidual / ssTotal);
+            const r = Math.sqrt(Math.abs(rSquared)) * (slope >= 0 ? 1 : -1);
+
+            // Calculate RMSE and MAE
+            const errors = yData.map((y, i) => y - yPredicted[i]);
+            const rmse = Math.sqrt(errors.reduce((sum, e) => sum + e ** 2, 0) / n);
+            const mae = errors.reduce((sum, e) => sum + Math.abs(e), 0) / n;
+
+            return { slope, intercept, r, rSquared, rmse, mae, yPredicted };
+        }
+
+        function updateChart() {
+            console.log('updateChart called');
+
+            // Check if Plotly is loaded
+            if (typeof Plotly === 'undefined') {
+                console.error('Plotly is not loaded!');
+                return;
+            }
+
+            const metricSelect = document.getElementById('metricSelect');
+            if (!metricSelect) {
+                console.error('metricSelect not found!');
+                return;
+            }
+
+            const metric = metricSelect.value;
+            const config = metrics[metric];
+
+            console.log('Rendering chart for metric:', metric);
+
+            // Extract data
+            const schools = Object.keys(schoolData);
+            const xData = schools.map(school => schoolData[school].inBoundaryPct);
+            const yData = schools.map(school => schoolData[school][metric]);
+            const colors = schools.map(school => chartSchoolColors[school]);
+            const programs = schools.map(school => schoolData[school].programs);
+
+            // Calculate statistics
+            const stats = calculateStatistics(xData, yData);
+
+            // Prepare hover template
+            let hoverTemplate = '<b>%{text}</b><br>' +
+                'In-Boundary: %{x:.1f}%<br>' +
+                config.label + ': %{y:.1f}' + config.unit;
+
+            // Add CI to hover if available
+            if (config.hasCI) {
+                const ciValues = schools.map(school => schoolData[school][config.ciField]);
+                hoverTemplate += '<br>95% CI: ±%{customdata:.1f}' + config.unit;
+            } else {
+                hoverTemplate += '<br>Programs: %{customdata}';
+            }
+            hoverTemplate += '<extra></extra>';
+
+            // Prepare custom data (either CI or programs)
+            const customData = config.hasCI
+                ? schools.map(school => schoolData[school][config.ciField])
+                : programs;
+
+            // Create scatter trace
+            const scatterTrace = {
+                x: xData,
+                y: yData,
+                mode: 'markers',
+                type: 'scatter',
+                name: 'Schools',
+                text: schools,
+                customdata: customData,
+                marker: {
+                    size: 14,
+                    color: colors,
+                    line: {
+                        color: '#fff',
+                        width: 2
+                    }
+                },
+                hovertemplate: hoverTemplate
+            };
+
+            // Create linear fit line
+            const xRange = [Math.min(...xData) - 5, Math.max(...xData) + 5];
+            const yFit = xRange.map(x => stats.slope * x + stats.intercept);
+
+            const fitTrace = {
+                x: xRange,
+                y: yFit,
+                mode: 'lines',
+                type: 'scatter',
+                name: 'Linear Fit',
+                line: {
+                    color: '#888',
+                    width: 2,
+                    dash: 'dash'
+                },
+                hovertemplate: 'Linear Fit<br>R² = ' + stats.rSquared.toFixed(3) + '<extra></extra>'
+            };
+
+            const layout = {
+                title: {
+                    text: `In-Boundary Enrollment Rate (2024-25) vs. ${config.label}`,
+                    font: { size: 18, color: '#e8eaed' }
+                },
+                xaxis: {
+                    title: 'In-Boundary Enrollment Rate (2024-25) (%)',
+                    color: '#9ca3af',
+                    gridcolor: '#374151',
+
+                },
+                yaxis: {
+                    title: config.yAxisTitle,
+                    color: '#9ca3af',
+                    gridcolor: '#374151'
+                },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#e8eaed', size: 12 },
+                hovermode: 'closest',
+                showlegend: false,
+                height: 600,
+                margin: { t: 80, b: 80, l: 80, r: 40 },
+                annotations: [{
+                    text: config.description,
+                    xref: 'paper',
+                    yref: 'paper',
+                    x: 0.5,
+                    y: -0.15,
+                    showarrow: false,
+                    font: { size: 11, color: '#9ca3af' },
+                    xanchor: 'center'
+                }]
+            };
+
+            Plotly.newPlot('scatterPlot', [scatterTrace, fitTrace], layout, {
+                responsive: true,
+                displayModeBar: true,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d']
+            });
+
+            // Update statistics panel
+            updateStatistics(stats, config, metric);
+        }
+
+        function updateStatistics(stats, config, metric) {
+            const interpretation = interpretCorrelation(stats.r, stats.rSquared, metric);
+
+            // Add CI note if applicable
+            let ciNote = '';
+            if (config.hasCI) {
+                ciNote = `
+                <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(6, 182, 212, 0.1); border-radius: 5px; font-size: 0.9rem; color: var(--text-secondary); border-left: 3px solid var(--accent-cyan);">
+                    <strong>📊 Confidence Intervals:</strong> Hover over data points to see ±95% CI for each school's projection. These intervals represent statistical uncertainty in the forecasts.
+                </div>`;
+            }
+
+            const html = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="padding: 1rem; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Correlation (R)</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: ${interpretation.rColor};">${stats.r.toFixed(3)}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">${stats.r > 0 ? 'Positive' : stats.r < 0 ? 'Negative' : 'None'}</div>
+                    </div>
+                    <div style="padding: 1rem; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">R-Squared</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: ${interpretation.r2Color};">${stats.rSquared.toFixed(3)}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">${(stats.rSquared * 100).toFixed(1)}% explained</div>
+                    </div>
+                    <div style="padding: 1rem; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">RMSE</div>
+                        <div style="font-size: 1.8rem; font-weight: 700;">${stats.rmse.toFixed(1)}${config.unit}</div>
+                    </div>
+                    <div style="padding: 1rem; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">MAE</div>
+                        <div style="font-size: 1.8rem; font-weight: 700;">${stats.mae.toFixed(1)}${config.unit}</div>
+                    </div>
+                </div>
+
+                <div style="padding: 1rem; background: ${interpretation.bgColor}; border-left: 4px solid ${interpretation.borderColor}; border-radius: 5px;">
+                    <h4 style="color: ${interpretation.borderColor}; margin-top: 0;">${interpretation.icon} ${interpretation.title}</h4>
+                    <p style="margin-bottom: 0; color: var(--text-secondary);">${interpretation.message}</p>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 5px; font-size: 0.9rem; color: var(--text-secondary);">
+                    <strong>Linear Fit Equation:</strong> ${config.label} = ${stats.slope.toFixed(2)} × (In-Boundary %) ${stats.intercept >= 0 ? '+' : ''} ${stats.intercept.toFixed(2)}
+                </div>
+                ${ciNote}
+            `;
+
+            document.getElementById('statsContent').innerHTML = html;
+        }
+
+        function interpretCorrelation(r, rSquared, metric) {
+            const absR = Math.abs(r);
+            const isNegative = r < 0;
+            const direction = isNegative ? 'NEGATIVE' : 'positive';
+            const directionSymbol = isNegative ? '↘️' : '↗️';
+
+            if (rSquared < 0.1 || absR < 0.3) {
+                return {
+                    icon: '❌',
+                    title: 'No Meaningful Correlation',
+                    message: `With R² = ${rSquared.toFixed(3)}, in-boundary enrollment rate (2024-25) explains only ${(rSquared * 100).toFixed(1)}% of variance in ${metrics[metric].label.toLowerCase()}. This metric has NO predictive value for decision-making.`,
+                    rColor: '#ef4444',
+                    r2Color: '#ef4444',
+                    bgColor: 'rgba(239, 68, 68, 0.1)',
+                    borderColor: '#ef4444'
+                };
+            } else if (rSquared < 0.3 || absR < 0.55) {
+                let message = `With R² = ${rSquared.toFixed(3)}, in-boundary enrollment rate (2024-25) explains only ${(rSquared * 100).toFixed(1)}% of variance. This is too weak to base decisions on.`;
+                if (isNegative) {
+                    message += ` <strong>Note: The ${direction} correlation suggests higher in-boundary rates associate with WORSE outcomes on this metric, contradicting the PAC's assumption.</strong>`;
+                }
+                return {
+                    icon: '⚠️',
+                    title: `Weak ${direction.charAt(0) + direction.slice(1).toLowerCase()} Correlation ${directionSymbol}`,
+                    message: message,
+                    rColor: '#f97316',
+                    r2Color: '#f97316',
+                    bgColor: 'rgba(251, 191, 36, 0.1)',
+                    borderColor: '#fbbf24'
+                };
+            } else if (absR < 0.7) {
+                let message = `With R² = ${rSquared.toFixed(3)}, in-boundary enrollment (2024-25) explains ${(rSquared * 100).toFixed(1)}% of variance. Some relationship exists but many other factors matter.`;
+                if (isNegative) {
+                    message += ` <strong>IMPORTANT: The ${direction} correlation means higher in-boundary rates predict WORSE performance. This suggests using this metric in the OPPOSITE manner than the PAC proposes!</strong>`;
+                }
+                return {
+                    icon: '📊',
+                    title: `Moderate ${direction.charAt(0) + direction.slice(1).toLowerCase()} Correlation ${directionSymbol}`,
+                    message: message,
+                    rColor: '#06b6d4',
+                    r2Color: '#06b6d4',
+                    bgColor: 'rgba(6, 182, 212, 0.1)',
+                    borderColor: '#06b6d4'
+                };
+            } else {
+                let message = `With R² = ${rSquared.toFixed(3)}, in-boundary enrollment (2024-25) explains ${(rSquared * 100).toFixed(1)}% of variance in ${metrics[metric].label.toLowerCase()}.`;
+                if (isNegative) {
+                    message += ` <strong>CRITICAL FINDING: This strong ${direction} correlation demonstrates that higher in-boundary rates are associated with WORSE outcomes. The PAC's preferred metric works in REVERSE—schools with LOW in-boundary rates perform BETTER!</strong>`;
+                } else {
+                    message += ` This ${direction} relationship suggests higher in-boundary rates associate with better outcomes on this metric.`;
+                }
+                return {
+                    icon: isNegative ? '🚨' : '✅',
+                    title: `Strong ${direction.charAt(0) + direction.slice(1).toLowerCase()} Correlation ${directionSymbol}`,
+                    message: message,
+                    rColor: isNegative ? '#ef4444' : '#10b981',
+                    r2Color: isNegative ? '#ef4444' : '#10b981',
+                    bgColor: isNegative ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+                    borderColor: isNegative ? '#ef4444' : '#10b981'
+                };
+            }
+        }
+
+        // Initialize on page load - wait for DOM
+        document.addEventListener('DOMContentLoaded', function () {
+            updateChart();
+        });
+
+        // Also try to update immediately in case DOMContentLoaded already fired
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(updateChart, 100);
+        }
+    </script>
+
+    <!-- Navigation Toggle Script -->
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navOverlay = document.getElementById('navOverlay');
+
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            navSidebar.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        navToggle.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        const navLinks = navSidebar.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (link.getAttribute('href').startsWith('#')) {
+                    toggleNav();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navSidebar.classList.contains('active')) {
+                toggleNav();
+            }
+        });
+    </script>
+</body>
+
+</html>

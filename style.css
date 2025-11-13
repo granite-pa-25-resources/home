@@ -208,27 +208,37 @@ li {
     border-radius: 8px;
     margin: 1.5rem 0;
     border-left: 4px solid;
+    color: var(--text-primary);
 }
 
 .alert-success {
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.15);
     border-color: var(--accent-green);
 }
 
 .alert-info {
-    background: rgba(6, 182, 212, 0.1);
+    background: rgba(6, 182, 212, 0.15);
     border-color: var(--accent-cyan);
-    color: var(--text-secondary);
 }
 
 .alert-warning {
-    background: rgba(251, 191, 36, 0.1);
+    background: rgba(251, 191, 36, 0.15);
     border-color: var(--accent-yellow);
 }
 
 .alert-danger {
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.15);
     border-color: var(--accent-red);
+}
+
+/* Ensure all alert text is readable */
+.alert h3, .alert h4, .alert h5,
+.alert p, .alert ul, .alert ol {
+    color: var(--text-primary);
+}
+
+.alert .h4, .alert .h5 {
+    color: var(--text-primary);
 }
 
 /* Sections */
@@ -338,18 +348,18 @@ tr:hover {
     opacity: 0.5;
 }
 
-/* School Color Classes */
-.cottonwood { background-color: rgba(220, 38, 38, 0.3) !important; color: #fca5a5; }
-.crestview { background-color: rgba(234, 88, 12, 0.3) !important; color: #fdba74; }
-.driggs { background-color: rgba(202, 138, 4, 0.3) !important; color: #fde047; }
-.eastwood { background-color: rgba(101, 163, 13, 0.3) !important; color: #bef264; }
-.morningside { background-color: rgba(5, 150, 105, 0.3) !important; color: #6ee7b7; }
-.oakridge { background-color: rgba(6, 182, 212, 0.3) !important; color: #67e8f9; }
-.oakwood { background-color: rgba(59, 130, 246, 0.3) !important; color: #93c5fd; }
-.penn { background-color: rgba(139, 92, 246, 0.3) !important; color: #c4b5fd; }
-.rosecrest { background-color: rgba(217, 70, 239, 0.3) !important; color: #e9d5ff; }
-.upland { background-color: rgba(236, 72, 153, 0.3) !important; color: #fbcfe8; }
-.other { background-color: rgba(107, 114, 128, 0.2) !important; color: #9ca3af; }
+/* School Color Classes - High Contrast */
+.cottonwood { background-color: rgba(220, 38, 38, 0.3) !important; color: #fecaca !important; }
+.crestview { background-color: rgba(234, 88, 12, 0.3) !important; color: #fed7aa !important; }
+.driggs { background-color: rgba(202, 138, 4, 0.3) !important; color: #fef08a !important; }
+.eastwood { background-color: rgba(101, 163, 13, 0.3) !important; color: #d9f99d !important; }
+.morningside { background-color: rgba(5, 150, 105, 0.3) !important; color: #a7f3d0 !important; }
+.oakridge { background-color: rgba(6, 182, 212, 0.3) !important; color: #a5f3fc !important; }
+.oakwood { background-color: rgba(59, 130, 246, 0.3) !important; color: #bfdbfe !important; }
+.penn { background-color: rgba(139, 92, 246, 0.3) !important; color: #ddd6fe !important; }
+.rosecrest { background-color: rgba(217, 70, 239, 0.3) !important; color: #f3e8ff !important; }
+.upland { background-color: rgba(236, 72, 153, 0.3) !important; color: #fce7f3 !important; }
+.other { background-color: rgba(107, 114, 128, 0.2) !important; color: #d1d5db !important; }
 
 /* Grid Layout */
 .row {

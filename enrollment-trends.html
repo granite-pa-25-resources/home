@@ -19,6 +19,7 @@
             <li><a href="enrollment-trends.html">📈 Enrollment Trends</a></li>
             <li><a href="mobility-matrices.html">📊 Mobility Matrices</a></li>
             <li><a href="morningside-study.html">🎓 Morningside Study</a></li>
+            <li><a href="data-driven-decisions.html">📐 Data-Driven Decisions</a></li>
             <li><a href="conclusions.html">💡 Conclusions</a></li>
         </ul>
     </nav>
@@ -977,24 +978,30 @@
                     text: currentView === 'absolute'
                         ? `Area 5 Schools Enrollment Trends (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`
                         : `Area 5 Schools Enrollment as % of Min Building Capacity (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`,
-                    font: { size: isMobile ? 14 : 18, color: '#e8eaed' }
+                    font: { size: isMobile ? 14 : 18, color: '#f9fafb' }
                 },
                 xaxis: {
-                    title: isMobile ? '' : 'School Year',
-                    color: '#9ca3af',
-                    gridcolor: '#374151',
-                    tickangle: -45,
-                    tickfont: { size: isMobile ? 9 : 12 }
+                    title: {
+                        text: isMobile ? '' : 'School Year',
+                        font: { color: '#f9fafb' }
+                    },
+                    tickfont: { size: isMobile ? 9 : 12, color: '#e5e7eb' },
+                    gridcolor: '#4b5563',
+                    zerolinecolor: '#6b7280',
+                    tickangle: -45
                 },
                 yaxis: {
-                    title: isMobile ? '' : (currentView === 'absolute' ? 'Student Count' : '% of Min Capacity'),
-                    color: '#9ca3af',
-                    gridcolor: '#374151',
-                    tickfont: { size: isMobile ? 10 : 12 }
+                    title: {
+                        text: isMobile ? '' : (currentView === 'absolute' ? 'Student Count' : '% of Min Capacity'),
+                        font: { color: '#f9fafb' }
+                    },
+                    tickfont: { size: isMobile ? 10 : 12, color: '#e5e7eb' },
+                    gridcolor: '#4b5563',
+                    zerolinecolor: '#6b7280'
                 },
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#e8eaed', size: isMobile ? 10 : 12 },
+                font: { color: '#f9fafb', size: isMobile ? 10 : 12 },
                 hovermode: 'closest',
                 legend: {
                     x: isMobile ? 0 : 1.05,
