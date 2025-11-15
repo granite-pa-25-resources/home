@@ -55,10 +55,10 @@
                     double-click to reset.
                 </p>
             <div class="alert alert-secondary mb-3" style="background: var(--bg-tertiary); color: var(--text-secondary); border-left: 4px solid var(--accent-cyan);">
-                <strong>🧭 Data Caveat:</strong> 
+                <strong>🧭 Data Note:</strong>
                 The <strong>in-boundary enrollment rates</strong> on the <b>x-axis</b> are calculated from the <a href="mobility-matrices.html" style="color: var(--accent-cyan); text-decoration: underline;">Mobility Matrices</a> page, using <b>2024-2025</b> student mobility data.<br>
-                The <strong>enrollment and trend metrics</strong> on the <b>y-axis</b> are drawn from the <a href="enrollment-trends.html" style="color: var(--accent-cyan); text-decoration: underline;">Enrollment Trends</a> page, covering historical data from <b>2004</b> through <b>2024</b> (ending one school year earlier).<br>
-                <span style="font-size: 0.95em;">Please note that while these years do not perfectly align, this design allows us to assess whether current in-boundary rates are predictive of past and future enrollment outcomes.</span>
+                The <strong>enrollment and trend metrics</strong> on the <b>y-axis</b> are drawn from the <a href="enrollment-trends.html" style="color: var(--accent-cyan); text-decoration: underline;">Enrollment Trends</a> page, covering historical data from <b>2004-2025</b>. Note that 2025 enrollment data is derived from the 2024-2025 mobility matrices (total students attending each school).<br>
+                <span style="font-size: 0.95em;">This allows us to assess whether current in-boundary rates are predictive of past and future enrollment outcomes.</span>
             </div>
             </div>
 
@@ -72,14 +72,14 @@
                 <select id="metricSelect" onchange="updateChart()" style="width: 100%; max-width: 600px; padding: 0.75rem 1rem; background: var(--bg-secondary); color: var(--text-primary);
                                border: 2px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; cursor: pointer;
                                transition: all 0.3s ease; font-family: inherit;">
-                    <option value="enrollmentChange">Total Enrollment Change between 2004 and 2024 (%)</option>
-                    <option value="enrollment2024">Total Enrollment 2023-24(students)</option>
+                    <option value="enrollmentChange">Total Enrollment Change between 2004 and 2025 (%)</option>
+                    <option value="enrollment2025">Total Enrollment 2024-25 (students)</option>
 
                     <option value="linearSlope">Linear Trend Slope (students/year)</option>
-                    <option value="capacityPct2024">2023-24 Capacity Utilization (%)</option>
-                    <option value="forecast2029">2029 Projected Enrollment (with 95% CI)</option>
-                    <option value="forecastChange">Projected Change between 2024 and 2029 (% with 95% CI)</option>
-                    <option value="capacityPct2029">2029 Projected Capacity Utilization (% with 95% CI)</option>
+                    <option value="capacityPct2025">2024-25 Capacity Utilization (%)</option>
+                    <option value="forecast2030">2030 Projected Enrollment (with 95% CI)</option>
+                    <option value="forecastChange">Projected Change between 2025 and 2030 (% with 95% CI)</option>
+                    <option value="capacityPct2030">2030 Projected Capacity Utilization (% with 95% CI)</option>
                 </select>
             </div>
 
@@ -120,21 +120,20 @@
                         style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
                         <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Enrollment
                             Change</h4>
-                        <p>Schools with <strong>high in-boundary rates</strong> (Cottonwood 83.5%, Crestview 80.2%, Penn 78.9%)
-                            show <strong>mixed outcomes</strong>—Cottonwood declined -34%, while Penn grew +43%.</p>
-                        <p style="margin-bottom: 0;">Schools with <strong>low in-boundary rates</strong> (Morningside 61.2%, Oakwood 70.0%)
-                            showed <strong>strong growth</strong> (+39%, +25%). Meanwhile, Oakridge (76.4% in-boundary) had the
-                            <strong>worst decline (-47%)</strong>. <strong>No clear pattern—the metric is not predictive!</strong></p>
+                        <p>Schools with <strong>high in-boundary rates</strong> (Cottonwood 68.1%, Oakridge 65.2%)
+                            show <strong>steep declines</strong>—Cottonwood declined -34%, Oakridge -51%.</p>
+                        <p style="margin-bottom: 0;">Schools with <strong>low in-boundary rates</strong> (Morningside 33.7%, Penn 45.1%)
+                            showed <strong>strong growth</strong> (+33%, +30%). <strong>No clear pattern—the metric is not predictive!</strong></p>
                     </div>
 
                     <div
                         style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--accent-red); border-radius: 5px;">
                         <h4 style="color: var(--accent-red); font-size: 1.1rem;">❌ NEGATIVE Correlation with Current
                             Enrollment</h4>
-                        <p>Largest schools (Penn 665, Morningside 585, Oakwood 543) have <strong>mixed in-boundary rates</strong>
-                            (78.9%, 61.2%, 70.0%)—ranging from lowest to moderate.</p>
-                        <p style="margin-bottom: 0;">Smallest schools (Eastwood 283, Rosecrest 295, Oakridge 299) have
-                            <strong>in-boundary rates ranging 71.8% to 76.4%</strong>—no consistent pattern with school size.</p>
+                        <p>Largest schools (Penn 606, Morningside 561, Oakwood 533) have <strong>low to moderate in-boundary rates</strong>
+                            (45.1%, 33.7%, 30.0%)—far from the highest rates.</p>
+                        <p style="margin-bottom: 0;">Smallest schools (Eastwood 267, Oakridge 277, Rosecrest 291) have
+                            <strong>varied in-boundary rates (46.8% to 65.2%)</strong>—no consistent pattern with school size.</p>
                     </div>
 
                     <div
@@ -257,103 +256,103 @@
         // In-boundary % = students from boundary attending that school / total students living in boundary
         const schoolData = {
             'Cottonwood': {
-                inBoundaryPct: 83.5,  // 233/279 - boundary retention rate
-                enrollment2024: 343,
+                inBoundaryPct: 68.1,  // 233/342 - boundary retention rate (2024-25 data)
+                enrollment2025: 342,
                 enrollment2004: 520,
-                enrollmentChange: -34.0,
-                linearSlope: -8.9,
-                forecast2029: 299,
-                forecast2029CI: 89,  // 95% CI half-width
+                enrollmentChange: -34.2,
+                linearSlope: -8.5,
+                forecast2030: 293,
+                forecast2030CI: 89,  // 95% CI half-width
                 programs: 'Traditional'
             },
             'Crestview': {
-                inBoundaryPct: 80.2,  // 430/536
-                enrollment2024: 489,
+                inBoundaryPct: 90.7,  // 430/474
+                enrollment2025: 474,
                 enrollment2004: 623,
-                enrollmentChange: -21.5,
-                linearSlope: -6.3,
-                forecast2029: 457,
-                forecast2029CI: 82,
+                enrollmentChange: -23.9,
+                linearSlope: -6.7,
+                forecast2030: 440,
+                forecast2030CI: 82,
                 programs: 'Traditional'
             },
             'Driggs': {
-                inBoundaryPct: 78.0,  // 341/437
-                enrollment2024: 445,
+                inBoundaryPct: 78.6,  // 341/434
+                enrollment2025: 434,
                 enrollment2004: 628,
-                enrollmentChange: -29.1,
-                linearSlope: -9.1,
-                forecast2029: 400,
-                forecast2029CI: 95,
+                enrollmentChange: -30.9,
+                linearSlope: -9.3,
+                forecast2030: 387,
+                forecast2030CI: 95,
                 programs: 'Traditional'
             },
             'Eastwood': {
-                inBoundaryPct: 73.1,  // 125/171
-                enrollment2024: 283,
+                inBoundaryPct: 46.8,  // 125/267
+                enrollment2025: 267,
                 enrollment2004: 486,
-                enrollmentChange: -41.8,
-                linearSlope: -10.0,
-                forecast2029: 233,
-                forecast2029CI: 78,
+                enrollmentChange: -45.1,
+                linearSlope: -10.5,
+                forecast2030: 215,
+                forecast2030CI: 78,
                 programs: 'Traditional'
             },
             'Morningside': {
-                inBoundaryPct: 61.2,  // 189/309
-                enrollment2024: 585,
+                inBoundaryPct: 33.7,  // 189/561
+                enrollment2025: 561,
                 enrollment2004: 422,
-                enrollmentChange: 38.6,
-                linearSlope: 7.7,
-                forecast2029: 624,
-                forecast2029CI: 112,
+                enrollmentChange: 32.9,
+                linearSlope: 6.6,
+                forecast2030: 594,
+                forecast2030CI: 112,
                 programs: 'ALC+DLI+Trad'
             },
             'Oakridge': {
-                inBoundaryPct: 76.4,  // 181/237
-                enrollment2024: 299,
+                inBoundaryPct: 65.2,  // 181/277
+                enrollment2025: 277,
                 enrollment2004: 560,
-                enrollmentChange: -46.6,
-                linearSlope: -13.1,
-                forecast2029: 233,
-                forecast2029CI: 98,
+                enrollmentChange: -50.5,
+                linearSlope: -13.5,
+                forecast2030: 210,
+                forecast2030CI: 98,
                 programs: 'Traditional'
             },
             'Oakwood': {
-                inBoundaryPct: 70.0,  // 329/470
-                enrollment2024: 543,
+                inBoundaryPct: 30.0,  // 160/533
+                enrollment2025: 533,
                 enrollment2004: 436,
-                enrollmentChange: 24.5,
-                linearSlope: 5.1,
-                forecast2029: 569,
-                forecast2029CI: 105,
+                enrollmentChange: 22.2,
+                linearSlope: 4.6,
+                forecast2030: 556,
+                forecast2030CI: 105,
                 programs: 'DLI+Trad'
             },
             'Penn': {
-                inBoundaryPct: 78.9,  // 273/346
-                enrollment2024: 665,
+                inBoundaryPct: 45.1,  // 273/606
+                enrollment2025: 606,
                 enrollment2004: 466,
-                enrollmentChange: 42.7,
-                linearSlope: 9.9,
-                forecast2029: 714,
-                forecast2029CI: 118,
+                enrollmentChange: 30.0,
+                linearSlope: 6.7,
+                forecast2030: 640,
+                forecast2030CI: 118,
                 programs: 'DLI+Trad'
             },
             'Rosecrest': {
-                inBoundaryPct: 71.8,  // 237/330
-                enrollment2024: 295,
+                inBoundaryPct: 80.8,  // 235/291
+                enrollment2025: 291,
                 enrollment2004: 525,
-                enrollmentChange: -43.8,
-                linearSlope: -11.5,
-                forecast2029: 238,
-                forecast2029CI: 92,
+                enrollmentChange: -44.6,
+                linearSlope: -11.2,
+                forecast2030: 235,
+                forecast2030CI: 92,
                 programs: 'Traditional'
             },
             'Upland Terrace': {
-                inBoundaryPct: 79.3,  // 322/406
-                enrollment2024: 476,
+                inBoundaryPct: 73.0,  // 322/441
+                enrollment2025: 441,
                 enrollment2004: 550,
-                enrollmentChange: -13.5,
-                linearSlope: -3.7,
-                forecast2029: 457,
-                forecast2029CI: 68,
+                enrollmentChange: -19.8,
+                linearSlope: -5.2,
+                forecast2030: 415,
+                forecast2030CI: 68,
                 programs: 'Traditional'
             }
         };
@@ -364,29 +363,29 @@
             const capacity = capacities[school];
 
             // Projected change
-            data.forecastChange = ((data.forecast2029 - data.enrollment2024) / data.enrollment2024) * 100;
-            data.forecastChangeCI = (data.forecast2029CI / data.enrollment2024) * 100;
+            data.forecastChange = ((data.forecast2030 - data.enrollment2025) / data.enrollment2025) * 100;
+            data.forecastChangeCI = (data.forecast2030CI / data.enrollment2025) * 100;
 
             // Current capacity %
-            data.capacityPct2024 = (data.enrollment2024 / capacity) * 100;
+            data.capacityPct2025 = (data.enrollment2025 / capacity) * 100;
 
-            // Projected 2029 capacity %
-            data.capacityPct2029 = (data.forecast2029 / capacity) * 100;
-            data.capacityPct2029CI = (data.forecast2029CI / capacity) * 100;
+            // Projected 2030 capacity %
+            data.capacityPct2030 = (data.forecast2030 / capacity) * 100;
+            data.capacityPct2030CI = (data.forecast2030CI / capacity) * 100;
         });
 
         // Metric configurations
         const metrics = {
-            'enrollment2024': {
-                label: '2024 Total Enrollment',
+            'enrollment2025': {
+                label: '2025 Total Enrollment',
                 yAxisTitle: 'Total Enrollment (students)',
                 unit: ' students',
                 hasCI: false,
                 description: 'Current school size - does high in-boundary rate predict larger enrollment?'
             },
             'enrollmentChange': {
-                label: '21-Year Enrollment Change',
-                yAxisTitle: 'Enrollment Change 2004-2024 (%)',
+                label: '22-Year Enrollment Change',
+                yAxisTitle: 'Enrollment Change 2004-2025 (%)',
                 unit: '%',
                 hasCI: false,
                 description: 'Historical performance - do high in-boundary schools grow or stay stable?'
@@ -398,35 +397,35 @@
                 hasCI: false,
                 description: 'Rate of enrollment change - do high in-boundary schools have positive trends?'
             },
-            'forecast2029': {
-                label: '2029 Projected Enrollment',
-                yAxisTitle: 'Projected 2029 Enrollment (students)',
+            'forecast2030': {
+                label: '2030 Projected Enrollment',
+                yAxisTitle: 'Projected 2030 Enrollment (students)',
                 unit: ' students',
                 hasCI: true,
-                ciField: 'forecast2029CI',
+                ciField: 'forecast2030CI',
                 description: 'Future outlook - do high in-boundary schools project stability?'
             },
             'forecastChange': {
-                label: 'Projected Change 2024-2029',
-                yAxisTitle: 'Projected Change 2024-2029 (%)',
+                label: 'Projected Change 2025-2030',
+                yAxisTitle: 'Projected Change 2025-2030 (%)',
                 unit: '%',
                 hasCI: true,
                 ciField: 'forecastChangeCI',
                 description: 'Near-term forecast - do high in-boundary schools project growth?'
             },
-            'capacityPct2024': {
-                label: '2024 Capacity Utilization',
-                yAxisTitle: '% of Minimum Building Capacity (2024)',
+            'capacityPct2025': {
+                label: '2025 Capacity Utilization',
+                yAxisTitle: '% of Minimum Building Capacity (2025)',
                 unit: '%',
                 hasCI: false,
                 description: 'Current capacity usage - do high in-boundary schools use buildings more efficiently?'
             },
-            'capacityPct2029': {
-                label: '2029 Projected Capacity Utilization',
-                yAxisTitle: '% of Minimum Building Capacity (2029)',
+            'capacityPct2030': {
+                label: '2030 Projected Capacity Utilization',
+                yAxisTitle: '% of Minimum Building Capacity (2030)',
                 unit: '%',
                 hasCI: true,
-                ciField: 'capacityPct2029CI',
+                ciField: 'capacityPct2030CI',
                 description: 'Projected capacity usage - do high in-boundary schools project better building utilization?'
             }
         };

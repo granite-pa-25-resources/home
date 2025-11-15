@@ -7,6 +7,61 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Simple Dual Range Slider */
+        .range-slider-container {
+            position: relative;
+            height: 6px;
+            margin: 20px 0;
+        }
+
+        .range-track {
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .range-fill {
+            position: absolute;
+            height: 6px;
+            background: var(--accent-cyan);
+            border-radius: 3px;
+        }
+
+        input[type="range"] {
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: transparent;
+            pointer-events: none;
+            -webkit-appearance: none;
+            margin: 0;
+            top: 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            pointer-events: auto;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            pointer-events: auto;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            border: 2px solid white;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <button class="nav-toggle" id="navToggle">☰</button>
@@ -27,7 +82,7 @@
     <div class="nav-overlay" id="navOverlay"></div>
 
     <header>
-        <h1>📈 Area 5 Enrollment Trends (2004-2024) & Forecasts (2025-2029)</h1>
+        <h1>📈 Area 5 Enrollment Trends (2004-2025) & Forecasts (2026-2030)</h1>
         <p>Historical enrollment data with multiple statistical forecast methods for all 10 Area 5 elementary schools</p>
         <p style="font-size: 0.9em; margin-top: 0.5rem;">Data from Granite School District enrollment records | 7 Forecast Methods Available</p>
     </header>
@@ -36,11 +91,11 @@
         <div class="content-section">
             <div class="alert alert-info mb-3 mb-md-4" id="about" style = 'color: #baa;'>
                 <h3 class="h4 mb-3">📊 About These Data</h3>
-                <p><strong>Enrollment history from 2003-04 through 2023-24</strong> shows long-term enrollent trends for each school, with <strong>statistical forecasts through 2029</strong> using multiple forecasting methods.</p>
+                <p><strong>Enrollment history from 2003-04 through 2024-25</strong> shows long-term enrollent trends for each school, with <strong>statistical forecasts through 2030</strong> using multiple forecasting methods.</p>
                 <p style="margin-top: 1rem;">Key features:</p>
                 <ul>
-                    <li><strong>21 years of historical data</strong> (solid lines) - Comprehensive enrollment perspective from 2004-2024</li>
-                    <li><strong>5-year forecasts</strong> (dotted lines) - Projections through 2029 using selected statistical method</li>
+                    <li><strong>22 years of historical data</strong> (solid lines) - Comprehensive enrollment perspective from 2004-2025</li>
+                    <li><strong>5-year forecasts</strong> (dotted lines) - Projections through 2030 using selected statistical method</li>
                     <li><strong>95% confidence intervals</strong> (shaded areas) - Statistical uncertainty around forecasts forming a "cone of uncertainty". There's a 95% probability actual enrollment will fall within these bands.</li>
                     <li><strong>7 forecast methods available</strong> - Linear Regression, Polynomial (Quadratic), Moving Average, Weighted Moving Average, Exponential Smoothing, Damped Trend, and Autoregressive (AR-2)</li>
                     <li><strong>Model fitted values</strong> (dashed lines) - Shows how well the selected model fits historical data. Extends naturally into forecast period.</li>
@@ -48,7 +103,7 @@
                     <li><strong>Color-coded by school</strong> - Consistent with other analysis pages</li>
                     <li><strong>Interactive legend</strong> - Click school name to show/hide all its data</li>
                 <li style="margin-bottom: 0.4rem;">
-                    <strong>Short sample period:</strong> All statistical forecasts are based on just <strong>21 years of historical enrollment</strong>. This limited sample means long-term patterns (e.g., underlying demographic cycles or shocks) may not be fully captured, affecting model reliability.
+                    <strong>Short sample period:</strong> All statistical forecasts are based on just <strong>22 years of historical enrollment</strong>. This limited sample means long-term patterns (e.g., underlying demographic cycles or shocks) may not be fully captured, affecting model reliability.
                 </li>
                 <li style="margin-bottom: 0.4rem;">
                     <strong>High variance and uncertainty:</strong> Enrollment numbers can fluctuate substantially from year to year due to a variety of unpredictable factors, amplifying forecast uncertainty. <strong>Confidence intervals expand rapidly</strong> as forecasts move further from the present, indicating greater statistical uncertainty about future values.
@@ -70,7 +125,7 @@
                 <div id="chartControls" class="mt-3 mt-md-4 p-3 p-md-4" style="background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
                     <div class="row g-3 g-md-4">
                         <!-- Forecast Method Dropdown -->
-                        <div class="col-12 col-md-6" title = 'Select the forecast method to use. The forecast method is used to predict the future enrollment of the school. No matter the method you choose, you will notice a wide confidence interval around the forecast. This is due to a small sample size (21 years of data) and high variability in enrollment.'>
+                        <div class="col-12 col-md-4" title = 'Select the forecast method to use. The forecast method is used to predict the future enrollment of the school. No matter the method you choose, you will notice a wide confidence interval around the forecast. This is due to a small sample size (22 years of data) and high variability in enrollment.'>
                             <label for="forecastMethodSelect" style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
                                 📊 Forecast Method
                             </label>
@@ -88,8 +143,28 @@
                             </select>
             </div>
 
+                        <!-- Year Range Slider -->
+                        <div class="col-12 col-md-4" title="Select the range of years to display. Use this to focus on specific time periods or exclude years with data anomalies (e.g., 2023 consolidation effects for Penn and Oakwood).">
+                            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
+                                📅 Year Range
+                            </label>
+                            <div style="padding: 0 0.5rem;">
+                                <div class="range-slider-container">
+                                    <div class="range-track"></div>
+                                    <div class="range-fill" id="rangeFill"></div>
+                                    <input type="range" id="minRange" min="0" max="21" value="0" step="1">
+                                    <input type="range" id="maxRange" min="0" max="21" value="21" step="1">
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.85rem;">
+                                    <span id="minYear">2004</span>
+                                    <span id="yearCount" style="color: var(--accent-cyan); font-weight: 600;">22 years</span>
+                                    <span id="maxYear">2025</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Display Mode Radio Buttons -->
-                        <div class="col-12 col-md-6" title = 'Show the number of students or the percentage of the minimum building capacity. Number of students show actual enrollment and is useful for seeing how many students are enrolled at a school, while percentage shows the enrollment as a percentage of the minimum building capacity which can be useful for seeing how close to capacity a school is.'>
+                        <div class="col-12 col-md-4" title = 'Show the number of students or the percentage of the minimum building capacity. Number of students show actual enrollment and is useful for seeing how many students are enrolled at a school, while percentage shows the enrollment as a percentage of the minimum building capacity which can be useful for seeing how close to capacity a school is.'>
                             <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.75rem; font-size: 1rem;">
                                 📈 Display Mode
                             </label>
@@ -117,9 +192,9 @@
                 <div class="mt-3 p-3 p-md-4" style="background: rgba(6, 182, 212, 0.05); border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
                     <p class="mb-2 fw-bold" style="color: var(--text-secondary);">📖 How to Use This Chart:</p>
                     <ul class="mb-3" style="color: var(--text-secondary); font-size: 0.9rem;">
-                        <li class="mb-1"><strong>Solid lines with markers</strong> = Actual historical enrollment data (2004-2024)</li>
+                        <li class="mb-1"><strong>Solid lines with markers</strong> = Actual historical enrollment data (2004-2025)</li>
                         <li class="mb-1"><strong>Dashed lines</strong> = Model fitted values showing how the selected method fits historical data</li>
-                        <li class="mb-1"><strong>Dotted lines</strong> = Forecast point estimates extending from fitted line (2025-2029)</li>
+                        <li class="mb-1"><strong>Dotted lines</strong> = Forecast point estimates extending from fitted line (2026-2030)</li>
                         <li class="mb-1"><strong>Shaded areas (cone)</strong> = 95% Confidence Intervals widening with time. Hover to see upper/lower bounds</li>
                     </ul>
                     <p class="mb-0 small fst-italic" style="color: var(--text-secondary);">
@@ -138,7 +213,7 @@
 
     <footer class="py-4 px-3">
         <div class="container-fluid">
-            <p class="mb-3"><strong>Data Source:</strong> Granite School District Enrollment Records (2003-2024)</p>
+            <p class="mb-3"><strong>Data Source:</strong> Granite School District Enrollment Records (2003-2025)</p>
             <p class="mb-3">Building capacity data from <a href="index.html">Area 5 Population Analysis Study</a></p>
             
             <div class="mt-4 mb-4" style="border-top: 2px solid var(--border-color); padding-top: 1.5rem;">
@@ -276,34 +351,37 @@
             'Upland Terrace': 650
         };
 
-        // Years from 2003-04 through 2023-24
+        // Years from 2003-04 through 2024-25
         const years = [
             '2004', '2005', '2006', '2007', '2008', '2009',
             '2010', '2011', '2012', '2013', '2014', '2015', '2016',
-            '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'
+            '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'
         ];
 
-        // Enrollment data from PDFs (2003-04 through 2023-24)
+        // Enrollment data from PDFs (2003-04 through 2024-25)
+        // 2025 data from student mobility matrices
         const enrollmentData = {
-            'Cottonwood': [520, 527, 552, 520, 513, 489, 487, 487, 490, 493, 491, 486, 510, 512, 509, 495, 511, 422, 402, 381, 343],
-            'Crestview': [623, 605, 609, 605, 602, 599, 606, 612, 639, 677, 652, 681, 712, 701, 704, 678, 646, 515, 504, 473, 489],
-            'Driggs': [628, 665, 671, 679, 653, 630, 655, 677, 695, 661, 643, 658, 643, 638, 606, 599, 582, 466, 457, 439, 445],
-            'Eastwood': [486, 479, 480, 495, 466, 455, 491, 487, 478, 492, 475, 450, 453, 393, 313, 274, 290, 275, 275, 303, 283],
-            'Morningside': [422, 403, 399, 573, 444, 481, 356, 567, 579, 614, 686, 699, 709, 698, 455, 446, 557, 667, 565, 571, 585],
-            'Oakridge': [560, 574, 548, 568, 528, 540, 557, 533, 549, 561, 663, 569, 576, 566, 438, 433, 396, 382, 331, 313, 299],
-            'Oakwood': [436, 462, 439, 430, 431, 447, 469, 433, 462, 517, 510, 505, 479, 490, 495, 459, 445, 413, 344, 312, 543],
-            'Penn': [466, 496, 532, 598, 587, 621, 623, 631, 656, 649, 666, 650, 641, 629, 674, 620, 643, 556, 552, 520, 665],
-            'Rosecrest': [525, 491, 509, 456, 394, 390, 406, 408, 410, 499, 480, 461, 481, 462, 438, 424, 397, 320, 284, 295, 295],
-            'Upland Terrace': [550, 557, 589, 589, 572, 576, 588, 548, 569, 574, 561, 556, 546, 547, 431, 420, 466, 494, 480, 481, 476]
+            'Cottonwood': [520, 527, 552, 520, 513, 489, 487, 487, 490, 493, 491, 486, 510, 512, 509, 495, 511, 422, 402, 381, 343, 342],
+            'Crestview': [623, 605, 609, 605, 602, 599, 606, 612, 639, 677, 652, 681, 712, 701, 704, 678, 646, 515, 504, 473, 489, 474],
+            'Driggs': [628, 665, 671, 679, 653, 630, 655, 677, 695, 661, 643, 658, 643, 638, 606, 599, 582, 466, 457, 439, 445, 434],
+            'Eastwood': [486, 479, 480, 495, 466, 455, 491, 487, 478, 492, 475, 450, 453, 393, 313, 274, 290, 275, 275, 303, 283, 267],
+            'Morningside': [422, 403, 399, 573, 444, 481, 356, 567, 579, 614, 686, 699, 709, 698, 455, 446, 557, 667, 565, 571, 585, 561],
+            'Oakridge': [560, 574, 548, 568, 528, 540, 557, 533, 549, 561, 663, 569, 576, 566, 438, 433, 396, 382, 331, 313, 299, 277],
+            'Oakwood': [436, 462, 439, 430, 431, 447, 469, 433, 462, 517, 510, 505, 479, 490, 495, 459, 445, 413, 344, 312, 543, 533],
+            'Penn': [466, 496, 532, 598, 587, 621, 623, 631, 656, 649, 666, 650, 641, 629, 674, 620, 643, 556, 552, 520, 665, 606],
+            'Rosecrest': [525, 491, 509, 456, 394, 390, 406, 408, 410, 499, 480, 461, 481, 462, 438, 424, 397, 320, 284, 295, 295, 291],
+            'Upland Terrace': [550, 557, 589, 589, 572, 576, 588, 548, 569, 574, 561, 556, 546, 547, 431, 420, 466, 494, 480, 481, 476, 441]
         };
 
-        // Forecast years (2024-25 through 2028-29)
-        const forecastYears = ['2025', '2026', '2027', '2028', '2029'];
+        // Forecast years (2025-26 through 2029-30)
+        const forecastYears = ['2026', '2027', '2028', '2029', '2030'];
         const allYears = [...years, ...forecastYears];
 
         let currentView = 'percent';
         let forecastMethod = 'linear';
         let visibilityState = {}; // Track which schools are visible
+        let yearRangeStart = 0;  // Index of first year to display
+        let yearRangeEnd = years.length - 1;  // Index of last year to display
 
         // Convert hex color to rgba
         function hexToRgba(hex, alpha) {
@@ -734,19 +812,25 @@
             saveVisibilityState();
 
             const traces = [];
-            const xValues = Array.from({length: years.length}, (_, i) => i);
+
+            // Filter years based on selected range
+            const filteredYears = years.slice(yearRangeStart, yearRangeEnd + 1);
+            const xValues = Array.from({length: filteredYears.length}, (_, i) => i);
             const allXValues = Array.from({length: allYears.length}, (_, i) => i);
-            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => years.length + i);
+            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => filteredYears.length + i);
 
             // Create a trace for each school
             Object.keys(enrollmentData).forEach((school, idx) => {
+                // Filter enrollment data based on selected year range
+                const filteredEnrollment = enrollmentData[school].slice(yearRangeStart, yearRangeEnd + 1);
+
                 const yValues = currentView === 'absolute'
-                    ? enrollmentData[school]
-                    : enrollmentData[school].map(val => (val / capacities[school]) * 100);
+                    ? filteredEnrollment
+                    : filteredEnrollment.map(val => (val / capacities[school]) * 100);
 
                 const rawData = currentView === 'absolute'
-                    ? enrollmentData[school]
-                    : enrollmentData[school].map(val => (val / capacities[school]) * 100);
+                    ? filteredEnrollment
+                    : filteredEnrollment.map(val => (val / capacities[school]) * 100);
 
                 // Calculate regression (always for reference)
                 const regression = linearRegression(xValues, yValues);
@@ -865,7 +949,7 @@
 
                 // Main data line (historical)
                 traces.push({
-                    x: years,
+                    x: filteredYears,
                     y: yValues,
                     name: school,
                     type: 'scatter',
@@ -888,7 +972,7 @@
 
                 // Fitted/Trend line (historical period) - shows model fit
                 traces.push({
-                    x: years,
+                    x: filteredYears,
                     y: fittedValues,
                     name: `${school} fitted`,
                     type: 'scatter',
@@ -976,8 +1060,8 @@
             const layout = {
                 title: {
                     text: currentView === 'absolute'
-                        ? `Area 5 Schools Enrollment Trends (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`
-                        : `Area 5 Schools Enrollment as % of Min Building Capacity (2003-2024) with ${methodName} Forecasts (2024-2029) - 95% CI`,
+                        ? `Area 5 Schools Enrollment Trends (${filteredYears[0]}-${filteredYears[filteredYears.length - 1]}) with ${methodName} Forecasts (2026-2030) - 95% CI`
+                        : `Area 5 Schools Enrollment as % of Min Building Capacity (${filteredYears[0]}-${filteredYears[filteredYears.length - 1]}) with ${methodName} Forecasts (2026-2030) - 95% CI`,
                     font: { size: isMobile ? 14 : 18, color: '#f9fafb' }
                 },
                 xaxis: {
@@ -1059,8 +1143,9 @@
 
         function updateTrendsSummary() {
             const summaryDiv = document.getElementById('trendsSummary');
-            const xValues = Array.from({length: years.length}, (_, i) => i);
-            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => years.length + i);
+            const filteredYears = years.slice(yearRangeStart, yearRangeEnd + 1);
+            const xValues = Array.from({length: filteredYears.length}, (_, i) => i);
+            const forecastXValues = Array.from({length: forecastYears.length}, (_, i) => filteredYears.length + i);
 
             const methodName = {
                 'linear': 'Linear Regression',
@@ -1078,7 +1163,7 @@
             const noTrend = [];
 
             Object.keys(enrollmentData).forEach(school => {
-                const data = enrollmentData[school];
+                const data = enrollmentData[school].slice(yearRangeStart, yearRangeEnd + 1);
                 const regression = linearRegression(xValues, data);
                 
                 const schoolData = {
@@ -1103,7 +1188,7 @@
 
             let summaryHTML = `
                 <div style="color: #ddd; margin-bottom: 1.5rem;">
-                    <p style="margin: 0 0 0.5rem 0;"><strong>Historical Trends (2004-2024) and ${methodName} Forecasts (2025-2029):</strong></p>
+                    <p style="margin: 0 0 0.5rem 0;"><strong>Historical Trends (${filteredYears[0]}-${filteredYears[filteredYears.length - 1]}) and ${methodName} Forecasts (2026-2030):</strong></p>
                     <p style="margin: 0; font-size: 0.9rem; font-style: italic; color: #aaa;">
                         Statistical significance determined by p-value &lt; 0.05. R² shows goodness of fit.
                     </p>
@@ -1176,7 +1261,7 @@
                         </div>
                         <div style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">
                             <div style="margin-bottom: 0.25rem;">
-                                <strong>Historical:</strong> ${start} (2004) → ${end} (2024) = 
+                                <strong>Historical:</strong> ${start} (${filteredYears[0]}) → ${end} (${filteredYears[filteredYears.length - 1]}) =
                         <strong style="${change < 0 ? 'color: #ef4444;' : 'color: #10b981;'}">${change > 0 ? '+' : ''}${change} students (${percentChange}%)</strong>
                             </div>
                             <div style="margin-bottom: 0.25rem;">
@@ -1186,8 +1271,8 @@
                                 </span>
                             </div>
                             <div>
-                                <strong>${methodName} Forecast:</strong> ${Math.round(forecast2029)} students by 2029 
-                                <span style="${forecastTrendClass}">(${forecastChange > 0 ? '+' : ''}${forecastChange} from 2024)</span>
+                                <strong>${methodName} Forecast:</strong> ${Math.round(forecast2029)} students by 2030
+                                <span style="${forecastTrendClass}">(${forecastChange > 0 ? '+' : ''}${forecastChange} from ${filteredYears[filteredYears.length - 1]})</span>
                             </div>
                         </div>
                     </div>
@@ -1316,9 +1401,57 @@
             infoDiv.innerHTML = infoHTML;
         }
 
+        // Simple Dual Range Slider
+        function initializeRangeSlider() {
+            const minRange = document.getElementById('minRange');
+            const maxRange = document.getElementById('maxRange');
+            const rangeFill = document.getElementById('rangeFill');
+            const minYear = document.getElementById('minYear');
+            const maxYear = document.getElementById('maxYear');
+            const yearCount = document.getElementById('yearCount');
+
+            function updateSlider() {
+                let minVal = parseInt(minRange.value);
+                let maxVal = parseInt(maxRange.value);
+
+                // Prevent crossing
+                if (minVal > maxVal) {
+                    minRange.value = maxVal;
+                    minVal = maxVal;
+                }
+                if (maxVal < minVal) {
+                    maxRange.value = minVal;
+                    maxVal = minVal;
+                }
+
+                // Update fill
+                const percent1 = (minVal / 21) * 100;
+                const percent2 = (maxVal / 21) * 100;
+                rangeFill.style.left = percent1 + '%';
+                rangeFill.style.width = (percent2 - percent1) + '%';
+
+                // Update labels
+                minYear.textContent = years[minVal];
+                maxYear.textContent = years[maxVal];
+                const count = maxVal - minVal + 1;
+                yearCount.textContent = count + ' year' + (count > 1 ? 's' : '') + ' selected';
+
+                // Update chart
+                yearRangeStart = minVal;
+                yearRangeEnd = maxVal;
+                createChart();
+            }
+
+            minRange.addEventListener('input', updateSlider);
+            maxRange.addEventListener('input', updateSlider);
+
+            updateSlider();
+        }
+
         // Initialize chart on page load
         updateForecastMethodInfo();
         createChart();
+        initializeRangeSlider();
     </script>
 
     <!-- Navigation Toggle Script -->
